@@ -18,11 +18,15 @@ namespace SaveCISE_Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Stage stage;
+        KeyboardState oldKeyboardState;
+        ButtonState oldLeftMouseState;
 
         public SaveCiseGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            oldKeyboardState = new KeyboardState();
         }
 
         /// <summary>
@@ -34,7 +38,8 @@ namespace SaveCISE_Game
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            stage = new Stage();
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -44,20 +49,21 @@ namespace SaveCISE_Game
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            ContentStore.addTexture("spr_smile", Content.Load<Texture2D>("Sprites/spr_smiley"));
+            ContentStore.addTexture("bg_background1", Content.Load<Texture2D>("Backgrounds/bg_background1"));
         }
 
+        /*
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
-        }
+            // Our game is not large enough for this to have bearing
+        }*/
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -66,13 +72,58 @@ namespace SaveCISE_Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
-            // TODO: Add your update logic here
+            doKeyboardEvents();
+            doMouseEvents();
 
             base.Update(gameTime);
+        }
+
+        private void doMouseEvents()
+        {
+            MouseState ms = Mouse.GetState();
+            if (ms.LeftButton != oldLeftMouseState)
+            {
+                if (ms.LeftButton == ButtonState.Pressed)
+                {
+                    stage.leftMousePressed(ms.X, ms.Y);
+                }
+                else
+                {
+                    stage.leftMouseReleased(ms.X, ms.Y);
+                }
+            }
+            oldLeftMouseState = ms.LeftButton;
+        }
+
+        private void doKeyboardEvents()
+        {
+            KeyboardState ks = Keyboard.GetState();
+
+            // Allows the game to exit
+            if (ks.IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
+
+            List<Keys> oldPressedKeys = oldKeyboardState.GetPressedKeys().ToList<Keys>();
+            Keys[] pressedKeys = ks.GetPressedKeys();
+            foreach (Keys key in pressedKeys)
+            {
+                if (!oldKeyboardState.IsKeyDown(key))
+                {
+                    stage.keyPressed(key);
+                }
+                else
+                {
+                    oldPressedKeys.Remove(key);
+                }
+            }
+            foreach (Keys key in oldPressedKeys)
+            {
+                stage.keyReleased(key);
+            }
+
+            oldKeyboardState = ks;
         }
 
         /// <summary>
@@ -83,7 +134,7 @@ namespace SaveCISE_Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            stage.draw(spriteBatch);
 
             base.Draw(gameTime);
         }
