@@ -16,7 +16,6 @@ namespace SaveCISE_Game
         public Stage()
         {
             scenes = new List<Scene>();
-            scenes.Add(new Scene());//Remove this line once we get this programming going!
             currentScene = 0;
         }
 
@@ -51,6 +50,11 @@ namespace SaveCISE_Game
 #if DEBUG
             Console.WriteLine("Mouse Released: (" + x + "," + y + ")");
 #endif
+        }
+
+        internal void addScene(Scene scene)
+        {
+            scenes.Add(scene);
         }
     }
 }
