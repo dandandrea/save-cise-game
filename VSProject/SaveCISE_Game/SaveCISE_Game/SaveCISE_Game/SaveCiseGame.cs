@@ -53,6 +53,22 @@ namespace SaveCISE_Game
 
             ContentStore.addTexture("spr_smile", Content.Load<Texture2D>("Sprites/spr_smiley"));
             ContentStore.addTexture("bg_background1", Content.Load<Texture2D>("Backgrounds/bg_background1"));
+
+            buildScenes();
+        }
+
+        private void buildScenes()
+        {
+            Scene openingScene = new Scene();
+            Sprite bgImage = new Sprite(ContentStore.getTexture("bg_background1"));
+            Actor bg = new Actor(bgImage, 10,10,100,30);
+            openingScene.add(bg);
+            stage.addScene(openingScene);
+
+            // Build "How to Play" scene here
+
+            // Build Play Scene Here
+
         }
 
         /*
