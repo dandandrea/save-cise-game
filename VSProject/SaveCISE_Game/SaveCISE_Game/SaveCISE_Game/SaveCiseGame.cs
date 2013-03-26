@@ -25,6 +25,8 @@ namespace SaveCISE_Game
         public SaveCiseGame()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 480;
             Content.RootDirectory = "Content";
             oldKeyboardState = new KeyboardState();
         }
@@ -40,6 +42,7 @@ namespace SaveCISE_Game
             // TODO: Add your initialization logic here
             stage = new Stage();
             this.IsMouseVisible = true;
+
             base.Initialize();
         }
 
@@ -51,8 +54,9 @@ namespace SaveCISE_Game
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            ContentStore.addTexture("spr_smile", Content.Load<Texture2D>("Sprites/spr_smiley"));
-            ContentStore.addTexture("bg_background1", Content.Load<Texture2D>("Backgrounds/bg_background1"));
+            ContentStore.addTexture("spr_beginButton", Content.Load<Texture2D>("Sprites/spr_beginButton"));
+            ContentStore.addTexture("spr_quitButton", Content.Load<Texture2D>("Sprites/spr_quitButton"));
+            ContentStore.addTexture("bg_mainScreen", Content.Load<Texture2D>("Backgrounds/bg_mainScreen"));
 
             buildScenes();
         }
@@ -60,12 +64,28 @@ namespace SaveCISE_Game
         private void buildScenes()
         {
             Scene openingScene = new Scene();
-            Sprite bgImage = new Sprite(ContentStore.getTexture("bg_background1"));
-            Actor bg = new Actor(bgImage, 10,10,100,30);
-            openingScene.add(bg);
+            
+            Sprite bg = new Sprite(ContentStore.getTexture("bg_mainScreen"));
+            openingScene.setBackground(bg);
+
             stage.addScene(openingScene);
 
+            Button playButton = new Button(200,250, new Sprite(ContentStore.getTexture("spr_beginButton"),200,50,3,3));
+            openingScene.add(playButton);
+
+            GameAction nextSceneAction = new ChangeSceneGameAction(stage, 1);
+            playButton.setMouseReleasedAction(nextSceneAction);
+
+            Button quitButton = new Button(200, 310, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
+            openingScene.add(quitButton);
+
+            GameAction quitAction = new QuitGameAction(this);
+            quitButton.setMouseReleasedAction(quitAction);
+
             // Build "How to Play" scene here
+            Scene instructionScene = new Scene();
+
+            stage.addScene(instructionScene);
 
             // Build Play Scene Here
 
@@ -106,6 +126,17 @@ namespace SaveCISE_Game
                 else
                 {
                     stage.leftMouseReleased(ms.X, ms.Y);
+                }
+            }
+            else
+            {
+                if (ms.LeftButton == ButtonState.Pressed)
+                {
+                    //dragging
+                }
+                else
+                {
+                    stage.mouseOver(ms.X, ms.Y);
                 }
             }
             oldLeftMouseState = ms.LeftButton;
