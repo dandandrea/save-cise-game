@@ -24,6 +24,7 @@ namespace SaveCISE_Game
             this.y = 0;
             this.width = sprite.getWidth();
             this.height = sprite.getHeight();
+            this.visible = true;
         }
 
         public Actor(Sprite sprite, int x, int y, int width, int height)
@@ -33,16 +34,42 @@ namespace SaveCISE_Game
             this.y = y;
             this.width = width;
             this.height = height;
+            this.visible = true;
         }
 
-        public void draw(SpriteBatch sb)
+        public virtual void draw(SpriteBatch sb)
         {
             sprite.draw(sb, x, y, imageIndex, ((double)width / sprite.getWidth()), ((double)height / sprite.getHeight()), Color.White);
         }
 
-        internal void setSprite(Sprite sprite)
+        public virtual void update()
         {
-            this.sprite = sprite;// throw new NotImplementedException();
+
+        }
+
+        internal virtual void setSprite(Sprite sprite)
+        {
+            this.sprite = sprite;
+        }
+
+        public virtual bool checkCollision(int x, int y)
+        {
+            return (x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height);
+        }
+
+        internal virtual void mouseOver(int x, int y)
+        {
+            //throw new NotImplementedException();
+        }
+
+        internal virtual void leftMousePressed(int x, int y)
+        {
+            //throw new NotImplementedException();
+        }
+
+        internal virtual void leftMouseReleased(int x, int y)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

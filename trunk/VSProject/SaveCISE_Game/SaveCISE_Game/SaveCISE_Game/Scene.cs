@@ -37,5 +37,29 @@ namespace SaveCISE_Game
                 a.draw(sb);
             }
         }
+
+        internal void mouseOver(int x, int y)
+        {
+            foreach (Actor a in actors)
+            {
+                a.mouseOver(x, y);
+            }
+        }
+
+        internal void leftMousePressed(int x, int y)
+        {
+            foreach (Actor a in actors)
+            {
+                a.leftMousePressed(x, y);
+            }
+        }
+
+        internal void leftMouseReleased(int x, int y)
+        {
+            foreach (Actor a in actors)
+            {
+                a.leftMouseReleased(x, y);
+            }
+        }
     }
 }

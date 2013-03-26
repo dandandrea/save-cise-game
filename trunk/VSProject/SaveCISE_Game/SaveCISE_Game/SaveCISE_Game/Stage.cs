@@ -43,6 +43,7 @@ namespace SaveCISE_Game
 #if DEBUG
             Console.WriteLine("Mouse Pressed: (" + x + "," + y + ")");
 #endif
+            scenes[currentScene].leftMousePressed(x, y);
         }
 
         internal void leftMouseReleased(int x, int y)
@@ -50,11 +51,22 @@ namespace SaveCISE_Game
 #if DEBUG
             Console.WriteLine("Mouse Released: (" + x + "," + y + ")");
 #endif
+            scenes[currentScene].leftMouseReleased(x, y);
         }
 
         internal void addScene(Scene scene)
         {
             scenes.Add(scene);
+        }
+
+        internal void mouseOver(int x, int y)
+        {
+            scenes[currentScene].mouseOver(x,y);
+        }
+
+        internal void gotoScene(int index)
+        {
+            currentScene = index;
         }
     }
 }
