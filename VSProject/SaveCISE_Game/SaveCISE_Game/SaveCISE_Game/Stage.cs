@@ -27,21 +27,21 @@ namespace SaveCISE_Game
         internal void keyPressed(Keys key)
         {
 #if DEBUG
-            Console.WriteLine("Key Pressed: " + key);
+            //Console.WriteLine("Key Pressed: " + key);
 #endif
         }
 
         internal void keyReleased(Keys key)
         {
 #if DEBUG
-            Console.WriteLine("Key Released: " + key);
+            //Console.WriteLine("Key Released: " + key);
 #endif
         }
 
         internal void leftMousePressed(int x, int y)
         {
 #if DEBUG
-            Console.WriteLine("Mouse Pressed: (" + x + "," + y + ")");
+            //Console.WriteLine("Mouse Pressed: (" + x + "," + y + ")");
 #endif
             scenes[currentScene].leftMousePressed(x, y);
         }
@@ -49,7 +49,7 @@ namespace SaveCISE_Game
         internal void leftMouseReleased(int x, int y)
         {
 #if DEBUG
-            Console.WriteLine("Mouse Released: (" + x + "," + y + ")");
+            //Console.WriteLine("Mouse Released: (" + x + "," + y + ")");
 #endif
             scenes[currentScene].leftMouseReleased(x, y);
         }
