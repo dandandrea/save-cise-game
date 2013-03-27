@@ -73,22 +73,29 @@ namespace SaveCISE_Game
             Button playButton = new Button(200,250, new Sprite(ContentStore.getTexture("spr_beginButton"),200,50,3,3));
             openingScene.add(playButton);
 
-            GameAction nextSceneAction = new ChangeSceneGameAction(stage, 1);
-            playButton.setMouseReleasedAction(nextSceneAction);
+            playButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 1));
 
             Button quitButton = new Button(200, 310, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
             openingScene.add(quitButton);
 
-            GameAction quitAction = new QuitGameAction(this);
-            quitButton.setMouseReleasedAction(quitAction);
+            quitButton.setMouseReleasedAction(new QuitGameAction(this));
 
             // Build "How to Play" scene here
             Scene instructionScene = new Scene();
 
             stage.addScene(instructionScene);
 
-            // Build Play Scene Here
+            Button nextButton = new Button(500, 300, new Sprite(ContentStore.getTexture("spr_beginButton"), 200, 50, 3, 3));
+            nextButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 2));
+            instructionScene.add(nextButton);
 
+            Button backButton = new Button(100, 300, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
+            backButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 0));
+            instructionScene.add(backButton);
+
+            // Build Play Scene Here
+            Scene gameScene = new Scene();
+            stage.addScene(gameScene);
         }
 
         /*
