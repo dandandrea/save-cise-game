@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bg_gameArea.png" />
+    <Content Include="bg_gamePlayArea.png" />
     <Content Include="bg_sideBar.png" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png">
