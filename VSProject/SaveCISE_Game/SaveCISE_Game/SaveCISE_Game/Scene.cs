@@ -10,10 +10,12 @@ namespace SaveCISE_Game
     {
         Sprite background;
         List<Actor> actors;
+        List<Actor> toAdd;
 
         public Scene()
         {
             actors = new List<Actor>();
+            toAdd = new List<Actor>();
         }
 
         public void setBackground(Sprite background)
@@ -23,7 +25,7 @@ namespace SaveCISE_Game
 
         public void add(Actor actor)
         {
-            this.actors.Add(actor);
+            this.toAdd.Add(actor);
         }
 
         public void draw( SpriteBatch sb )
@@ -59,6 +61,34 @@ namespace SaveCISE_Game
             foreach (Actor a in actors)
             {
                 a.leftMouseReleased(x, y);
+            }
+        }
+
+        internal void update()
+        {
+            GameController.update();
+            foreach (Actor a in toAdd)
+            {
+                actors.Add(a);
+            }
+            actors.Sort(Actor.getComparer());
+            toAdd.Clear();
+            foreach (Actor a in actors)
+            {
+                a.update();
+            }
+        }
+
+        internal void remove(Actor a)
+        {
+            actors.Remove(a);
+        }
+
+        internal void mouseDragged(int x, int y)
+        {
+            foreach (Actor a in actors)
+            {
+                a.mouseDragged(x,y);
             }
         }
     }

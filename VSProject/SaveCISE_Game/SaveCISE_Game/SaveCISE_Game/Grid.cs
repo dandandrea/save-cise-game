@@ -11,18 +11,18 @@ namespace SaveCISE_Game
         private const int rows = 27;
         private const int cols = 27;
 
-        protected GridTile[,] grid;
+        protected GridCell[,] grid;
 
         //Initialize the grid. Put any permanent obstacles here (such as out of bounds)
         public Grid()
         {
-            grid = new GridTile[rows, cols];
+            grid = new GridCell[rows, cols];
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    grid[i, j] = new GridTile(i, j);
+                    grid[i, j] = new GridCell(i, j);
 
                     if (j == 0 || j == cols-1 || i==0 || i==rows-1)
                     {
@@ -49,10 +49,10 @@ namespace SaveCISE_Game
         }
 
         //returns the surrounding tiles and also sets the appropriate scores.
-        private List<GridTile> getSurroundingTiles(GridTile current, GridTile end, List<GridTile> closedList, List<GridTile> openList) 
+        private List<GridCell> getSurroundingTiles(GridCell current, GridCell end, List<GridCell> closedList, List<GridCell> openList) 
         {
             //List of surrounding tiles to add to the openList
-            List<GridTile> surroundingTiles = new List<GridTile>();
+            List<GridCell> surroundingTiles = new List<GridCell>();
 
             //Iterate through the 8 surrounding tiles
             for(int i=-1; i <= 1; i++) 
@@ -69,7 +69,7 @@ namespace SaveCISE_Game
                         dir = 10;
                     }
 
-                    GridTile nearTile = grid[current.row + i, current.col + j];
+                    GridCell nearTile = grid[current.row + i, current.col + j];
 
                     //To do: put a construct that will tax the dir variable if tile is a "slow down" or other. Must change isBlocked().
 
@@ -98,23 +98,23 @@ namespace SaveCISE_Game
 
         public void markTile(int row, int col) 
         {
-            grid[row, col].markAsBlocked();
+            grid[row, col].markAsBlocked("o");
         }
 
         //A* algorithm
-        public Stack<GridTile> astar(int row1, int col1, int row2, int col2)
+        public Stack<GridCell> astar(int row1, int col1, int row2, int col2)
         {
             
-            List<GridTile> openList = new List<GridTile>();
-            List<GridTile> closedList = new List<GridTile>();
+            List<GridCell> openList = new List<GridCell>();
+            List<GridCell> closedList = new List<GridCell>();
 
-            GridTile current = this.grid[row1, col1];
-            GridTile end = this.grid[row2, col2];
+            GridCell current = this.grid[row1, col1];
+            GridCell end = this.grid[row2, col2];
 
             while (current != null && current!=end)
             {
                 //check for nonLegal tiles (closedList or Blocked) and set parent to current. Also, add scores.
-                List<GridTile> surroundingTiles = getSurroundingTiles(current, end, closedList, openList);
+                List<GridCell> surroundingTiles = getSurroundingTiles(current, end, closedList, openList);
                 openList.AddRange(surroundingTiles);
                 closedList.Add(current);
                 openList.Remove(current);
@@ -125,11 +125,11 @@ namespace SaveCISE_Game
             {
                 //Path found
 
-                Stack<GridTile> path = new Stack<GridTile>();
+                Stack<GridCell> path = new Stack<GridCell>();
                 //trace path
                 while (current != null)
                 {
-                    path.Push(current.parent);
+                        path.Push(current);
 #if DEBUG
                     //For debugging, drawing X's on the console grid
                     current.path = true;
@@ -151,11 +151,11 @@ namespace SaveCISE_Game
 
         }
 
-        private GridTile findLowestFscore(List<GridTile> list)
+        private GridCell findLowestFscore(List<GridCell> list)
         {
             int f = 0;
-            GridTile lowest = null;
-            foreach (GridTile tile in list)
+            GridCell lowest = null;
+            foreach (GridCell tile in list)
             {
                 if (f == 0 || tile.fScore < f)
                 {
@@ -197,6 +197,10 @@ namespace SaveCISE_Game
 
         }
 
+        public bool isCellBlocked(int row, int col)
+        {
+            return grid[row, col].isBlocked();
+        }
         //To do:
         //public void setBlock(int x, int y)
         //public void clearBlock(int x, int y)

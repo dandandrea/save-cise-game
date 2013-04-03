@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SaveCISE_Game
 {
-    class GridTile
+    class GridCell
     {
         //To do: change from string?
         //'b' => blocked, 'c' => castle (CISE), 'o' => out of bounds
@@ -15,11 +15,11 @@ namespace SaveCISE_Game
         public int fScore = 0;
         public int gScore = 0;
         public int hScore = 0;
-        public GridTile parent = null;
+        public GridCell parent = null;
         //This is for debugging, can remove later.
         public bool path = false; 
 
-        public GridTile(int row, int col)
+        public GridCell(int row, int col)
         {
             this.row = row;
             this.col = col;
@@ -34,7 +34,7 @@ namespace SaveCISE_Game
         // g is the gScore of the tile we want to move from.
         // dir the diagonal or orthogonal score
         //target is our target tile. (For manhattan #)
-        public bool setScore(GridTile target, int g, int dir = 10)
+        public bool setScore(GridCell target, int g, int dir = 10)
         {
             if (fScore != 0)
             {
@@ -59,7 +59,7 @@ namespace SaveCISE_Game
             }
         }
 
-        public void setParent(GridTile parent)
+        public void setParent(GridCell parent)
         {
             this.parent = parent;
         }
@@ -73,7 +73,7 @@ namespace SaveCISE_Game
             else return true;
         }
 
-        public GridTile getParent()
+        public GridCell getParent()
         {
             return this.parent;
         }

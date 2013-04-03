@@ -66,7 +66,21 @@ namespace SaveCISE_Game
 
         internal void gotoScene(int index)
         {
-            currentScene = index;
+            if (index == 2)
+            {
+                GameController.startGame();
+            }
+                currentScene = index;
+        }
+
+        internal void update()
+        {
+            scenes[currentScene].update();
+        }
+
+        internal void mouseDragged(int x, int y)
+        {
+            scenes[currentScene].mouseDragged(x,y);
         }
     }
 }
