@@ -118,7 +118,7 @@ namespace SaveCISE_Game
         {
             doKeyboardEvents();
             doMouseEvents();
-            stage.update();
+            stage.Update( gameTime );
 
             base.Update(gameTime);
         }

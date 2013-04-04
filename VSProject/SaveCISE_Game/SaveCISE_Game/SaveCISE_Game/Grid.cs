@@ -206,5 +206,10 @@ namespace SaveCISE_Game
         //public void clearBlock(int x, int y)
         //bool checkNoCycles(int x, int y)
 
+
+        internal void clearTile(int row, int col)
+        {
+            grid[row, col].markAsBlocked("");
+        }
     }
 }

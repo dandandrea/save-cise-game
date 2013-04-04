@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace SaveCISE_Game
 {
@@ -64,9 +65,9 @@ namespace SaveCISE_Game
             }
         }
 
-        internal void update()
+        internal void Update( GameTime gameTime)
         {
-            GameController.update();
+            GameController.Update( gameTime );
             foreach (Actor a in toAdd)
             {
                 actors.Add(a);

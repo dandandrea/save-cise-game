@@ -73,9 +73,9 @@ namespace SaveCISE_Game
                 currentScene = index;
         }
 
-        internal void update()
+        internal void Update( GameTime gameTime )
         {
-            scenes[currentScene].update();
+            scenes[currentScene].Update(gameTime);
         }
 
         internal void mouseDragged(int x, int y)
