@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SaveCISE_Game
 {
@@ -104,6 +105,11 @@ namespace SaveCISE_Game
                 else
                 {
                     grid.markTile(cellY, cellX);
+                    if (grid.astar(1, 1, CISE_ROW, CISE_COL) == null)
+                    {
+                        grid.clearTile(cellY, cellX);
+                        return false;
+                    }
                     Actor newTower = new Actor(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     newTower.setLocation(cellX * CELL_WIDTH + GRID_OFFSET_X, cellY * CELL_HEIGHT + GRID_OFFSET_Y);
                     newTower.setOrigin(0,12);
@@ -122,7 +128,7 @@ namespace SaveCISE_Game
             }
         }
 
-        internal static void update()
+        internal static void Update( GameTime gameTime )
         {
             foreach( Enemy e in deadEnemies )
             {

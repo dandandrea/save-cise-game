@@ -166,35 +166,64 @@ namespace SaveCISE_Game
 
         public void updatePath()
         {
-            if (target != null)
-            {
-                if (checkAlive())
+            if(pathIsBlocked())
                 {
-                    myPath = aStarGrid.astar(target.row, target.col, GameController.CISE_COL, GameController.CISE_ROW);
-                    target = myPath.Pop();
-                }
-                else
+                if (target != null)
                 {
-                    myPath = aStarGrid.astar(target.row, target.col, 1, 1);
-                    //target = myPath.Pop();
-                }
-            }
-            else
-            {
-                if (checkAlive())
-                {
-                    if (!atCiseBuilding)
+                    if (checkAlive())
                     {
-                        myPath = aStarGrid.astar(1, 1, GameController.CISE_COL, GameController.CISE_ROW);
-                        target = myPath.Pop();
+                        Stack<GridCell> temp = aStarGrid.astar(target.row, target.col, GameController.CISE_COL, GameController.CISE_ROW);
+                        if (temp != null)
+                        {
+                            myPath = temp;
+                            target = myPath.Pop();
+                        }
+
+                    }
+                    else
+                    {
+                        myPath = aStarGrid.astar(target.row, target.col, 1, 1);
+                        //target = myPath.Pop();
                     }
                 }
                 else
                 {
-                    myPath = aStarGrid.astar(GameController.CISE_COL, GameController.CISE_ROW, 1, 1);
-                    target = myPath.Pop();
+                    if (checkAlive())
+                    {
+                        if (!atCiseBuilding)
+                        {
+                            myPath = aStarGrid.astar(1, 1, GameController.CISE_COL, GameController.CISE_ROW);
+                            target = myPath.Pop();
+                        }
+                    }
+                    else
+                    {
+                        myPath = aStarGrid.astar(GameController.CISE_COL, GameController.CISE_ROW, 1, 1);
+                        target = myPath.Pop();
+                    }
                 }
             }
+        }
+
+        private bool pathIsBlocked()
+        {
+            GridCell[] pathOfCells;
+            if (myPath != null)
+            {
+                pathOfCells = myPath.ToArray();
+                foreach (GridCell c in pathOfCells)
+                {
+                    if (aStarGrid.isCellBlocked(c.row, c.col))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool moveTowardCell( GridCell cell )
