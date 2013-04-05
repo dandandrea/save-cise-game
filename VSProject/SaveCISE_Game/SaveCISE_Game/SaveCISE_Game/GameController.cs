@@ -26,13 +26,20 @@ namespace SaveCISE_Game
         public const int GRID_HEIGHT = 25;
         public const int CISE_COL = 25;
         public const int CISE_ROW = 25;
+        private const int NUM_LEVELS = 20; // Total number of waves 
+        private const int WAVE_ALL_SPAWN_SECS = 45; // Number of seconds to spawn the complete wave in
         private static int budget = 20000000;
         private static Scene gameScene;
         private static Grid grid;
         private static List<Enemy> enemies;
         private static List<Enemy> deadEnemies;
+        private static bool isGameStarted; // Whether or not gameplay has started
+        private static bool isPaused = false; // Whether or not gameplay is currently paused, hardcoded to false for now
+        private static List<List<Enemy>> waves; // The enemies that make up each wave
+        private static int currentWaveIndex = 0; // Current wave index
+        private static int currentWaveSize; // Size of the current wave
+        private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately
         private static TowerPlacer towerPlacer;
-        private static bool isGameStarted;
 
         public static void hurtBudget(int damage)
         {
@@ -71,21 +78,11 @@ namespace SaveCISE_Game
             // Build Play Scene Here
             gameScene = new Scene();
             grid = new Grid();
-            
+
+            generateWaves(); // Generate the waves
+            currentWaveSize = waves[0].Count; // Initialize current wave size
             enemies = new List<Enemy>();
             deadEnemies = new List<Enemy>();
-            Enemy oneGuy = new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 500, 1, 100);
-            oneGuy.setLocation(-50, -50);
-            addEnemy(oneGuy);
-            oneGuy = new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100);
-            oneGuy.setLocation(-80, -70);
-            addEnemy(oneGuy);
-            oneGuy = new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100);
-            oneGuy.setLocation(-100, -80);
-            addEnemy(oneGuy);
-            oneGuy = new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100);
-            oneGuy.setLocation(-20, -20);
-            addEnemy(oneGuy);
 
             towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_cell")), 100, 100);
             gameScene.add(towerPlacer);
@@ -173,12 +170,67 @@ namespace SaveCISE_Game
             }
             deadEnemies.Clear();
 
-            //PlaceWallTowerGameAction pwt = new PlaceWallTowerGameAction();
-            //pwt.doAction();
+            // Spawn another enemy?  Only perform this check if gameplay has started and
+            // there are still enemies remaining to be spawned
+            if (isGameStarted == true && isPaused == false && currentWaveIndex != -1)
+            {
+                // Is it time to spawn another enemy?
+                if (gameTime.TotalGameTime.TotalMilliseconds >= nextSpawnTime)
+                {
+                    #if DEBUG
+                    Console.WriteLine("Spawning next enemy");
+                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    Console.WriteLine("nextSpawnTime is " + (nextSpawnTime / 1000) + " secs");
+                    Console.WriteLine("Current wave size is " + currentWaveSize);
+                    #endif
 
+                    // Place the enemy and remove from waves list
+                    addEnemy(waves[currentWaveIndex][0]);
+                    waves[currentWaveIndex].RemoveAt(0);
 
-            //Next wave enemies goes here??
+                    // End of current wave?
+                    if (waves[currentWaveIndex].Count == 0)
+                    {
+                        #if DEBUG
+                        Console.WriteLine("Wave finished");
+                        #endif
 
+                        // No more waves?
+                        if (currentWaveIndex == waves.Count - 1)
+                        {
+                            #if DEBUG
+                            Console.WriteLine("No more waves");
+                            #endif
+
+                            // Set current wave index to -1
+                            currentWaveIndex = -1;
+                        }
+                        else
+                        {
+                            #if DEBUG
+                            Console.WriteLine("Next wave");
+                            #endif
+
+                            // There is another wave
+                            currentWaveIndex++;
+
+                            // Update current wave size
+                            currentWaveSize = waves[currentWaveIndex].Count;
+                        }
+                    }
+
+                    // If there are still more enemies to spawn
+                    if (currentWaveIndex != -1)
+                    {
+                        // Calculate the next spawn time
+                        nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + (WAVE_ALL_SPAWN_SECS * 1000 / currentWaveSize);
+
+                        #if DEBUG
+                        Console.WriteLine("nextSpawnTime updated to " + (nextSpawnTime / 1000) + " secs");
+                        #endif
+                    }
+                }
+            }
         }
 
         internal static void removeEnemy(Enemy e)
@@ -195,6 +247,54 @@ namespace SaveCISE_Game
         internal static void startGame()
         {
             isGameStarted = true;
+        }
+
+        private static void generateWaves()
+        {
+            #if DEBUG
+            Console.WriteLine("generateWaves() starting");
+            #endif
+
+            // Initialize the waves list
+            waves = new List<List<Enemy>>();
+
+            // Add enemies to first wave
+            List<Enemy> wave1 = new List<Enemy>(5);
+            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            waves.Add(wave1);
+
+            // Add enemies to second wave
+            List<Enemy> wave2 = new List<Enemy>(4);
+            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            waves.Add(wave2);
+
+            // Add enemies to third wave
+            List<Enemy> wave3 = new List<Enemy>(6);
+            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            waves.Add(wave3);
+
+            #if DEBUG
+            Console.WriteLine("[" + waves.Count + "]");
+            Console.WriteLine("[" + waves[0].Count + "]");
+            Console.WriteLine("[" + waves[1].Count + "]");
+            Console.WriteLine("[" + waves[2].Count + "]");
+            #endif
+
+            #if DEBUG
+            Console.WriteLine("generateWaves() ending");
+            #endif
         }
     }
 }

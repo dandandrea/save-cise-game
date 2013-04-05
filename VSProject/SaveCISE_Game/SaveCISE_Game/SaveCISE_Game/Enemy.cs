@@ -52,6 +52,7 @@ namespace SaveCISE_Game
             framesPerDirection = sprite.getSubimageCount() / (int)directions.NUM_DIRECTIONS;
             this.width /= 2;
             this.height /= 2;
+            setLocation(-10, -10); // Default spawn location
         }
 
         public override void setLocation(int x, int y)
