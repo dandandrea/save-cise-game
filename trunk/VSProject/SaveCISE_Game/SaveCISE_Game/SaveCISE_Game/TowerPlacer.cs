@@ -53,9 +53,15 @@ namespace SaveCISE_Game
 
         public override void draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
-            float alpha = 0.5f;
-            Color transparent = new Color(1.0f * alpha, 1.0f * alpha, 1.0f * alpha, alpha);
-            base.draw(sb, transparent);
+            if (typeToPlace == towerTypes.NONE)
+            {
+            }
+            else
+            {
+                float alpha = 0.5f;
+                Color transparent = new Color(1.0f * alpha, 1.0f * alpha, 1.0f * alpha, alpha);
+                base.draw(sb, transparent);
+            }
         }
 
         internal void setTypeToPlace(towerTypes type)

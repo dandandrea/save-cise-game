@@ -89,6 +89,32 @@ namespace SaveCISE_Game
 
             towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_cell")), 100, 100);
             gameScene.add(towerPlacer);
+
+            // buttons/side panel
+
+            // default towers
+            Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            gameScene.add(tower1);
+            gameScene.add(tower2);
+            gameScene.add(tower3);
+            tower1.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower2.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower3.setMouseReleasedAction(new PlaceWallTowerGameAction());
+
+
+            // hero towers
+            Button hero1 = new Button(650, 150, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            Button hero2 = new Button(700, 150, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            Button hero3 = new Button(750, 150, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            gameScene.add(hero1);
+            gameScene.add(hero2);
+            gameScene.add(hero3);
+            hero1.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            hero2.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());
+
             return gameScene;
         }
 
@@ -149,6 +175,10 @@ namespace SaveCISE_Game
 
             //PlaceWallTowerGameAction pwt = new PlaceWallTowerGameAction();
             //pwt.doAction();
+
+
+            //Next wave enemies goes here??
+
         }
 
         internal static void removeEnemy(Enemy e)
