@@ -84,8 +84,12 @@ namespace SaveCISE_Game
             enemies = new List<Enemy>();
             deadEnemies = new List<Enemy>();
 
-            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_cell")), 100, 100);
+            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"),CELL_WIDTH,CELL_HEIGHT,1,1), 100, 100);
             gameScene.add(towerPlacer);
+#if DEBUG
+            GridDrawer gd = new GridDrawer();
+            gameScene.add(gd);
+#endif
 
             // buttons/side panel
 
@@ -110,9 +114,7 @@ namespace SaveCISE_Game
             gameScene.add(hero3);
             hero1.setMouseReleasedAction(new PlaceWallTowerGameAction());
             hero2.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());
-
-            return gameScene;
+            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());            return gameScene;
         }
 
         internal static bool tryToPlaceTower(towerTypes typeToPlace, int x, int y)

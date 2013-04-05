@@ -87,8 +87,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\spr_cell.bmp">
-      <Name>spr_cell</Name>
+    <Compile Include="Sprites\spr_whitePixel.bmp">
+      <Name>spr_whitePixel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
