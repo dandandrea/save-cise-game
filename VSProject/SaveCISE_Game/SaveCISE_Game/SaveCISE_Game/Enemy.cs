@@ -66,7 +66,9 @@ namespace SaveCISE_Game
         {
             doMovement();
             doAnimation();
-            this.depth = -y;
+            this.verticalDepth = -y;
+            this.horizontalDepth = -x;
+
 
             base.update();
         }

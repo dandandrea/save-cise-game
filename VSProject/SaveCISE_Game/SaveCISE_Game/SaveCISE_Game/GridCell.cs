@@ -5,11 +5,17 @@ using System.Text;
 
 namespace SaveCISE_Game
 {
+    enum cellTypes {
+        EMPTY,
+        BLOCKED, //All-Purpose
+        SLOWED,
+        OUTOFBOUNDS,
+        CASTLE
+    }
+
     class GridCell
     {
-        //To do: change from string?
-        //'b' => blocked, 'c' => castle (CISE), 'o' => out of bounds
-        public String blocked = "";
+        public cellTypes blocked = 0;
         public int row;
         public int col;
         public int fScore = 0;
@@ -25,7 +31,7 @@ namespace SaveCISE_Game
             this.col = col;
         }
 
-        public void markAsBlocked(String blockedType = "b")
+        public void markAsBlocked(cellTypes blockedType = cellTypes.BLOCKED)
         {
             this.blocked = blockedType;
         }
@@ -66,7 +72,7 @@ namespace SaveCISE_Game
 
         public bool isBlocked()
         {
-            if (this.blocked == "")
+            if (this.blocked == 0)
             {
                 return false;
             }
@@ -101,11 +107,18 @@ namespace SaveCISE_Game
                 return fScore.ToString();
             }
              */
-            if (blocked == "")
+            switch(blocked) 
             {
-                return " ";
+                case cellTypes.BLOCKED:
+                    return "b";
+                case cellTypes.CASTLE:
+                    return "c";
+                case cellTypes.OUTOFBOUNDS:
+                    return "O";
+                default:
+                    return " ";
+                    
             }
-            else return blocked;
         }
     }
 }
