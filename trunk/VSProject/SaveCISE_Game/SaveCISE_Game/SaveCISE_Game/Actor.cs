@@ -24,7 +24,13 @@ namespace SaveCISE_Game
             {
                 return 0;
             }*/
-            return a2.getDepth() - a1.getDepth();
+
+            if (a2.getVerticalDepth() == a1.getVerticalDepth())
+            {
+                return a2.getHorizontalDepth() - a1.getHorizontalDepth();
+            }
+
+            return a2.getVerticalDepth() - a1.getVerticalDepth();
         }
     }
     class Actor
@@ -38,7 +44,8 @@ namespace SaveCISE_Game
         protected bool visible;
         protected int originX = 0;
         protected int originY = 0;
-        protected int depth = 0;
+        protected int verticalDepth = 0;
+        protected int horizontalDepth = 0;
 
         public Actor(Sprite sprite)
         {
@@ -64,7 +71,8 @@ namespace SaveCISE_Game
         {
             this.x = x;
             this.y = y;
-            depth = -y;
+            this.verticalDepth = -y;
+            this.horizontalDepth = -x;
         }
 
         public virtual void draw(SpriteBatch sb)
@@ -88,14 +96,14 @@ namespace SaveCISE_Game
             this.originY = y;
         }
 
-        public void setDepth(int depth)
+        public int getVerticalDepth()
         {
-            this.depth = depth;
+            return this.verticalDepth;
         }
 
-        public int getDepth()
+        public int getHorizontalDepth()
         {
-            return depth;
+            return this.horizontalDepth;
         }
 
         internal virtual void setSprite(Sprite sprite)

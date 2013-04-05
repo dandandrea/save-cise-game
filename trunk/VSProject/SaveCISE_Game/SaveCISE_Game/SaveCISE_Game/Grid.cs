@@ -27,23 +27,12 @@ namespace SaveCISE_Game
                     if (j == 0 || j == cols-1 || i==0 || i==rows-1)
                     {
                         //Out of bounds
-                        grid[i, j].markAsBlocked("o");
+                        grid[i, j].markAsBlocked(cellTypes.OUTOFBOUNDS);
                     }
                 }
             }
 
-/* Example A* usage. Uncomment for demo.
-            try
-            {
-                Stack<GridTile> path = this.astar(1, 22, 25, 25);
-            }
-            catch (Exception outOfBounds)
-            {
-                Console.WriteLine(outOfBounds);
-            }
-*/
 #if DEBUG 
-    
             Console.WriteLine(this);
 #endif
         }
@@ -69,11 +58,43 @@ namespace SaveCISE_Game
                         dir = 10;
                     }
 
+                    //Corner Cases
+                    bool deny = false;
+                    if (i == -1 && j == -1) //top left
+                    {
+                        if (grid[current.row, current.col - 1].isBlocked() || grid[current.row - 1, current.col].isBlocked())
+                        {
+                            deny = true;
+                        }
+                    }
+                    else if (i == -1 && j == 1) //top right
+                    {
+                        if (grid[current.row - 1, current.col].isBlocked() || grid[current.row, current.col + 1].isBlocked())
+                        {
+                            deny = true;
+                        }
+                    }
+                    else if (i == 1 && j == -1) //bottom left
+                    {
+                        if (grid[current.row, current.col - 1].isBlocked() || grid[current.row + 1, current.col].isBlocked())
+                        {
+                            deny = true;
+                        }
+                    }
+                    else if (i == 1 && j == 1) //bottom right
+                    {
+                        if (grid[current.row + 1, current.col].isBlocked() || grid[current.row, current.col + 1].isBlocked())
+                        {
+                            deny = true;
+                        }
+                    }
+
+
                     GridCell nearTile = grid[current.row + i, current.col + j];
 
                     //To do: put a construct that will tax the dir variable if tile is a "slow down" or other. Must change isBlocked().
 
-                    if (!nearTile.isBlocked() && !closedList.Contains(nearTile))
+                    if (!nearTile.isBlocked() && !closedList.Contains(nearTile) && !deny)
                     {
                         if (openList.Contains(nearTile))
                         {
@@ -98,7 +119,35 @@ namespace SaveCISE_Game
 
         public void markTile(int row, int col) 
         {
-            grid[row, col].markAsBlocked("o");
+            grid[row, col].markAsBlocked(cellTypes.BLOCKED);
+        }
+
+        public void markTile(int row, int col, towerTypes tower)
+        {
+            //todo: switch statement that handles different towers
+            switch (tower)
+            {
+                case towerTypes.SLOW:
+                    grid[row, col].markAsBlocked(cellTypes.BLOCKED);
+                    this.markSurroundingTiles(row, col, cellTypes.SLOWED);
+                    break;
+                default:
+                    grid[row, col].markAsBlocked(cellTypes.BLOCKED);
+                    break;
+
+            }
+        }
+
+        private void markSurroundingTiles(int row, int col, cellTypes blockType)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    grid[row + i, col + j].markAsBlocked(blockType);
+                }
+            }
+
         }
 
         //A* algorithm
@@ -129,7 +178,7 @@ namespace SaveCISE_Game
                 //trace path
                 while (current != null)
                 {
-                        path.Push(current);
+                    path.Push(current);
 #if DEBUG
                     //For debugging, drawing X's on the console grid
                     current.path = true;
@@ -209,7 +258,7 @@ namespace SaveCISE_Game
 
         internal void clearTile(int row, int col)
         {
-            grid[row, col].markAsBlocked("");
+            grid[row, col].markAsBlocked(cellTypes.EMPTY);
         }
     }
 }
