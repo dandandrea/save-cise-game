@@ -93,9 +93,9 @@ namespace SaveCISE_Game
             // buttons/side panel
 
             // default towers
-            Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_blockTower")));
-            Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_blockTower")));
-            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
+            Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
+            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
             gameScene.add(tower1);
             gameScene.add(tower2);
             gameScene.add(tower3);
@@ -105,9 +105,9 @@ namespace SaveCISE_Game
 
 
             // hero towers
-            Button hero1 = new Button(650, 150, new Sprite(ContentStore.getTexture("spr_blockTower")));
-            Button hero2 = new Button(700, 150, new Sprite(ContentStore.getTexture("spr_blockTower")));
-            Button hero3 = new Button(750, 150, new Sprite(ContentStore.getTexture("spr_blockTower")));
+            Button hero1 = new Button(650, 150, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
+            Button hero2 = new Button(700, 150, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
+            Button hero3 = new Button(750, 150, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
             gameScene.add(hero1);
             gameScene.add(hero2);
             gameScene.add(hero3);
