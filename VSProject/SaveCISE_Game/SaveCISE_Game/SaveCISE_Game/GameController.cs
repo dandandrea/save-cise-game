@@ -31,6 +31,7 @@ namespace SaveCISE_Game
         private static Grid grid;
         private static List<Enemy> enemies;
         private static List<Enemy> deadEnemies;
+        private static TowerPlacer towerPlacer;
         private static bool isGameStarted;
 
         public static void hurtBudget(int damage)
@@ -86,46 +87,55 @@ namespace SaveCISE_Game
             oneGuy.setLocation(-20, -20);
             addEnemy(oneGuy);
 
-            TowerPlacer b = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_cell")), 100, 100);
-            gameScene.add(b);
+            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_cell")), 100, 100);
+            gameScene.add(towerPlacer);
             return gameScene;
         }
 
         internal static bool tryToPlaceTower(towerTypes typeToPlace, int x, int y)
         {
-            int cellX = (x-GRID_OFFSET_X) / CELL_WIDTH;
-            int cellY = (y-GRID_OFFSET_Y) / CELL_HEIGHT;
-
-            if (cellX >= 1 && cellX <= GRID_WIDTH && cellY >= 1 && cellY <= GRID_HEIGHT)
+            if (typeToPlace != towerTypes.NONE)
             {
-                if (grid.isCellBlocked(cellY, cellX) || (cellX == CISE_COL && cellY == CISE_ROW) || (cellX == 1 & cellY == 1))
+                int cellX = (x - GRID_OFFSET_X) / CELL_WIDTH;
+                int cellY = (y - GRID_OFFSET_Y) / CELL_HEIGHT;
+
+                if (cellX >= 1 && cellX <= GRID_WIDTH && cellY >= 1 && cellY <= GRID_HEIGHT)
                 {
-                    return false;
+                    if (grid.isCellBlocked(cellY, cellX) || (cellX == CISE_COL && cellY == CISE_ROW) || (cellX == 1 & cellY == 1))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        grid.markTile(cellY, cellX);
+                        if (grid.astar(1, 1, CISE_ROW, CISE_COL) == null)
+                        {
+                            grid.clearTile(cellY, cellX);
+                            return false;
+                        }
+                        Actor newTower = new Actor(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                        newTower.setLocation(cellX * CELL_WIDTH + GRID_OFFSET_X, cellY * CELL_HEIGHT + GRID_OFFSET_Y);
+                        newTower.setOrigin(0, 12);
+                        gameScene.add(newTower);
+                        foreach (Enemy e in enemies)
+                        {
+                            e.updatePath();
+                        }
+
+                    }
+                    return true;
                 }
                 else
                 {
-                    grid.markTile(cellY, cellX);
-                    if (grid.astar(1, 1, CISE_ROW, CISE_COL) == null)
-                    {
-                        grid.clearTile(cellY, cellX);
-                        return false;
-                    }
-                    Actor newTower = new Actor(new Sprite(ContentStore.getTexture("spr_blockTower")));
-                    newTower.setLocation(cellX * CELL_WIDTH + GRID_OFFSET_X, cellY * CELL_HEIGHT + GRID_OFFSET_Y);
-                    newTower.setOrigin(0,12);
-                    gameScene.add(newTower);
-                    foreach (Enemy e in enemies)
-                    {
-                        e.updatePath();
-                    }
-
+                    return false;
                 }
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
+        }
+
+        internal static void beginPlacingTower(towerTypes type)
+        {
+            towerPlacer.setTypeToPlace(type);
         }
 
         internal static void Update( GameTime gameTime )
@@ -136,6 +146,9 @@ namespace SaveCISE_Game
                 gameScene.remove(e);
             }
             deadEnemies.Clear();
+
+            //PlaceWallTowerGameAction pwt = new PlaceWallTowerGameAction();
+            //pwt.doAction();
         }
 
         internal static void removeEnemy(Enemy e)
