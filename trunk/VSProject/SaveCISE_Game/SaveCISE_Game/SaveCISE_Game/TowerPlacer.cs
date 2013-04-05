@@ -35,9 +35,8 @@ namespace SaveCISE_Game
                     //nothing
                     break;
             }*/
-
-            GameController.tryToPlaceTower(typeToPlace, x, y);
-            typeToPlace = towerTypes.NONE;
+                GameController.tryToPlaceTower(typeToPlace, x, y);
+                typeToPlace = towerTypes.NONE;
         }
 
         internal override void mouseOver(int x, int y)
@@ -57,6 +56,11 @@ namespace SaveCISE_Game
             float alpha = 0.5f;
             Color transparent = new Color(1.0f * alpha, 1.0f * alpha, 1.0f * alpha, alpha);
             base.draw(sb, transparent);
+        }
+
+        internal void setTypeToPlace(towerTypes type)
+        {
+            typeToPlace = type;
         }
     }
 }

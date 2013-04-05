@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor.cs" />
+    <Compile Include="PlaceWallTowerGameAction.cs" />
     <Compile Include="TowerPlacer.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Enemy.cs" />
