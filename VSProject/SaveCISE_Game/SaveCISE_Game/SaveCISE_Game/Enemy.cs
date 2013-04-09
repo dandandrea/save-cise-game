@@ -50,9 +50,10 @@ namespace SaveCISE_Game
             this.damageDealt = damageDealt;
             this.enthusiasmBonus = enthusiasmBonus;
             framesPerDirection = sprite.getSubimageCount() / (int)directions.NUM_DIRECTIONS;
-            this.width /= 2;
-            this.height /= 2;
+            //this.width /= 2;
+            //this.height /= 2;
             setLocation(-10, -10); // Default spawn location
+            this.setOrigin(20, 40); // for drawing the sprite properly
         }
 
         public override void setLocation(int x, int y)

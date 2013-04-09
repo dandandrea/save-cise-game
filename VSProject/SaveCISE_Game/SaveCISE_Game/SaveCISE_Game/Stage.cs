@@ -29,6 +29,7 @@ namespace SaveCISE_Game
 #if DEBUG
             //Console.WriteLine("Key Pressed: " + key);
 #endif
+            scenes[currentScene].keyPressed(key);
         }
 
         internal void keyReleased(Keys key)

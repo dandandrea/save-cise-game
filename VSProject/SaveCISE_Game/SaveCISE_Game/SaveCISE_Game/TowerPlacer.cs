@@ -19,13 +19,12 @@ namespace SaveCISE_Game
             this.x = x;
             this.y = y;
         }
-
-        internal override void leftMouseReleased(int x, int y)
+        internal override void leftMousePressed(int x, int y)
         {
             /*switch (typeToPlace)
             //{
                 case towerTypes.NONE :
-                    //Enemy oneGuy = new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), new Grid(), 1.0f, 500, 1, 100);
+                    //Enemy oneGuy = new Enemy(new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8), new Grid(), 1.0f, 500, 1, 100);
                     //oneGuy.setLocation(x, y);
                     //GameController.getGameScene().add(oneGuy);
 
@@ -35,8 +34,11 @@ namespace SaveCISE_Game
                     //nothing
                     break;
             }*/
+            if (this.typeToPlace != towerTypes.NONE)
+            {
                 GameController.tryToPlaceTower(typeToPlace, x, y);
                 typeToPlace = towerTypes.NONE;
+            }
         }
 
         internal override void mouseOver(int x, int y)
