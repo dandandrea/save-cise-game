@@ -24,8 +24,8 @@ namespace SaveCISE_Game
         public const int GRID_OFFSET_Y = 0;
         public const int GRID_WIDTH = 25;
         public const int GRID_HEIGHT = 25;
-        public const int CISE_COL = 25;
-        public const int CISE_ROW = 25;
+        public const int CISE_COL = 18;
+        public const int CISE_ROW = 18;
         private const int NUM_LEVELS = 20; // Total number of waves 
         private const int WAVE_ALL_SPAWN_SECS = 45; // Number of seconds to spawn the complete wave in
         private static int budget = 20000000;
@@ -77,6 +77,10 @@ namespace SaveCISE_Game
         {
             // Build Play Scene Here
             gameScene = new Scene();
+            gameScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameArea")));
+
+
+
             grid = new Grid();
 
             generateWaves(); // Generate the waves
@@ -94,14 +98,15 @@ namespace SaveCISE_Game
             // buttons/side panel
 
             // default towers
-            Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
-            Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
+            Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
             gameScene.add(tower1);
             gameScene.add(tower2);
             gameScene.add(tower3);
             tower1.setMouseReleasedAction(new PlaceWallTowerGameAction());
             tower2.setMouseReleasedAction(new PlaceWallTowerGameAction());
+                    tower2.setActive(false);// just to demonstrate
             tower3.setMouseReleasedAction(new PlaceWallTowerGameAction());
 
 
@@ -165,6 +170,7 @@ namespace SaveCISE_Game
 
         internal static void Update( GameTime gameTime )
         {
+            //GameController.beginPlacingTower(towerTypes.BLOCK);
             foreach( Enemy e in deadEnemies )
             {
                 enemies.Remove(e);
@@ -260,31 +266,33 @@ namespace SaveCISE_Game
             // Initialize the waves list
             waves = new List<List<Enemy>>();
 
+            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8);
+            Enemy test;
             // Add enemies to first wave
             List<Enemy> wave1 = new List<Enemy>(5);
-            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
             waves.Add(wave1);
 
             // Add enemies to second wave
             List<Enemy> wave2 = new List<Enemy>(4);
-            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave2.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
             waves.Add(wave2);
 
             // Add enemies to third wave
             List<Enemy> wave3 = new List<Enemy>(6);
-            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(new Sprite(ContentStore.getTexture("spr_enemy"), 45, 22, 16, 8), grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
             waves.Add(wave3);
 
             #if DEBUG

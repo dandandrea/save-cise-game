@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace SaveCISE_Game
 {
@@ -12,6 +13,7 @@ namespace SaveCISE_Game
         Sprite background;
         List<Actor> actors;
         List<Actor> toAdd;
+        GameAction escapeAction;
 
         public Scene()
         {
@@ -91,6 +93,19 @@ namespace SaveCISE_Game
             {
                 a.mouseDragged(x,y);
             }
+        }
+
+        internal void keyPressed(Keys key)
+        {
+            if (escapeAction != null && key == Keys.Escape)
+            {
+                escapeAction.doAction();
+            }
+        }
+
+        internal void setEscapeAction(GameAction action)
+        {
+            escapeAction = action;
         }
     }
 }

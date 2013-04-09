@@ -77,7 +77,9 @@ namespace SaveCISE_Game
 
         public virtual void draw(SpriteBatch sb)
         {
-            sprite.draw(sb, x - originX, y - originY, imageIndex, ((double)width / sprite.getWidth()), ((double)height / sprite.getHeight()), Color.White);
+            double scaleX = ((double)width / sprite.getWidth());
+            double scaleY = ((double)height / sprite.getHeight());
+            sprite.draw(sb, x - (int)(originX*scaleX), y - (int)(originY*scaleY), imageIndex, scaleX, scaleY, Color.White);
         }
 
         public virtual void draw(SpriteBatch sb, Color color)
