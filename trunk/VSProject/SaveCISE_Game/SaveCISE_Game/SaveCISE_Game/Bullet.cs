@@ -14,27 +14,31 @@ namespace SaveCISE_Game
         private float rotation;
         protected float trueX;
         protected float trueY;
+        private Enemy target;
 
-        public Bullet(Sprite sprite, float rotation, float speed, int x, int y, int width, int height)
+        public Bullet(Sprite sprite, float rotation, float speed, Enemy target, int x, int y, int width, int height)
             : base(sprite, x, y, width, height)
         {
             this.speed = speed;
             this.rotation = rotation;
         }
 
+        // checks to see if the bullet is dead
         public bool isDead()
         {
             return age > 100;
         }
 
+        // kills the bullet when it hits something or goes off the screen
         public void kill()
         {
             this.age = 200;
         }
 
-        public void moveTowardEnemy(Enemy enemy)
+        //moves the bullet towards the enemy
+        public void moveTowardEnemy()
         {
-            Point p = new Point(GameController.GRID_OFFSET_X + enemy.getX() * GameController.CELL_WIDTH, GameController.GRID_OFFSET_Y + enemy.getY() * GameController.CELL_HEIGHT);
+            Point p = new Point(GameController.GRID_OFFSET_X + target.getX() * GameController.CELL_WIDTH, GameController.GRID_OFFSET_Y + target.getY() * GameController.CELL_HEIGHT);
             float dx = p.X - trueX;
             float dy = p.Y - trueY;
             float sqrDist = dx * dx + dy * dy;
@@ -59,9 +63,10 @@ namespace SaveCISE_Game
             y = (int)trueY;
         }
 
-        public void update()
+        public override void update()
         {
             age++;
+            moveTowardEnemy();
         }
     }
 }
