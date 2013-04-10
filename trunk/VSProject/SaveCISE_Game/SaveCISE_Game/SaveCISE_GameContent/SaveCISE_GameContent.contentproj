@@ -110,13 +110,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backgrounds\bg_gameAreaOld.png">
-      <Name>bg_gameAreaOld</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Backgrounds\bg_gameArea.png">
       <Name>bg_gameArea</Name>
       <Importer>TextureImporter</Importer>
