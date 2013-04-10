@@ -100,9 +100,9 @@ namespace SaveCISE_Game
             gameScene.add(wp);
 
             // default towers
-            Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower1 = new Button(646, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 30, 30, 1, 1));
+            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 1, 1));
             gameScene.add(tower1);
             gameScene.add(tower2);
             gameScene.add(tower3);
