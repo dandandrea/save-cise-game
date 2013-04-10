@@ -8,8 +8,8 @@ namespace SaveCISE_Game
 {
     class Grid
     {
-        private const int rows = 27;
-        private const int cols = 27;
+        private const int rows = GameController.GRID_HEIGHT+2;
+        private const int cols = GameController.GRID_WIDTH+2;
 
         protected GridCell[,] grid;
 

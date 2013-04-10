@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor.cs" />
+    <Compile Include="WhitePanel.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="GridDrawer.cs" />
     <Compile Include="PlaceWallTowerGameAction.cs" />

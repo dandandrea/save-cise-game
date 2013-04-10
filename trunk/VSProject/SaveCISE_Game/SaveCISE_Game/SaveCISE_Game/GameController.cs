@@ -18,14 +18,14 @@ namespace SaveCISE_Game
 
     static class GameController
     {
-        public const int CELL_WIDTH = 25;//30;
-        public const int CELL_HEIGHT = 18;//15;
+        public const int CELL_WIDTH = 40;//30;
+        public const int CELL_HEIGHT = 30;//15;
         public const int GRID_OFFSET_X = 0;
         public const int GRID_OFFSET_Y = 0;
-        public const int GRID_WIDTH = 25;
-        public const int GRID_HEIGHT = 25;
-        public const int CISE_COL = 18;
-        public const int CISE_ROW = 18;
+        public const int GRID_WIDTH = 15;
+        public const int GRID_HEIGHT = 15;
+        public const int CISE_COL = 12;
+        public const int CISE_ROW = 12;
         private const int NUM_LEVELS = 20; // Total number of waves 
         private const int WAVE_ALL_SPAWN_SECS = 45; // Number of seconds to spawn the complete wave in
         private static int budget = 20000000;
@@ -96,11 +96,13 @@ namespace SaveCISE_Game
 #endif
 
             // buttons/side panel
+            WhitePanel wp = new WhitePanel();
+            gameScene.add(wp);
 
             // default towers
             Button tower1 = new Button(650, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
+            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 30, 30, 1, 1));
             gameScene.add(tower1);
             gameScene.add(tower2);
             gameScene.add(tower3);
@@ -119,7 +121,9 @@ namespace SaveCISE_Game
             gameScene.add(hero3);
             hero1.setMouseReleasedAction(new PlaceWallTowerGameAction());
             hero2.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());            return gameScene;
+            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());            
+            
+            return gameScene;
         }
 
         internal static bool tryToPlaceTower(towerTypes typeToPlace, int x, int y)

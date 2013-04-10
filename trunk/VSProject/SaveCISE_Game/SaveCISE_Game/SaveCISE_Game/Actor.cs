@@ -24,8 +24,11 @@ namespace SaveCISE_Game
             {
                 return 0;
             }*/
-
-            if (a2.getVerticalDepth() == a1.getVerticalDepth())
+            if (a1.getPanelTier()!= 0 || a2.getPanelTier()!=0)
+            {
+                return a2.getPanelTier() - a1.getPanelTier();
+            }
+            else if (a2.getVerticalDepth() == a1.getVerticalDepth())
             {
                 return a2.getHorizontalDepth() - a1.getHorizontalDepth();
             }
@@ -46,6 +49,7 @@ namespace SaveCISE_Game
         protected int originY = 0;
         protected int verticalDepth = 0;
         protected int horizontalDepth = 0;
+        protected int panelTier = 0;
 
         public Actor(Sprite sprite)
         {
@@ -65,6 +69,11 @@ namespace SaveCISE_Game
             this.width = width;
             this.height = height;
             this.visible = true;
+        }
+
+        public int getPanelTier() 
+        {
+            return this.panelTier;
         }
 
         public virtual void setLocation(int x, int y)
