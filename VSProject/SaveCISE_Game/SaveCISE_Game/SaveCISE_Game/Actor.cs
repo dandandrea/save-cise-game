@@ -108,6 +108,16 @@ namespace SaveCISE_Game
             return this.horizontalDepth;
         }
 
+        public int getX()
+        {
+            return this.x;
+        }
+
+        public int getY()
+        {
+            return this.y;
+        }
+
         internal virtual void setSprite(Sprite sprite)
         {
             this.sprite = sprite;
