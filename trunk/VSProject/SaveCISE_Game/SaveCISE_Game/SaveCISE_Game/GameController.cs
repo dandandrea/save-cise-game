@@ -33,12 +33,13 @@ namespace SaveCISE_Game
         private static Grid grid;
         private static List<Enemy> enemies;
         private static List<Enemy> deadEnemies;
+        private static List<Tower> towers;
         private static bool isGameStarted; // Whether or not gameplay has started
         private static bool isPaused = false; // Whether or not gameplay is currently paused, hardcoded to false for now
         private static List<List<Enemy>> waves; // The enemies that make up each wave
         private static int currentWaveIndex = 0; // Current wave index
         private static int currentWaveSize; // Size of the current wave
-        private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately
+        private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately (stored in milliseconds)
         private static TowerPlacer towerPlacer;
 
         public static void hurtBudget(int damage)
@@ -87,6 +88,7 @@ namespace SaveCISE_Game
             currentWaveSize = waves[0].Count; // Initialize current wave size
             enemies = new List<Enemy>();
             deadEnemies = new List<Enemy>();
+            towers = new List<Tower>();
 
             towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"),CELL_WIDTH,CELL_HEIGHT,1,1), 100, 100);
             gameScene.add(towerPlacer);
@@ -147,9 +149,10 @@ namespace SaveCISE_Game
                             grid.clearTile(cellY, cellX);
                             return false;
                         }
-                        Actor newTower = new Actor(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                        Tower newTower = new Tower(new Sprite(ContentStore.getTexture("spr_blockTower")), typeToPlace);
                         newTower.setLocation(cellX * CELL_WIDTH + GRID_OFFSET_X, cellY * CELL_HEIGHT + GRID_OFFSET_Y);
                         newTower.setOrigin(0, 12);
+                        towers.Add(newTower);
                         gameScene.add(newTower);
                         foreach (Enemy e in enemies)
                         {
@@ -181,6 +184,99 @@ namespace SaveCISE_Game
                 gameScene.remove(e);
             }
             deadEnemies.Clear();
+
+            // Iterate each tower
+            // 1. Acquire new targets as they enter into the targeting range
+            // 2. Drop existing targets as they leave the targeting range
+            // 3. Fire at the active target if there is one (or all targets within range for area effects like shouting)
+            // 4. Remove the target if its strengh goes to zero
+            foreach (Tower t in towers)
+            {
+                #if DEBUG
+                // Console.WriteLine("Found a tower at " + t.getX() + ", " + t.getY());
+                #endif
+
+                // Acquire new targets
+                #if DEBUG
+                // Console.WriteLine("Acquiring new targets, if any");
+                #endif
+                t.acquireNewTargets(enemies);
+
+                // Drop existing targets that have left the targeting range
+                #if DEBUG
+                // Console.WriteLine("Dropping existing targets that have left the targeting range, if any");
+                #endif
+                t.dropTargetsOutOfRange();
+
+                // Does this tower have a next fire time yet?  If not then set it and skip to the next tower
+                if (t.getNextFireTime() == 0.0d)
+                {
+                    #if DEBUG
+                    Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
+                    #endif
+
+                    // Generate the next fire time
+                    t.generateNextFireTime(gameTime);
+
+                    #if DEBUG
+                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    #endif
+
+                    // Skip to next tower, if any
+                    continue;
+                }
+
+                #if DEBUG
+                // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                #endif
+
+                // Is it not yet time for this tower to fire?
+                if (t.getNextFireTime() > gameTime.TotalGameTime.TotalMilliseconds)
+                {
+                    #if DEBUG
+                    // Console.WriteLine("It is not yet time for this tower to fire, skipping to next tower (if any)");
+                    #endif
+
+                    // Skip to next tower, if any
+                    continue;
+                }
+
+                // Fire at the active target if there is one
+                #if DEBUG
+                // Console.WriteLine("Firing at active target, if any");
+                #endif
+                t.fireAtActiveTarget();
+
+                // Is there an active target?
+                if (t.getActiveTarget() != null)
+                {
+                    // Generate next fire time
+                    t.generateNextFireTime(gameTime);
+
+                    #if DEBUG
+                    Console.WriteLine("Generated next fire time");
+                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    #endif
+
+                    #if DEBUG
+                    Console.WriteLine("Active target's strength is " + t.getActiveTarget().getStrength());
+                    #endif
+
+                    // Is the active target's strength now zero?
+                    if (t.getActiveTarget().getStrength() <= 0)
+                    {
+                        #if DEBUG
+                        Console.WriteLine("Active target's strength is now at or below zero, removing from target list");
+                        #endif
+
+                        // Remove the active target from the tower
+                        t.removeActiveTarget();
+                    }
+                }
+            }
 
             // Spawn another enemy?  Only perform this check if gameplay has started and
             // there are still enemies remaining to be spawned
@@ -270,33 +366,32 @@ namespace SaveCISE_Game
             // Initialize the waves list
             waves = new List<List<Enemy>>();
 
-            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8);
-            Enemy test;
             // Add enemies to first wave
-            List<Enemy> wave1 = new List<Enemy>(5);
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            List<Enemy> wave1 = new List<Enemy>(1);
+            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8);
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
+            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
             waves.Add(wave1);
 
             // Add enemies to second wave
             List<Enemy> wave2 = new List<Enemy>(4);
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
+            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
             waves.Add(wave2);
 
             // Add enemies to third wave
             List<Enemy> wave3 = new List<Enemy>(6);
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 1500, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
+            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
             waves.Add(wave3);
 
             #if DEBUG
