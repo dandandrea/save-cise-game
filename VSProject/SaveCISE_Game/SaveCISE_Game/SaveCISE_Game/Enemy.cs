@@ -21,8 +21,8 @@ namespace SaveCISE_Game
             NUM_DIRECTIONS
         }
         protected float speed;
-        protected int strength;
-        protected int damageDealt;
+        protected int strength; // This is the enemy's hit points
+        protected int damageDealt; // This is the amount of damage that the enemy deals per attack
         protected int enthusiasmBonus;
         protected float trueX;
         protected float trueY;
@@ -170,7 +170,7 @@ namespace SaveCISE_Game
 
         public void updatePath()
         {
-            if(pathIsBlocked())
+            if(pathIsBlocked() || !checkAlive())
                 {
                 if (target != null)
                 {
@@ -291,6 +291,16 @@ namespace SaveCISE_Game
                 bearing = directions.NORTH;
             }
             return bearing;
+        }
+
+        public void dealDamage(int damageAmount)
+        {
+            this.strength = this.strength - damageAmount;
+        }
+
+        public int getStrength()
+        {
+            return this.strength;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace SaveCISE_Game
             }
 
 #if DEBUG 
-            Console.WriteLine(this);
+            // Console.WriteLine(this);
 #endif
         }
 
@@ -186,7 +186,7 @@ namespace SaveCISE_Game
                     current = current.parent;
                 }
 #if DEBUG
-                Console.WriteLine(this);
+                // Console.WriteLine(this);
 #endif
                 this.resetGrid();
                 return path;
