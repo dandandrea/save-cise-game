@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace SaveCISE_Game
 {
     class TowerPlacer : Actor
     {
         towerTypes typeToPlace = towerTypes.NONE;
+        bool shiftDown = false;
 
         public TowerPlacer(Sprite sprite) : base(sprite)
         {
@@ -37,7 +39,10 @@ namespace SaveCISE_Game
             if (this.typeToPlace != towerTypes.NONE)
             {
                 GameController.tryToPlaceTower(typeToPlace, x, y);
-                typeToPlace = towerTypes.NONE;
+                if (!shiftDown)
+                {
+                    typeToPlace = towerTypes.NONE;
+                }
             }
         }
 
@@ -72,6 +77,22 @@ namespace SaveCISE_Game
         internal void setTypeToPlace(towerTypes type)
         {
             typeToPlace = type;
+        }
+
+        internal override void keyPressed(Keys key)
+        {
+            if (key == Keys.LeftShift || key == Keys.RightShift)
+            {
+                this.shiftDown = true;
+            }
+        }
+
+        internal override void keyReleased(Keys key)
+        {
+            if (key == Keys.LeftShift || key == Keys.RightShift)
+            {
+                this.shiftDown = false;
+            }
         }
     }
 }

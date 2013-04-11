@@ -37,6 +37,7 @@ namespace SaveCISE_Game
 #if DEBUG
             //Console.WriteLine("Key Released: " + key);
 #endif
+            scenes[currentScene].keyReleased(key);
         }
 
         internal void leftMousePressed(int x, int y)

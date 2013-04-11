@@ -101,11 +101,26 @@ namespace SaveCISE_Game
             {
                 escapeAction.doAction();
             }
+            else
+            {
+                foreach (Actor a in actors)
+                {
+                    a.keyPressed(key);
+                }
+            }
         }
 
         internal void setEscapeAction(GameAction action)
         {
             escapeAction = action;
+        }
+
+        internal void keyReleased(Keys key)
+        {
+            foreach (Actor a in actors)
+            {
+                a.keyReleased(key);
+            }
         }
     }
 }
