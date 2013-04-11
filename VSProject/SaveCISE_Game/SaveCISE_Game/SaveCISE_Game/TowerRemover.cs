@@ -29,8 +29,9 @@ namespace SaveCISE_Game
 
         internal override void leftMousePressed(int x, int y)
         {
-            if(GameController.tryToRemoveTower(x, y))
+            if (remove)
             {
+                GameController.tryToRemoveTower(x, y);
                 if (!shiftDown)
                 {
                     remove = false;

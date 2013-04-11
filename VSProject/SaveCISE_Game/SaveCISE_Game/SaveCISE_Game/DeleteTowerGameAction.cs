@@ -9,7 +9,7 @@ namespace SaveCISE_Game
     {
         public override void doAction()
         {
-            GameController.beginPlacingTower(towerTypes.BLOCK);
+            GameController.beginRemovingTower();
         }
     }
 }
