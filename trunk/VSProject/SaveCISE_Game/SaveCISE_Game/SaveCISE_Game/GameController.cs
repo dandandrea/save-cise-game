@@ -104,7 +104,7 @@ namespace SaveCISE_Game
             // default towers
             Button tower1 = new Button(646, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 1, 1));
+            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             gameScene.add(tower1);
             gameScene.add(tower2);
             gameScene.add(tower3);
@@ -151,7 +151,7 @@ namespace SaveCISE_Game
                         }
                         Tower newTower = new Tower(new Sprite(ContentStore.getTexture("spr_blockTower")), typeToPlace);
                         newTower.setLocation(cellX * CELL_WIDTH + GRID_OFFSET_X, cellY * CELL_HEIGHT + GRID_OFFSET_Y);
-                        newTower.setOrigin(0, 12);
+                        newTower.setOrigin(10, 34);//newTower.setOrigin(0, 12);
                         towers.Add(newTower);
                         gameScene.add(newTower);
                         foreach (Enemy e in enemies)

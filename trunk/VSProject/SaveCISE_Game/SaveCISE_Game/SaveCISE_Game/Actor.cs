@@ -89,16 +89,28 @@ namespace SaveCISE_Game
             double scaleX = ((double)width / sprite.getWidth());
             double scaleY = ((double)height / sprite.getHeight());
             sprite.draw(sb, x - (int)(originX*scaleX), y - (int)(originY*scaleY), imageIndex, scaleX, scaleY, Color.White);
+
+#if DEBUG
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("spr_whitePixel"));
+            originDrawer.draw(sb, x-1, y-1, 0, 3, 3, Color.Red);
+#endif
         }
 
         public virtual void draw(SpriteBatch sb, Color color)
         {
-            sprite.draw(sb, x - originX, y - originY, imageIndex, ((double)width / sprite.getWidth()), ((double)height / sprite.getHeight()), color);
+            double scaleX = ((double)width / sprite.getWidth());
+            double scaleY = ((double)height / sprite.getHeight());
+            sprite.draw(sb, x - (int)(originX * scaleX), y - (int)(originY * scaleY), imageIndex, scaleX, scaleY, color);
+            
+#if DEBUG
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("spr_whitePixel"));
+            originDrawer.draw(sb, x-1, y-1,0,3,3,Color.Red);
+#endif
         }
 
         public virtual void update()
         {
-
+            
         }
 
         public void setOrigin(int x, int y)
@@ -170,6 +182,22 @@ namespace SaveCISE_Game
         internal virtual void mouseDragged(int x, int y)
         {
             
+        }
+
+        internal void scale(double scale)
+        {
+            this.width = (int)(width*scale);
+            this.height = (int)(height * scale);
+        }
+
+        internal virtual void keyPressed(Microsoft.Xna.Framework.Input.Keys key)
+        {
+            //throw new NotImplementedException();
+        }
+
+        internal virtual void keyReleased(Microsoft.Xna.Framework.Input.Keys key)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

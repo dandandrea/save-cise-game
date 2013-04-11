@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace SaveCISE_Game
 {
@@ -50,8 +51,6 @@ namespace SaveCISE_Game
             this.damageDealt = damageDealt;
             this.enthusiasmBonus = enthusiasmBonus;
             framesPerDirection = sprite.getSubimageCount() / (int)directions.NUM_DIRECTIONS;
-            //this.width /= 2;
-            //this.height /= 2;
             setLocation(-10, -10); // Default spawn location
             this.setOrigin(20, 40); // for drawing the sprite properly
         }
@@ -187,7 +186,7 @@ namespace SaveCISE_Game
                     else
                     {
                         myPath = aStarGrid.astar(target.row, target.col, 1, 1);
-                        //target = myPath.Pop();
+                        target = myPath.Pop();
                     }
                 }
                 else

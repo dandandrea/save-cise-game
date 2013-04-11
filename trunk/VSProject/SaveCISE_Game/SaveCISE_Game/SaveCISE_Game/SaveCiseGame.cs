@@ -72,9 +72,14 @@ namespace SaveCISE_Game
             Button playButton = new Button(200,250, new Sprite(ContentStore.getTexture("spr_beginButton"),200,50,3,3));
             openingScene.add(playButton);
 
+#if DEBUG
             playButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 2));
+#else
+            playButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 1));
+#endif
 
             Button quitButton = new Button(200, 310, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
+
             openingScene.add(quitButton);
 
             quitButton.setMouseReleasedAction(new QuitGameAction(this));
