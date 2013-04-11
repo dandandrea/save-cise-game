@@ -8,8 +8,8 @@ namespace SaveCISE_Game
     enum cellTypes {
         EMPTY,
         BLOCKED, //All-Purpose
-        SLOWED,
         OUTOFBOUNDS,
+        ATTACKPOINT,
         CASTLE
     }
 
@@ -72,7 +72,7 @@ namespace SaveCISE_Game
 
         public bool isBlocked()
         {
-            if (this.blocked == 0)
+            if (this.blocked == 0 || this.blocked == cellTypes.ATTACKPOINT)
             {
                 return false;
             }
@@ -109,6 +109,8 @@ namespace SaveCISE_Game
              */
             switch(blocked) 
             {
+                case cellTypes.ATTACKPOINT:
+                    return "a";
                 case cellTypes.BLOCKED:
                     return "b";
                 case cellTypes.CASTLE:

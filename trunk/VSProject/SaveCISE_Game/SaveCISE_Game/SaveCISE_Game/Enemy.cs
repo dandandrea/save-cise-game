@@ -27,6 +27,7 @@ namespace SaveCISE_Game
         protected int enthusiasmBonus;
         protected float trueX;
         protected float trueY;
+        protected GridCell attack;
         protected GridCell target;
         Stack<GridCell> myPath;
         Grid aStarGrid;
@@ -47,6 +48,8 @@ namespace SaveCISE_Game
             : base(sprite)
         {
             this.aStarGrid = aStarGrid;
+            this.attack = aStarGrid.getRandomAttackPoint();
+            //Console.WriteLine("asd" + att.col + " " + att.row);
             this.speed = speed;
             this.strength = strength;
             this.damageDealt = damageDealt;
@@ -190,7 +193,7 @@ namespace SaveCISE_Game
                 {
                     if (checkAlive())
                     {
-                        Stack<GridCell> temp = aStarGrid.astar(target.row, target.col, GameController.CISE_COL, GameController.CISE_ROW);
+                        Stack<GridCell> temp = aStarGrid.astar(target.row, target.col, attack.row, attack.col);
                         if (temp != null)
                         {
                             myPath = temp;
@@ -210,13 +213,13 @@ namespace SaveCISE_Game
                     {
                         if (!atCiseBuilding)
                         {
-                            myPath = aStarGrid.astar(1, 1, GameController.CISE_COL, GameController.CISE_ROW);
+                            myPath = aStarGrid.astar(1, 1, attack.row, attack.col);
                             target = myPath.Pop();
                         }
                     }
                     else
                     {
-                        myPath = aStarGrid.astar(GameController.CISE_COL, GameController.CISE_ROW, 1, 1);
+                        myPath = aStarGrid.astar(12, 12, attack.row, attack.col);
                         target = myPath.Pop();
                     }
                 }
