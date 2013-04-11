@@ -31,7 +31,7 @@ namespace SaveCISE_Game
             this.col = col;
         }
 
-        public void markAsBlocked(cellTypes blockedType = cellTypes.BLOCKED)
+        public void markAsBlocked(cellTypes blockedType)
         {
             this.blocked = blockedType;
         }
