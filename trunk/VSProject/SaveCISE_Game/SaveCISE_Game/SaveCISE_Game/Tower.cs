@@ -191,5 +191,10 @@ namespace SaveCISE_Game
                     break;
             }
         }
+
+        public void remove()
+        {
+            GameController.removeTower(this);
+        }
     }
 }
