@@ -75,6 +75,8 @@
     <Compile Include="Actor.cs" />
     <Compile Include="PlaceSlowTowerGameAction.cs" />
     <Compile Include="PlaceYellTowerGameAction.cs" />
+    <Compile Include="DeleteTowerGameAction.cs" />
+    <Compile Include="TowerRemover.cs" />
     <Compile Include="WhitePanel.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="GridDrawer.cs" />

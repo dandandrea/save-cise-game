@@ -34,6 +34,7 @@ namespace SaveCISE_Game
         private static List<Enemy> enemies;
         private static List<Enemy> deadEnemies;
         private static List<Tower> towers;
+        private static List<Tower> deleteTowers;
         private static bool isGameStarted; // Whether or not gameplay has started
         private static bool isPaused = false; // Whether or not gameplay is currently paused, hardcoded to false for now
         private static List<List<Enemy>> waves; // The enemies that make up each wave
@@ -41,6 +42,7 @@ namespace SaveCISE_Game
         private static int currentWaveSize; // Size of the current wave
         private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately (stored in milliseconds)
         private static TowerPlacer towerPlacer;
+        private static TowerRemover towerRemover;
 
         public static void hurtBudget(int damage)
         {
@@ -89,9 +91,14 @@ namespace SaveCISE_Game
             enemies = new List<Enemy>();
             deadEnemies = new List<Enemy>();
             towers = new List<Tower>();
+            deleteTowers = new List<Tower>();
 
             towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"),CELL_WIDTH,CELL_HEIGHT,1,1), 100, 100);
             gameScene.add(towerPlacer);
+
+            towerRemover = new TowerRemover(new Sprite(ContentStore.getTexture("spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
+            gameScene.add(towerRemover);
+
 #if DEBUG
             GridDrawer gd = new GridDrawer();
             gameScene.add(gd);
@@ -123,7 +130,11 @@ namespace SaveCISE_Game
             gameScene.add(hero3);
             hero1.setMouseReleasedAction(new PlaceWallTowerGameAction());
             hero2.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());            
+            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());
+
+            Button deleteTower = new Button(700, 250, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
+            gameScene.add(deleteTower);
+            deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
             
             return gameScene;
         }
@@ -170,9 +181,44 @@ namespace SaveCISE_Game
             return false;
         }
 
+        internal static bool tryToRemoveTower(int x, int y)
+        {
+            int cellX = (x - GRID_OFFSET_X) / CELL_WIDTH;
+            int cellY = (y - GRID_OFFSET_Y) / CELL_HEIGHT;
+
+            if (cellX >= 1 && cellX <= GRID_WIDTH && cellY >= 1 && cellY <= GRID_HEIGHT)
+            {
+                foreach(Tower t in towers)
+                {
+                    int cellTX = (t.getX() - GRID_OFFSET_X) / CELL_WIDTH;
+                    int cellTY = (t.getY() - GRID_OFFSET_Y) / CELL_HEIGHT;
+                    if((cellX == cellTX) && (cellY == cellTY))
+                    {
+                        deleteTowers.Add(t);
+                        foreach (Enemy e in enemies)
+                        {
+                            e.updatePath();
+                        }
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         internal static void beginPlacingTower(towerTypes type)
         {
             towerPlacer.setTypeToPlace(type);
+        }
+
+        internal static void beginRemovingTower()
+        {
+            towerRemover.setTrue();
+        }
+
+        internal static void removeTower(Tower t)
+        {
+            deleteTowers.Add(t);
         }
 
         internal static void Update( GameTime gameTime )
@@ -184,6 +230,13 @@ namespace SaveCISE_Game
                 gameScene.remove(e);
             }
             deadEnemies.Clear();
+
+            foreach (Tower t in deleteTowers)
+            {
+                towers.Remove(t);
+                gameScene.remove(t);
+            }
+            deleteTowers.Clear();
 
             // Iterate each tower
             // 1. Acquire new targets as they enter into the targeting range
