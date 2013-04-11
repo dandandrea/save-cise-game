@@ -63,8 +63,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backgrounds\bg_gameArea.png">
-      <Name>bg_gameArea</Name>
+    <Compile Include="Backgrounds\bg_gameAreaOld.png">
+      <Name>bg_gameAreaOld</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -104,6 +104,27 @@
   <ItemGroup>
     <Compile Include="Sprites\spr_blockTower.png">
       <Name>spr_blockTower</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\spr_yell.png">
+      <Name>spr_yell</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\spr_slow.png">
+      <Name>spr_slow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\bg_gameArea.png">
+      <Name>bg_gameArea</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

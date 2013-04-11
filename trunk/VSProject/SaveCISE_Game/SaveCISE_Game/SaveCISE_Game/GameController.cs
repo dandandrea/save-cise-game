@@ -109,9 +109,9 @@ namespace SaveCISE_Game
             gameScene.add(tower2);
             gameScene.add(tower3);
             tower1.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            tower2.setMouseReleasedAction(new PlaceWallTowerGameAction());
-                    tower2.setActive(false);// just to demonstrate
-            tower3.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower2.setMouseReleasedAction(new PlaceYellTowerGameAction());
+                    //tower2.setActive(false);// just to demonstrate
+            tower3.setMouseReleasedAction(new PlaceSlowTowerGameAction());
 
 
             // hero towers

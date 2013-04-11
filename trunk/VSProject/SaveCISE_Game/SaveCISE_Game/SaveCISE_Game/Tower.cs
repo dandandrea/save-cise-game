@@ -173,18 +173,21 @@ namespace SaveCISE_Game
                     this.targetingRange = 150;
                     this.fireRateSecs = 2;
                     this.damageDealt = 5;
+                    this.setSprite(new Sprite(ContentStore.getTexture("spr_yell")));
                     break;
 
                 case towerTypes.SLOW:
                     this.targetingRange = 150;
                     this.fireRateSecs = 2;
                     this.damageDealt = 5;
+                    this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
 
                 case towerTypes.BLOCK:
                     this.targetingRange = 0;
                     this.fireRateSecs = 0;
                     this.damageDealt = 0;
+                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     break;
             }
         }
