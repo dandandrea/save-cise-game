@@ -41,10 +41,18 @@ namespace SaveCISE_Game
 
         internal override void mouseOver(int x, int y)
         {
-            if ((x > 40 && x < 640) && (y > 30 && y < 480))
+            if (remove)
+            {
+                visible = true;
+            }
+            if ((x > GameController.CELL_WIDTH && x < GameController.CELL_WIDTH * (GameController.GRID_WIDTH + 1)) && (y > GameController.CELL_HEIGHT && y < GameController.CELL_HEIGHT * (GameController.GRID_HEIGHT + 1)))
             {
                 this.x = ((x - GameController.GRID_OFFSET_X) / GameController.CELL_WIDTH) * GameController.CELL_WIDTH + GameController.GRID_OFFSET_X;
                 this.y = ((y - GameController.GRID_OFFSET_Y) / GameController.CELL_HEIGHT) * GameController.CELL_HEIGHT + GameController.GRID_OFFSET_Y;
+            }
+            else
+            {
+                visible = false;
             }
         }
 
