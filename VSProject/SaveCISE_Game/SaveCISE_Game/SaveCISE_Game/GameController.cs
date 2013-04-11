@@ -42,6 +42,7 @@ namespace SaveCISE_Game
         private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately (stored in milliseconds)
         private static TowerPlacer towerPlacer;
         private static TowerRemover towerRemover;
+        private static MobFactory mobFactory;
 
         public static void hurtBudget(int damage)
         {
@@ -84,6 +85,7 @@ namespace SaveCISE_Game
 
 
             grid = new Grid();
+            mobFactory = new MobFactory(grid);
 
             generateWaves(); // Generate the waves
             currentWaveSize = waves[0].Count; // Initialize current wave size
@@ -206,6 +208,10 @@ namespace SaveCISE_Game
                     if((cellX == cellTX) && (cellY == cellTY))
                     {
                         deleteTowers.Add(t);
+                        grid.clearTile(cellY, cellX);
+#if DEBUG
+                        Console.WriteLine(cellX + " " + cellY);
+#endif
                         foreach (Enemy e in enemies)
                         {
                             e.updatePath();
@@ -442,32 +448,13 @@ namespace SaveCISE_Game
             waves = new List<List<Enemy>>();
 
             // Add enemies to first wave
-            List<Enemy> wave1 = new List<Enemy>(1);
-            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8);
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
-            wave1.Add(new Enemy(enemySprite, grid, 0.25f, 100, 1, 100));
-            waves.Add(wave1);
+            waves.Add(mobFactory.generateMob1(5));
 
             // Add enemies to second wave
-            List<Enemy> wave2 = new List<Enemy>(4);
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
-            wave2.Add(new Enemy(enemySprite, grid, 0.25f, 150, 1, 100));
-            waves.Add(wave2);
+            waves.Add(mobFactory.generateMob1(3));
 
             // Add enemies to third wave
-            List<Enemy> wave3 = new List<Enemy>(6);
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
-            wave3.Add(new Enemy(enemySprite, grid, 0.25f, 200, 1, 100));
-            waves.Add(wave3);
+            waves.Add(mobFactory.generateMob1(8));
 
             #if DEBUG
             Console.WriteLine("[" + waves.Count + "]");
