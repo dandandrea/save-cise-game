@@ -11,7 +11,6 @@ namespace SaveCISE_Game
         BLOCK,
         SLOW,
         HARM,
-
         NUM_TYPES,
         NONE
     }
@@ -108,17 +107,28 @@ namespace SaveCISE_Game
             WhitePanel wp = new WhitePanel();
             gameScene.add(wp);
 
-            // default towers
-            Button tower1 = new Button(646, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower2 = new Button(700, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower3 = new Button(750, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            //Tower buttons
+            Button tower1 = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower2 = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower3 = new Button(747, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower4 = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower5 = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower6 = new Button(747, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             gameScene.add(tower1);
             gameScene.add(tower2);
             gameScene.add(tower3);
+            gameScene.add(tower4);
+            gameScene.add(tower5);
+            gameScene.add(tower6);
             tower1.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            tower2.setMouseReleasedAction(new PlaceYellTowerGameAction());
-                    //tower2.setActive(false);// just to demonstrate
-            tower3.setMouseReleasedAction(new PlaceSlowTowerGameAction());
+            tower2.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower2.setActive(false);// just to demonstrate
+            tower3.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower4.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower5.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            tower5.setActive(false);// just to demonstrate
+            tower6.setMouseReleasedAction(new PlaceWallTowerGameAction());
+     
 
 
             // hero towers

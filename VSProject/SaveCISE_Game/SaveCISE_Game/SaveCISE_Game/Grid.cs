@@ -10,6 +10,7 @@ namespace SaveCISE_Game
     {
         private const int rows = GameController.GRID_HEIGHT+2;
         private const int cols = GameController.GRID_WIDTH+2;
+        private List<GridCell> attackPoints;
 
         protected GridCell[,] grid;
 
@@ -31,10 +32,45 @@ namespace SaveCISE_Game
                     }
                 }
             }
+            
+            //Set attack points
+            attackPoints = new List<GridCell>();
+            grid[10, 13].markAsBlocked(cellTypes.ATTACKPOINT);
+            attackPoints.Add(grid[10,13]);
+            grid[10, 14].markAsBlocked(cellTypes.ATTACKPOINT);
+            attackPoints.Add(grid[10,14]);
+            grid[11, 12].markAsBlocked(cellTypes.ATTACKPOINT);
+            attackPoints.Add(grid[11, 12]);
+            grid[12,12].markAsBlocked(cellTypes.ATTACKPOINT);
+            attackPoints.Add(grid[12,12]);
+            grid[13, 11].markAsBlocked(cellTypes.ATTACKPOINT);
+            attackPoints.Add(grid[13, 11]);
+            grid[14,11].markAsBlocked(cellTypes.ATTACKPOINT);
+            attackPoints.Add(grid[14,11]);
 
+            //CISE points
+            grid[11, 13].markAsBlocked(cellTypes.CASTLE);
+            grid[11, 14].markAsBlocked(cellTypes.CASTLE);
+            grid[12, 13].markAsBlocked(cellTypes.CASTLE);
+            grid[12, 14].markAsBlocked(cellTypes.CASTLE);
+            grid[13, 12].markAsBlocked(cellTypes.CASTLE);
+            grid[13, 13].markAsBlocked(cellTypes.CASTLE);
+            grid[13, 14].markAsBlocked(cellTypes.CASTLE);
+            grid[14, 12].markAsBlocked(cellTypes.CASTLE);
+            grid[14, 13].markAsBlocked(cellTypes.CASTLE);
+            grid[14, 14].markAsBlocked(cellTypes.CASTLE);
+            
 #if DEBUG 
             // Console.WriteLine(this);
 #endif
+        }
+
+        private static Random r = new Random();
+        public GridCell getRandomAttackPoint()
+        {
+            int rando = r.Next(0, attackPoints.Count);
+            GridCell att = this.attackPoints.ElementAt(rando);
+            return att;
         }
 
         //returns the surrounding tiles and also sets the appropriate scores.
@@ -120,22 +156,6 @@ namespace SaveCISE_Game
         public void markTile(int row, int col) 
         {
             grid[row, col].markAsBlocked(cellTypes.BLOCKED);
-        }
-
-        public void markTile(int row, int col, towerTypes tower)
-        {
-            //todo: switch statement that handles different towers
-            switch (tower)
-            {
-                case towerTypes.SLOW:
-                    grid[row, col].markAsBlocked(cellTypes.BLOCKED);
-                    this.markSurroundingTiles(row, col, cellTypes.SLOWED);
-                    break;
-                default:
-                    grid[row, col].markAsBlocked(cellTypes.BLOCKED);
-                    break;
-
-            }
         }
 
         private void markSurroundingTiles(int row, int col, cellTypes blockType)
@@ -248,7 +268,14 @@ namespace SaveCISE_Game
 
         public bool isCellBlocked(int row, int col)
         {
-            return grid[row, col].isBlocked();
+            if (grid[row, col].blocked == cellTypes.ATTACKPOINT || grid[row, col].blocked == cellTypes.CASTLE)
+            {
+                return true;
+            }
+            else
+            {
+                return grid[row, col].isBlocked();
+            }
         }
         //To do:
         //public void setBlock(int x, int y)

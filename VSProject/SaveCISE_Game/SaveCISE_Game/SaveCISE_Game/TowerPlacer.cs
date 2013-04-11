@@ -14,10 +14,12 @@ namespace SaveCISE_Game
 
         public TowerPlacer(Sprite sprite) : base(sprite)
         {
+            this.panelTier = 2;
         }
 
         public TowerPlacer(Sprite sprite, int x, int y): base(sprite)
         {
+            this.panelTier = 2;
             this.x = x;
             this.y = y;
         }
