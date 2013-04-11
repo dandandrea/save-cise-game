@@ -22,8 +22,8 @@ namespace SaveCISE_Game
         public const int CELL_HEIGHT = 30;//15;
         public const int GRID_OFFSET_X = 0;
         public const int GRID_OFFSET_Y = 0;
-        public const int GRID_WIDTH = 15;
-        public const int GRID_HEIGHT = 15;
+        public const int GRID_WIDTH = 14;
+        public const int GRID_HEIGHT = 14;
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
         private const int NUM_LEVELS = 20; // Total number of waves 
