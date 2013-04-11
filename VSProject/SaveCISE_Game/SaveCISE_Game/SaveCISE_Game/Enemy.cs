@@ -36,6 +36,7 @@ namespace SaveCISE_Game
         float frameSpeed = 0.1f;
         int framesPerDirection;
         directions bearing;
+        private Color myColor = Color.White;
 
        /*public Enemy( Sprite sprite ) : base(sprite)
         {
@@ -60,6 +61,11 @@ namespace SaveCISE_Game
             this.trueX = x;
             this.trueY = y;
             base.setLocation(x, y);
+        }
+
+        public override void draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            base.draw(sb, myColor);
         }
 
         public override void update()
@@ -149,6 +155,15 @@ namespace SaveCISE_Game
 
         private void doAnimation()
         {
+            if (!checkAlive())
+            {
+                if (myColor == Color.White)
+                {
+                    float alpha = 0.4f;
+                    Vector3 components = myColor.ToVector3();
+                    myColor = new Color(components.X * alpha, components.Y * alpha, components.Z * alpha, alpha);
+                }
+            }
             frame += frameSpeed;
             if (frame >= framesPerDirection)
             {
