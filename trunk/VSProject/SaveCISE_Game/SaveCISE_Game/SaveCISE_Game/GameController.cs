@@ -192,6 +192,7 @@ namespace SaveCISE_Game
                 {
                     int cellTX = (t.getX() - GRID_OFFSET_X) / CELL_WIDTH;
                     int cellTY = (t.getY() - GRID_OFFSET_Y) / CELL_HEIGHT;
+
                     if((cellX == cellTX) && (cellY == cellTY))
                     {
                         deleteTowers.Add(t);
