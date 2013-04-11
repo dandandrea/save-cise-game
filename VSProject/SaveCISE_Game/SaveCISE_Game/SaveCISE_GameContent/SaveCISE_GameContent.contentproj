@@ -102,13 +102,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\spr_wallOld.png">
-      <Name>spr_wallOld</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\spr_blockTower.png">
       <Name>spr_blockTower</Name>
       <Importer>TextureImporter</Importer>

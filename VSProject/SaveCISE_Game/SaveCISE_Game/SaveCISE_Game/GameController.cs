@@ -196,6 +196,17 @@ namespace SaveCISE_Game
                 // Console.WriteLine("Found a tower at " + t.getX() + ", " + t.getY());
                 #endif
 
+                // If this is not a tower that deals damage then skip this entire section of code
+                if (t.getDamageDealt() == 0)
+                {
+                    #if DEBUG
+                    // Console.WriteLine("This tower does not deal damage, skipping to next tower");
+                    #endif
+
+                    // Skip to next tower
+                    continue;
+                }
+
                 // Acquire new targets
                 #if DEBUG
                 // Console.WriteLine("Acquiring new targets, if any");

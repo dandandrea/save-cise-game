@@ -160,6 +160,11 @@ namespace SaveCISE_Game
             return this.towerType;
         }
 
+        public int getDamageDealt()
+        {
+            return this.damageDealt;
+        }
+
         private void setTowerProperties(towerTypes towerType)
         {
             switch (towerType)
