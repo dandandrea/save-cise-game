@@ -177,9 +177,9 @@ namespace SaveCISE_Game
                     break;
 
                 case towerTypes.BLOCK:
-                    this.targetingRange = 150;
-                    this.fireRateSecs = 2;
-                    this.damageDealt = 5;
+                    this.targetingRange = 0;
+                    this.fireRateSecs = 0;
+                    this.damageDealt = 0;
                     break;
             }
         }
