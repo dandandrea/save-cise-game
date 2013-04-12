@@ -249,11 +249,6 @@ namespace SaveCISE_Game
             return this.towerType;
         }
 
-        public int getEnthusiasmCost()
-        {
-            return this.enthusiasmCost;
-        }
-
         private void setTowerProperties(towerTypes towerType)
         {
             switch (towerType)
@@ -264,7 +259,6 @@ namespace SaveCISE_Game
                     this.damageDealt = 5;
                     this.percentSlowDownDealt = 0f;
                     this.isAreaEffect = false;
-                    this.enthusiasmCost = 50;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_yell")));
                     break;
 
@@ -274,7 +268,6 @@ namespace SaveCISE_Game
                     this.damageDealt = 0;
                     this.isAreaEffect = true;
                     this.percentSlowDownDealt = 33.33f;
-                    this.enthusiasmCost = 100;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
 
@@ -284,7 +277,6 @@ namespace SaveCISE_Game
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
-                    this.enthusiasmCost = 20;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     break;
             }
