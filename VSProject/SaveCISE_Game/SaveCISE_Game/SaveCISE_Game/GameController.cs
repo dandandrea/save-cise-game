@@ -27,7 +27,7 @@ namespace SaveCISE_Game
         public const int GRID_HEIGHT = 14;
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
-        public const int MAX_BUDGET = 5000;
+        public const int MAX_BUDGET = 20000000;
         private const int NUM_LEVELS = 20; // Total number of waves 
         private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
         private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
@@ -463,6 +463,11 @@ namespace SaveCISE_Game
             #if DEBUG
             Console.WriteLine("generateWaves() ending");
             #endif
+        }
+
+        public static void towerShootEnemy(Tower from, Enemy target)
+        {
+
         }
     }
 }
