@@ -17,8 +17,7 @@ namespace SaveCISE_Game
 
     static class GameController
     {
-        public const int BLOCKBUTTONVAL = 20;
-        public static int enthusiasm = 0;
+        public static int enthusiasm = 100; //starting enthusiasm
         public const int CELL_WIDTH = 40;//30;
         public const int CELL_HEIGHT = 30;//15;
         public const int GRID_OFFSET_X = 0;
@@ -49,6 +48,8 @@ namespace SaveCISE_Game
         private static TowerRemover towerRemover;
         private static MobFactory mobFactory;
         private static Button blockButton;
+        public static Button yellButton;
+        public static Button slowButton;
 
         public static void hurtBudget(int damage)
         {
@@ -119,8 +120,8 @@ namespace SaveCISE_Game
 
             //Tower buttons
             GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower4 = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower5 = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower6 = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
@@ -136,10 +137,8 @@ namespace SaveCISE_Game
             tower4.setMouseReleasedAction(new PlaceWallTowerGameAction());
             tower5.setMouseReleasedAction(new PlaceWallTowerGameAction());
             tower6.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            blockButton.setActive(false);
 
-
-            Button deleteTower = new Button(700, 250, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
+            Button deleteTower = new Button(696, 130, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
             gameScene.add(deleteTower);
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
 
@@ -178,6 +177,10 @@ namespace SaveCISE_Game
                         }
 
                     }
+
+                    //Discount the cost of the tower from enthusiasm
+                    GameController.enthusiasm -= Tower.getTowerCost(typeToPlace);
+
                     return true;
                 }
                 else
@@ -409,14 +412,31 @@ namespace SaveCISE_Game
                 }
             }
 
-            if (GameController.enthusiasm < GameController.BLOCKBUTTONVAL)
+            if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.BLOCK))
             {
                 blockButton.setActive(false);
             }
             else
             {
-                blockButton.setActive(true);
+                //blockButton.setActive(true);
             }
+            if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.HARM))
+            {
+                yellButton.setActive(false);
+            }
+            else
+            {
+                yellButton.setActive(true);
+            }
+            if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.SLOW))
+            {
+                slowButton.setActive(false);
+            }
+            else
+            {
+                slowButton.setActive(true);
+            }
+
         }
 
         internal static void removeEnemy(Enemy e)

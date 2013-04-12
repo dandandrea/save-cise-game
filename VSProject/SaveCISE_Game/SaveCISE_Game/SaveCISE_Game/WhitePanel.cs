@@ -30,7 +30,7 @@ namespace SaveCISE_Game
 
             sb.Begin();
             //"Enthusiasm"
-            string output = "Budget";
+            string output = "Enthusiasm";
             Vector2 FontOrigin = font1.MeasureString(output) / 2;
             Vector2 FontPos = new Vector2(720.0f, 200.0f);
             sb.DrawString(font1, output, FontPos, Color.Black,
