@@ -435,7 +435,7 @@ namespace SaveCISE_Game
             waves = new List<List<Enemy>>();
 
             // Add enemies to first wave
-            waves.Add(mobFactory.generateMob1(5));
+            waves.Add(mobFactory.generateMob1(5, 1f, 100, 1, 100));
 
             // Add enemies to second wave
             waves.Add(mobFactory.generateMob1(3));
