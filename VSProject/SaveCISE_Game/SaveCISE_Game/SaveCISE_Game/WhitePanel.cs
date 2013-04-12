@@ -23,24 +23,24 @@ namespace SaveCISE_Game
        public override void draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
        {
            
-            Color alpha = new Color(10, 90, 90, 90);
+            Color alpha = new Color(10, 10, 10, 10);
             this.sprite.draw(sb, drawX, drawY, 1, 1, 1, alpha);
 
             SpriteFont font1 = ContentStore.getFont("font_fontName1");
 
             sb.Begin();
             //"Enthusiasm"
-            string output = "Enthusiasm";
+            string output = "Budget";
             Vector2 FontOrigin = font1.MeasureString(output) / 2;
             Vector2 FontPos = new Vector2(720.0f, 200.0f);
             sb.DrawString(font1, output, FontPos, Color.Black,
                           0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
             
            //Enthusiasm value
-            int value = 20;
+            int value = GameController.enthusiasm;
             FontOrigin = font1.MeasureString(value.ToString()) / 2;
             FontPos = new Vector2(720.0f, 230.0f);
-            sb.DrawString(font1, value.ToString(), FontPos, Color.Black,
+            sb.DrawString(font1, "$" + value.ToString(), FontPos, Color.Black,
                           0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
 
             //"Next"

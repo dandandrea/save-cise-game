@@ -40,6 +40,7 @@ namespace SaveCISE_Game
         int framesPerDirection;
         directions bearing;
         private Color myColor = Color.White;
+        private bool dead = false;
 
        /*public Enemy( Sprite sprite ) : base(sprite)
         {
@@ -178,6 +179,11 @@ namespace SaveCISE_Game
         {
             if (!checkAlive())
             {
+                if (!this.dead)
+                {
+                    GameController.enthusiasm += 20;
+                    this.dead = true;
+                }
                 if (myColor == Color.White)
                 {
                     float alpha = 0.4f;

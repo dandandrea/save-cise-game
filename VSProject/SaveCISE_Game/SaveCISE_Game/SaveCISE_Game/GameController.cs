@@ -17,6 +17,8 @@ namespace SaveCISE_Game
 
     static class GameController
     {
+        public const int BLOCKBUTTONVAL = 20;
+        public static int enthusiasm = 0;
         public const int CELL_WIDTH = 40;//30;
         public const int CELL_HEIGHT = 30;//15;
         public const int GRID_OFFSET_X = 0;
@@ -44,6 +46,7 @@ namespace SaveCISE_Game
         private static TowerPlacer towerPlacer;
         private static TowerRemover towerRemover;
         private static MobFactory mobFactory;
+        private static Button blockButton;
 
         public static void hurtBudget(int damage)
         {
@@ -113,12 +116,12 @@ namespace SaveCISE_Game
             gameScene.add(wp);
 
             //Tower buttons
-            Button blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button slowButton = new Button(747, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower4 = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower5 = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower6 = new Button(747, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            Button tower6 = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             gameScene.add(blockButton);
             gameScene.add(yellButton);
             gameScene.add(slowButton);
@@ -128,23 +131,11 @@ namespace SaveCISE_Game
             blockButton.setMouseReleasedAction(new PlaceWallTowerGameAction());
             yellButton.setMouseReleasedAction(new PlaceYellTowerGameAction());
             slowButton.setMouseReleasedAction(new PlaceSlowTowerGameAction());
-
             tower4.setMouseReleasedAction(new PlaceWallTowerGameAction());
             tower5.setMouseReleasedAction(new PlaceWallTowerGameAction());
             tower6.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            blockButton.setActive(false);
 
-
-
-            // hero towers
-            Button hero1 = new Button(650, 150, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
-            Button hero2 = new Button(700, 150, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
-            Button hero3 = new Button(750, 150, new Sprite(ContentStore.getTexture("spr_blockTower"), 30, 30, 1, 1));
-            gameScene.add(hero1);
-            gameScene.add(hero2);
-            gameScene.add(hero3);
-            hero1.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            hero2.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            hero3.setMouseReleasedAction(new PlaceWallTowerGameAction());
 
             Button deleteTower = new Button(700, 250, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
             gameScene.add(deleteTower);
@@ -406,6 +397,15 @@ namespace SaveCISE_Game
                         #endif
                     }
                 }
+            }
+
+            if (GameController.enthusiasm < GameController.BLOCKBUTTONVAL)
+            {
+                blockButton.setActive(false);
+            }
+            else
+            {
+                blockButton.setActive(true);
             }
         }
 
