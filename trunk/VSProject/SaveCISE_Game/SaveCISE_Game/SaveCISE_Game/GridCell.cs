@@ -72,7 +72,7 @@ namespace SaveCISE_Game
 
         public bool isBlocked()
         {
-            if (this.blocked == 0 || this.blocked == cellTypes.ATTACKPOINT)
+            if (this.blocked == 0 || this.blocked == cellTypes.ATTACKPOINT || this.blocked == cellTypes.CASTLE)
             {
                 return false;
             }
