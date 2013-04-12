@@ -61,6 +61,7 @@ namespace SaveCISE_Game
                     // Deal damage (if damage dealing tower)
                     if (this.damageDealt > 0)
                     {
+                        GameController.towerShootEnemy(this, e);
                         e.dealDamage(this.damageDealt);
 
                         #if DEBUG
