@@ -9,7 +9,8 @@ namespace SaveCISE_Game
     class Tower : Actor
     {
         private towerTypes towerType; // Type of tower
-        private int damageDealt; // This is the amount of damage that the tower deals per attack
+        private int damageDealt; // This is the amount of damage that the tower deals per attack (if any)
+        private float percentSlowDownDealt; // This is the percentage of slow down that this tower deals 
         private int targetingRange; // Firing range of tower
         private List<Enemy> enemiesInRange; // Queue of enemies to enemies that are within firing range
         private double fireRateSecs; // How often the tower should fire, in seconds
@@ -41,12 +42,26 @@ namespace SaveCISE_Game
                     Console.WriteLine("[Tower.fireAtActiveTarget()] Found active target with current strengh " + e.getStrength());
                     #endif
 
-                    // Deal damage
-                    e.dealDamage(this.damageDealt);
+                    // Deal damage (if damage dealing tower)
+                    if (this.damageDealt > 0)
+                    {
+                        e.dealDamage(this.damageDealt);
 
-                    #if DEBUG
-                    Console.WriteLine("[Tower.fireAtActiveTarget()] Dealt " + this.damageDealt + " damage to the target, new strength is " + e.getStrength());
-                    #endif
+                        #if DEBUG
+                        Console.WriteLine("[Tower.fireAtActiveTarget()] Dealt " + this.damageDealt + " damage to the target, new strength is " + e.getStrength());
+                        #endif
+                    }
+
+                    // Slow down (if slow down tower) if this target hasn't already been slowed down before 
+                    if (this.percentSlowDownDealt > 0f && e.getHasBeenSlowedDown() == false)
+                    {
+                        e.slowDown(this.percentSlowDownDealt);
+                        e.setHasBeenSlowedDown(true);
+
+                        #if DEBUG
+                        Console.WriteLine("[Tower.fireAtActiveTarget()] Slowed down target");
+                        #endif
+                    }
 
                     // Zero strength?  If so then add to the removal list
                     if (e.getStrength() <= 0)
@@ -165,6 +180,18 @@ namespace SaveCISE_Game
                     Console.WriteLine("[Tower.dropTargetsOutOfRange()] This enemy is no longer within firing range, dropping from target list");
                     #endif
 
+                    // Do we need to speed this enemy back up?
+                    if (this.percentSlowDownDealt > 0f && e.getHasBeenSlowedDown() == true)
+                    {
+                        e.speedUp(this.percentSlowDownDealt);
+                        e.setHasBeenSlowedDown(false);
+
+                        #if DEBUG
+                        Console.WriteLine("[Tower.fireAtActiveTarget()] Slowed down target");
+                        #endif
+                    }
+
+
                     // Add to drop from target list
                     dropList.Add(e);
                 }
@@ -175,6 +202,16 @@ namespace SaveCISE_Game
             {
                 enemiesInRange.Remove(e);
             }
+        }
+
+        public int getDamageDealt()
+        {
+            return this.damageDealt;
+        }
+
+        public float getPercentSlowDownDealt()
+        {
+            return this.percentSlowDownDealt;
         }
 
         public double getNextFireTime()
@@ -192,36 +229,34 @@ namespace SaveCISE_Game
             return this.towerType;
         }
 
-        public int getDamageDealt()
-        {
-            return this.damageDealt;
-        }
-
         private void setTowerProperties(towerTypes towerType)
         {
             switch (towerType)
             {
                 case towerTypes.HARM:
-                    this.targetingRange = 150;
+                    this.targetingRange = 100;
                     this.fireRateSecs = 2;
                     this.damageDealt = 5;
+                    this.percentSlowDownDealt = 0f;
                     this.isAreaEffect = false;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_yell")));
                     break;
 
                 case towerTypes.SLOW:
-                    this.targetingRange = 150;
+                    this.targetingRange = 75;
                     this.fireRateSecs = 2;
-                    this.damageDealt = 5;
+                    this.damageDealt = 0;
                     this.isAreaEffect = true;
+                    this.percentSlowDownDealt = 33.33f;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
 
                 case towerTypes.BLOCK:
-                    this.targetingRange = 150;
-                    this.fireRateSecs = 2;
-                    this.damageDealt = 5;
-                    this.isAreaEffect = true;
+                    this.targetingRange = 0;
+                    this.fireRateSecs = 0;
+                    this.damageDealt = 0;
+                    this.isAreaEffect = false;
+                    this.percentSlowDownDealt = 0f;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     break;
             }

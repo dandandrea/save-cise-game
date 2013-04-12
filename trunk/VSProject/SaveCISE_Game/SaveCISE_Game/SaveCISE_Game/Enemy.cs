@@ -25,6 +25,7 @@ namespace SaveCISE_Game
         protected int strength; // This is the enemy's hit points
         protected int startingStrength;
         protected int damageDealt; // This is the amount of damage that the enemy deals per attack
+        protected bool hasBeenSlowedDown = false;
         protected int enthusiasmBonus;
         protected float trueX;
         protected float trueY;
@@ -332,9 +333,46 @@ namespace SaveCISE_Game
             this.strength = this.strength - damageAmount;
         }
 
+        public void slowDown(float percentSlowDown)
+        {
+            #if DEBUG
+            Console.WriteLine("[Enemy.slowDown()] Current speed is " + this.speed + ", slowing down by " + percentSlowDown + "%");
+            #endif
+
+            // Perform the slow down
+            this.speed = this.speed * ((100 - percentSlowDown) / 100);
+            #if DEBUG
+            Console.WriteLine("[Enemy.slowDown()] New speed is " + this.speed);
+            #endif
+        }
+
+        public void speedUp(float percentSlowDown)
+        {
+            #if DEBUG
+            Console.WriteLine("[Enemy.speedUp()] Current speed is " + this.speed + ", speeding up by " + percentSlowDown + "%");
+            #endif
+
+            // Perform the speed up
+            this.speed = this.speed / ((100 - percentSlowDown) / 100);
+
+            #if DEBUG
+            Console.WriteLine("[Enemy.speedUp()] New speed is " + this.speed);
+            #endif
+        }
+
         public int getStrength()
         {
             return this.strength;
+        }
+
+        public bool getHasBeenSlowedDown()
+        {
+            return this.hasBeenSlowedDown;
+        }
+
+        public void setHasBeenSlowedDown(bool hasBeenSlowedDown)
+        {
+            this.hasBeenSlowedDown = hasBeenSlowedDown;
         }
     }
 }
