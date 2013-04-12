@@ -94,16 +94,16 @@ namespace SaveCISE_Game
             towers = new List<Tower>();
             deleteTowers = new List<Tower>();
 
-            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"),CELL_WIDTH,CELL_HEIGHT,1,1), 100, 100);
+            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
             gameScene.add(towerPlacer);
 
             towerRemover = new TowerRemover(new Sprite(ContentStore.getTexture("spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
             gameScene.add(towerRemover);
 
-#if DEBUG
+            #if DEBUG
             GridDrawer gd = new GridDrawer();
             gameScene.add(gd);
-#endif
+            #endif
 
             // buttons/side panel
             WhitePanel wp = new WhitePanel();
@@ -130,7 +130,7 @@ namespace SaveCISE_Game
             tower5.setMouseReleasedAction(new PlaceWallTowerGameAction());
             tower5.setActive(false);// just to demonstrate
             tower6.setMouseReleasedAction(new PlaceWallTowerGameAction());
-     
+
 
 
             // hero towers
@@ -147,7 +147,7 @@ namespace SaveCISE_Game
             Button deleteTower = new Button(700, 250, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
             gameScene.add(deleteTower);
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
-            
+
             return gameScene;
         }
 
@@ -200,18 +200,18 @@ namespace SaveCISE_Game
 
             if (cellX >= 1 && cellX <= GRID_WIDTH && cellY >= 1 && cellY <= GRID_HEIGHT)
             {
-                foreach(Tower t in towers)
+                foreach (Tower t in towers)
                 {
                     int cellTX = (t.getX() - GRID_OFFSET_X) / CELL_WIDTH;
                     int cellTY = (t.getY() - GRID_OFFSET_Y) / CELL_HEIGHT;
 
-                    if((cellX == cellTX) && (cellY == cellTY))
+                    if ((cellX == cellTX) && (cellY == cellTY))
                     {
                         deleteTowers.Add(t);
                         grid.clearTile(cellY, cellX);
-#if DEBUG
+                        #if DEBUG
                         Console.WriteLine(cellX + " " + cellY);
-#endif
+                        #endif
                         foreach (Enemy e in enemies)
                         {
                             e.updatePath();
@@ -238,10 +238,10 @@ namespace SaveCISE_Game
             deleteTowers.Add(t);
         }
 
-        internal static void Update( GameTime gameTime )
+        internal static void Update(GameTime gameTime)
         {
             //GameController.beginPlacingTower(towerTypes.BLOCK);
-            foreach( Enemy e in deadEnemies )
+            foreach (Enemy e in deadEnemies)
             {
                 enemies.Remove(e);
                 gameScene.remove(e);
@@ -258,7 +258,7 @@ namespace SaveCISE_Game
             // Iterate each tower
             // 1. Acquire new targets as they enter into the targeting range
             // 2. Drop existing targets as they leave the targeting range
-            // 3. Fire at the active target if there is one (or all targets within range for area effects like shouting)
+            // 3. Fire at the active targets if there are any
             // 4. Remove the target if its strengh goes to zero
             foreach (Tower t in towers)
             {
@@ -324,14 +324,14 @@ namespace SaveCISE_Game
                     continue;
                 }
 
-                // Fire at the active target if there is one
+                // Fire at the active targets if there are any
                 #if DEBUG
-                // Console.WriteLine("Firing at active target, if any");
+                // Console.WriteLine("Firing at active target(s), if any");
                 #endif
-                t.fireAtActiveTarget();
+                t.fireAtActiveTargets();
 
-                // Is there an active target?
-                if (t.getActiveTarget() != null)
+                // Are there any active targets?
+                if (t.getActiveTargets() != null)
                 {
                     // Generate next fire time
                     t.generateNextFireTime(gameTime);
@@ -341,21 +341,6 @@ namespace SaveCISE_Game
                     Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
                     Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
                     #endif
-
-                    #if DEBUG
-                    Console.WriteLine("Active target's strength is " + t.getActiveTarget().getStrength());
-                    #endif
-
-                    // Is the active target's strength now zero?
-                    if (t.getActiveTarget().getStrength() <= 0)
-                    {
-                        #if DEBUG
-                        Console.WriteLine("Active target's strength is now at or below zero, removing from target list");
-                        #endif
-
-                        // Remove the active target from the tower
-                        t.removeActiveTarget();
-                    }
                 }
             }
 
