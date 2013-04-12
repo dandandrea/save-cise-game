@@ -268,11 +268,11 @@ namespace SaveCISE_Game
                 // Console.WriteLine("Found a tower at " + t.getX() + ", " + t.getY());
                 #endif
 
-                // If this is not a tower that deals damage then skip this entire section of code
-                if (t.getDamageDealt() == 0)
+                // If this is not a tower that deals damage or slows down then skip this entire section of code
+                if (t.getDamageDealt() == 0 && t.getPercentSlowDownDealt() == 0f)
                 {
                     #if DEBUG
-                    // Console.WriteLine("This tower does not deal damage, skipping to next tower");
+                    // Console.WriteLine("This tower does not deal damage or slow down, skipping to next tower");
                     #endif
 
                     // Skip to next tower
