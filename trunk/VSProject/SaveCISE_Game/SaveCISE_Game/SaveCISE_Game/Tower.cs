@@ -26,6 +26,21 @@ namespace SaveCISE_Game
             setTowerProperties(towerType);
         }
 
+        public static int getTowerCost(towerTypes type)
+        {
+            switch (type)
+            {
+                case towerTypes.HARM:
+                    return 50;
+                case towerTypes.SLOW:
+                    return 30;
+                case towerTypes.BLOCK:
+                    return 20;
+            }
+
+            return 0;
+        }
+
         // Fire at the active targets, if any
         public void fireAtActiveTargets()
         {
