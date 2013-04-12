@@ -181,6 +181,7 @@ namespace SaveCISE_Game
             {
                 if (!this.dead)
                 {
+                    GameController.enthusiasm += 20;
                     this.dead = true;
                 }
                 if (myColor == Color.White)
@@ -234,6 +235,12 @@ namespace SaveCISE_Game
                 {
                     if (checkAlive())
                     {
+                        if (!this.dead)
+                        {
+                            GameController.enthusiasm += 20;
+                            this.dead = true;
+                        }
+
                         if (!atCiseBuilding)
                         {
                             myPath = aStarGrid.astar(1, 1, attack.row, attack.col);
@@ -341,28 +348,27 @@ namespace SaveCISE_Game
         public void slowDown(float percentSlowDown)
         {
             #if DEBUG
-            // Console.WriteLine("[Enemy.slowDown()] Current speed is " + this.speed + ", slowing down by " + percentSlowDown + "%");
+            Console.WriteLine("[Enemy.slowDown()] Current speed is " + this.speed + ", slowing down by " + percentSlowDown + "%");
             #endif
 
             // Perform the slow down
             this.speed = this.speed * ((100 - percentSlowDown) / 100);
-
             #if DEBUG
-            // Console.WriteLine("[Enemy.slowDown()] New speed is " + this.speed);
+            Console.WriteLine("[Enemy.slowDown()] New speed is " + this.speed);
             #endif
         }
 
         public void speedUp(float percentSlowDown)
         {
             #if DEBUG
-            // Console.WriteLine("[Enemy.speedUp()] Current speed is " + this.speed + ", speeding up by " + percentSlowDown + "%");
+            Console.WriteLine("[Enemy.speedUp()] Current speed is " + this.speed + ", speeding up by " + percentSlowDown + "%");
             #endif
 
             // Perform the speed up
             this.speed = this.speed / ((100 - percentSlowDown) / 100);
 
             #if DEBUG
-            // Console.WriteLine("[Enemy.speedUp()] New speed is " + this.speed);
+            Console.WriteLine("[Enemy.speedUp()] New speed is " + this.speed);
             #endif
         }
 
@@ -379,11 +385,6 @@ namespace SaveCISE_Game
         public void setHasBeenSlowedDown(bool hasBeenSlowedDown)
         {
             this.hasBeenSlowedDown = hasBeenSlowedDown;
-        }
-
-        public int getEnthusiasm()
-        {
-            return enthusiasmBonus;
         }
     }
 }
