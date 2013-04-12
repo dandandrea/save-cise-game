@@ -40,7 +40,7 @@ namespace SaveCISE_Game
                 foreach (Enemy e in activeTargetList)
                 {
                     #if DEBUG
-                    Console.WriteLine("[Tower.fireAtActiveTarget()] Found active target with current strengh " + e.getStrength());
+                    // Console.WriteLine("[Tower.fireAtActiveTarget()] Found active target with current strengh " + e.getStrength());
                     #endif
 
                     // Deal damage (if damage dealing tower)
@@ -188,7 +188,7 @@ namespace SaveCISE_Game
                         e.setHasBeenSlowedDown(false);
 
                         #if DEBUG
-                        Console.WriteLine("[Tower.fireAtActiveTarget()] Slowed down target");
+                        Console.WriteLine("[Tower.fireAtActiveTarget()] Sped up target");
                         #endif
                     }
 
@@ -251,10 +251,10 @@ namespace SaveCISE_Game
 
                 case towerTypes.SLOW:
                     this.targetingRange = 75;
-                    this.fireRateSecs = 2;
+                    this.fireRateSecs = .1;
                     this.damageDealt = 0;
                     this.isAreaEffect = true;
-                    this.percentSlowDownDealt = 200f; // 33.33f;
+                    this.percentSlowDownDealt = 33.33f;
                     this.enthusiasmCost = 100;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
