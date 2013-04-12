@@ -23,6 +23,7 @@ namespace SaveCISE_Game
         }
         protected float speed;
         protected int strength; // This is the enemy's hit points
+        protected int startingStrength;
         protected int damageDealt; // This is the amount of damage that the enemy deals per attack
         protected int enthusiasmBonus;
         protected float trueX;
@@ -57,6 +58,7 @@ namespace SaveCISE_Game
             framesPerDirection = sprite.getSubimageCount() / (int)directions.NUM_DIRECTIONS;
             setLocation(-10, -10); // Default spawn location
             this.setOrigin(20, 40); // for drawing the sprite properly
+            this.startingStrength = strength;
         }
 
         public override void setLocation(int x, int y)
@@ -68,6 +70,21 @@ namespace SaveCISE_Game
 
         public override void draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
         {
+
+            //Healthbars
+            if (this.checkAlive())
+            {
+                double scaleX = ((double)width / sprite.getWidth());
+                double scaleY = ((double)height / sprite.getHeight());
+                int nextHeight = 4;
+                int nextWidth = 30;
+                float str = ((float)strength / (float)startingStrength) * nextWidth;
+                int healthWidth = (int)str;
+                Sprite healthBar = new Sprite(ContentStore.getTexture("spr_whitePixel"), nextWidth, nextHeight, 1, 1);
+                Sprite healthLeft = new Sprite(ContentStore.getTexture("spr_whitePixel"), healthWidth, nextHeight, 1, 1);
+                healthBar.draw(sb, (x - (int)(originX * scaleX)) + 15, (y - (int)(originY * scaleY)) + 3, imageIndex, scaleX, scaleY, Color.Red);
+                healthLeft.draw(sb, (x - (int)(originX * scaleX)) + 15, (y - (int)(originY * scaleY)) + 3, imageIndex, scaleX, scaleY, Color.Green);
+            }
             base.draw(sb, myColor);
         }
 
