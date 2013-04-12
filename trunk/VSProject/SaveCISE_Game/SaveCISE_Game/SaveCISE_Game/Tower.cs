@@ -68,7 +68,7 @@ namespace SaveCISE_Game
                         e.dealDamage(this.damageDealt);
 
                         #if DEBUG
-                        Console.WriteLine("[Tower.fireAtActiveTarget()] Dealt " + this.damageDealt + " damage to the target, new strength is " + e.getStrength());
+                        // Console.WriteLine("[Tower.fireAtActiveTarget()] Dealt " + this.damageDealt + " damage to the target, new strength is " + e.getStrength());
                         #endif
                     }
 
@@ -79,7 +79,7 @@ namespace SaveCISE_Game
                         e.setHasBeenSlowedDown(true);
 
                         #if DEBUG
-                        Console.WriteLine("[Tower.fireAtActiveTarget()] Slowed down target");
+                        // Console.WriteLine("[Tower.fireAtActiveTarget()] Slowed down target");
                         #endif
                     }
 
@@ -172,7 +172,7 @@ namespace SaveCISE_Game
                 if (c <= (this.targetingRange * this.targetingRange))
                 {
                     #if DEBUG
-                    Console.WriteLine("[Tower.acquireNewTargets()] This enemy is within firing range, adding to target list");
+                    // Console.WriteLine("[Tower.acquireNewTargets()] This enemy is within firing range, adding to target list");
                     #endif
 
                     // Add to target list
@@ -197,7 +197,7 @@ namespace SaveCISE_Game
                 if (c > (this.targetingRange * this.targetingRange))
                 {
                     #if DEBUG
-                    Console.WriteLine("[Tower.dropTargetsOutOfRange()] This enemy is no longer within firing range, dropping from target list");
+                    // Console.WriteLine("[Tower.dropTargetsOutOfRange()] This enemy is no longer within firing range, dropping from target list");
                     #endif
 
                     // Do we need to speed this enemy back up?
@@ -207,7 +207,7 @@ namespace SaveCISE_Game
                         e.setHasBeenSlowedDown(false);
 
                         #if DEBUG
-                        Console.WriteLine("[Tower.fireAtActiveTarget()] Sped up target");
+                        // Console.WriteLine("[Tower.fireAtActiveTarget()] Sped up target");
                         #endif
                     }
 

@@ -291,7 +291,7 @@ namespace SaveCISE_Game
                 if (t.getNextFireTime() == 0.0d)
                 {
                     #if DEBUG
-                    Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
+                    // Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
                     // Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
                     #endif
 
@@ -351,10 +351,10 @@ namespace SaveCISE_Game
                 if (gameTime.TotalGameTime.TotalMilliseconds >= nextSpawnTime)
                 {
                     #if DEBUG
-                    Console.WriteLine("Spawning next enemy");
-                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    Console.WriteLine("nextSpawnTime is " + (nextSpawnTime / 1000) + " secs");
-                    Console.WriteLine("Current wave size is " + currentWaveSize);
+                    // Console.WriteLine("Spawning next enemy");
+                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    // Console.WriteLine("nextSpawnTime is " + (nextSpawnTime / 1000) + " secs");
+                    // Console.WriteLine("Current wave size is " + currentWaveSize);
                     #endif
 
                     if (waves[currentWaveIndex].Count != 0)
@@ -368,14 +368,14 @@ namespace SaveCISE_Game
                     if (waves[currentWaveIndex].Count == 0)
                     {
                         #if DEBUG
-                        Console.WriteLine("Wave finished");
+                        // Console.WriteLine("Wave finished");
                         #endif
 
                         // No more waves?
                         if (currentWaveIndex == waves.Count - 1)
                         {
                             #if DEBUG
-                            Console.WriteLine("No more waves");
+                            // Console.WriteLine("No more waves");
                             #endif
 
                             // Set current wave index to -1
@@ -384,7 +384,7 @@ namespace SaveCISE_Game
                         else
                         {
                             #if DEBUG
-                            Console.WriteLine("Next wave");
+                            // Console.WriteLine("Next wave");
                             #endif
 
                             if (gameTime.TotalGameTime.TotalMilliseconds >= nextWaveTime)
@@ -407,7 +407,7 @@ namespace SaveCISE_Game
                         nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + (WAVE_ALL_SPAWN_SECS * 1000 / currentWaveSize);
 
                         #if DEBUG
-                        Console.WriteLine("nextSpawnTime updated to " + (nextSpawnTime / 1000) + " secs");
+                        // Console.WriteLine("nextSpawnTime updated to " + (nextSpawnTime / 1000) + " secs");
                         #endif
                     }
                 }
@@ -459,7 +459,7 @@ namespace SaveCISE_Game
         private static void generateWaves()
         {
             #if DEBUG
-            Console.WriteLine("generateWaves() starting");
+            // Console.WriteLine("generateWaves() starting");
             #endif
 
             // Initialize the waves list
@@ -475,14 +475,14 @@ namespace SaveCISE_Game
             waves.Add(mobFactory.generateMob1(45, .25f, 100, 10, 100));
 
             #if DEBUG
-            Console.WriteLine("[" + waves.Count + "]");
-            Console.WriteLine("[" + waves[0].Count + "]");
-            Console.WriteLine("[" + waves[1].Count + "]");
-            Console.WriteLine("[" + waves[2].Count + "]");
+            // Console.WriteLine("[" + waves.Count + "]");
+            // Console.WriteLine("[" + waves[0].Count + "]");
+            // Console.WriteLine("[" + waves[1].Count + "]");
+            // Console.WriteLine("[" + waves[2].Count + "]");
             #endif
 
             #if DEBUG
-            Console.WriteLine("generateWaves() ending");
+            // Console.WriteLine("generateWaves() ending");
             #endif
         }
 
