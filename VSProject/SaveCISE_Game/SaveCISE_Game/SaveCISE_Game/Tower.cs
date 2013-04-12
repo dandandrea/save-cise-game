@@ -61,7 +61,10 @@ namespace SaveCISE_Game
                     // Deal damage (if damage dealing tower)
                     if (this.damageDealt > 0)
                     {
+                        // Render the animated bullet
                         GameController.towerShootEnemy(this, e);
+
+                        // Deal the damage
                         e.dealDamage(this.damageDealt);
 
                         #if DEBUG
