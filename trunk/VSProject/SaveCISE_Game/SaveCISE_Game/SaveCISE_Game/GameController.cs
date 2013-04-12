@@ -27,10 +27,11 @@ namespace SaveCISE_Game
         public const int GRID_HEIGHT = 14;
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
-        public const int MAX_BUDGET = 20000000;
+        public const int MAX_BUDGET = 5000;
         private const int NUM_LEVELS = 20; // Total number of waves 
-        private const int WAVE_ALL_SPAWN_SECS = 45; // Number of seconds to spawn the complete wave in
-        private static int budget = 20000000;
+        private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
+        private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
+        private static int budget = 5000;
         private static Scene gameScene;
         private static Grid grid;
         private static List<Enemy> enemies;
@@ -43,6 +44,7 @@ namespace SaveCISE_Game
         private static int currentWaveIndex = 0; // Current wave index
         private static int currentWaveSize; // Size of the current wave
         private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately (stored in milliseconds)
+        private static double nextWaveTime = ((double) WAVE_ALL_SPAWN_SECS + WAVE_SPAWN_DELAY) * 1000;
         private static TowerPlacer towerPlacer;
         private static TowerRemover towerRemover;
         private static MobFactory mobFactory;
@@ -351,9 +353,12 @@ namespace SaveCISE_Game
                     Console.WriteLine("Current wave size is " + currentWaveSize);
                     #endif
 
-                    // Place the enemy and remove from waves list
-                    addEnemy(waves[currentWaveIndex][0]);
-                    waves[currentWaveIndex].RemoveAt(0);
+                    if (waves[currentWaveIndex].Count != 0)
+                    {
+                        // Place the enemy and remove from waves list
+                        addEnemy(waves[currentWaveIndex][0]);
+                        waves[currentWaveIndex].RemoveAt(0);
+                    }
 
                     // End of current wave?
                     if (waves[currentWaveIndex].Count == 0)
@@ -378,11 +383,16 @@ namespace SaveCISE_Game
                             Console.WriteLine("Next wave");
                             #endif
 
-                            // There is another wave
-                            currentWaveIndex++;
+                            if (gameTime.TotalGameTime.TotalMilliseconds >= nextWaveTime)
+                            {
+                                // There is another wave
+                                currentWaveIndex++;
 
-                            // Update current wave size
-                            currentWaveSize = waves[currentWaveIndex].Count;
+                                // Update current wave size
+                                currentWaveSize = waves[currentWaveIndex].Count;
+                                nextWaveTime += (WAVE_SPAWN_DELAY + WAVE_ALL_SPAWN_SECS) * 1000;
+                                nextSpawnTime += nextWaveTime;
+                            }
                         }
                     }
 
@@ -435,13 +445,13 @@ namespace SaveCISE_Game
             waves = new List<List<Enemy>>();
 
             // Add enemies to first wave
-            waves.Add(mobFactory.generateMob1(5, 1f, 100, 1, 100));
+            waves.Add(mobFactory.generateMob1(15, .25f, 20, 10, 50));
 
             // Add enemies to second wave
-            waves.Add(mobFactory.generateMob1(3));
+            waves.Add(mobFactory.generateMob1(45, .25f, 100, 10, 100));
 
             // Add enemies to third wave
-            waves.Add(mobFactory.generateMob1(8));
+            waves.Add(mobFactory.generateMob1(45, .25f, 100, 10, 100));
 
             #if DEBUG
             Console.WriteLine("[" + waves.Count + "]");

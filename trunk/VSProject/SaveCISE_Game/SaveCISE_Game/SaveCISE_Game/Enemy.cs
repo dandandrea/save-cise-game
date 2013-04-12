@@ -181,7 +181,6 @@ namespace SaveCISE_Game
             {
                 if (!this.dead)
                 {
-                    GameController.enthusiasm += 20;
                     this.dead = true;
                 }
                 if (myColor == Color.White)
@@ -379,6 +378,11 @@ namespace SaveCISE_Game
         public void setHasBeenSlowedDown(bool hasBeenSlowedDown)
         {
             this.hasBeenSlowedDown = hasBeenSlowedDown;
+        }
+
+        public int getEnthusiasm()
+        {
+            return enthusiasmBonus;
         }
     }
 }
