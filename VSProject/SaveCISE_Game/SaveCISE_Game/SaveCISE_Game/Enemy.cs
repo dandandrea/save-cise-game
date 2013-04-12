@@ -11,7 +11,6 @@ namespace SaveCISE_Game
     {
         enum directions
         {
-            b,
             EAST, 
             NORTHEAST, 
             NORTH, 
