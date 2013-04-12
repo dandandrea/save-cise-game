@@ -292,14 +292,15 @@ namespace SaveCISE_Game
                 {
                     #if DEBUG
                     Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
+                    // Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
                     #endif
 
                     // Generate the next fire time
                     t.generateNextFireTime(gameTime);
 
                     #if DEBUG
-                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
                     #endif
 
                     // Skip to next tower, if any
@@ -335,9 +336,9 @@ namespace SaveCISE_Game
                     t.generateNextFireTime(gameTime);
 
                     #if DEBUG
-                    Console.WriteLine("Generated next fire time");
-                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    // Console.WriteLine("Generated next fire time");
+                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
                     #endif
                 }
             }
