@@ -14,6 +14,7 @@ namespace SaveCISE_Game
         private List<Enemy> enemiesInRange; // Queue of enemies to enemies that are within firing range
         private double fireRateSecs; // How often the tower should fire, in seconds
         private double nextFireTime = 0.0d; // The next fire time (in milliseconds)
+        private bool isAreaEffect;
 
         public Tower(Sprite sprite, towerTypes towerType)
             : base(sprite)
@@ -23,33 +24,64 @@ namespace SaveCISE_Game
             setTowerProperties(towerType);
         }
 
-        // Fire at the active target, if any
-        public void fireAtActiveTarget()
+        // Fire at the active targets, if any
+        public void fireAtActiveTargets()
         {
             #if DEBUG
-            // Console.WriteLine("[Tower.fireAtActiveTarget()] Looking for active target");
+            // Console.WriteLine("[Tower.fireAtActiveTarget()] Looking for active targets");
             #endif
-            if (this.enemiesInRange.Count > 0)
+
+            List<Enemy> activeTargetList = this.getActiveTargets();
+            List<Enemy> removalList = new List<Enemy>();
+            if (activeTargetList != null)
             {
-                #if DEBUG
-                Console.WriteLine("[Tower.fireAtActiveTarget()] Found active target with current strengh " + this.enemiesInRange[0].getStrength());
-                #endif
+                foreach (Enemy e in activeTargetList)
+                {
+                    #if DEBUG
+                    Console.WriteLine("[Tower.fireAtActiveTarget()] Found active target with current strengh " + e.getStrength());
+                    #endif
 
-                // Deal damage
-                this.enemiesInRange[0].dealDamage(this.damageDealt);
+                    // Deal damage
+                    e.dealDamage(this.damageDealt);
 
-                #if DEBUG
-                Console.WriteLine("[Tower.fireAtActiveTarget()] Dealt " + this.damageDealt + " damage to the target, new strength is " + this.enemiesInRange[0].getStrength());
-                #endif
+                    #if DEBUG
+                    Console.WriteLine("[Tower.fireAtActiveTarget()] Dealt " + this.damageDealt + " damage to the target, new strength is " + e.getStrength());
+                    #endif
+
+                    // Zero strength?  If so then add to the removal list
+                    if (e.getStrength() <= 0)
+                    {
+                        removalList.Add(e);
+                    }
+                }
+            }
+
+            // Remove enemies that were added to the removal list
+            foreach (Enemy e in removalList)
+            {
+                activeTargetList.Remove(e);
             }
         }
 
-        // Get the active target
-        public Enemy getActiveTarget()
+        // Get the active targets
+        public List<Enemy> getActiveTargets()
         {
+            // Are there any enemies in range?
             if (enemiesInRange.Count > 0)
             {
-                return enemiesInRange[0];
+                // Is this an area effect tower?
+                // If so then return the first enemy on the active targets list
+                // Otherwise return the entire active targets list
+                if (this.isAreaEffect == false)
+                {
+                    List<Enemy> _enemyInRange = new List<Enemy>();
+                    _enemyInRange.Add(enemiesInRange[0]);
+                    return _enemyInRange;
+                }
+                else
+                {
+                    return enemiesInRange;
+                }
             }
             else
             {
@@ -173,6 +205,7 @@ namespace SaveCISE_Game
                     this.targetingRange = 150;
                     this.fireRateSecs = 2;
                     this.damageDealt = 5;
+                    this.isAreaEffect = false;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_yell")));
                     break;
 
@@ -180,13 +213,15 @@ namespace SaveCISE_Game
                     this.targetingRange = 150;
                     this.fireRateSecs = 2;
                     this.damageDealt = 5;
+                    this.isAreaEffect = true;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
 
                 case towerTypes.BLOCK:
-                    this.targetingRange = 0;
-                    this.fireRateSecs = 0;
-                    this.damageDealt = 0;
+                    this.targetingRange = 150;
+                    this.fireRateSecs = 2;
+                    this.damageDealt = 5;
+                    this.isAreaEffect = true;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     break;
             }
