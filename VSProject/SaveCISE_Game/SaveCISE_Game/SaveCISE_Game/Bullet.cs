@@ -10,18 +10,18 @@ namespace SaveCISE_Game
     class Bullet : Actor
     {
         public Bullet(Vector2 start, Vector2 end)
-            : base(new Sprite(ContentStore.getTexture("")))
+            : base(new Sprite(ContentStore.getTexture("spr_")))
         {
         }
         //moves the bullet towards the enemy
-        public void moveTowardEnemy()
+        public void moveTowardEnd()
         {
             
         }
 
         public override void update()
         {
-            moveTowardEnemy();
+            moveTowardEnd();
         }
     }
 }

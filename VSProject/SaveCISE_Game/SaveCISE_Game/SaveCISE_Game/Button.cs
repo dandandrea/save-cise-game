@@ -161,7 +161,7 @@ namespace SaveCISE_Game
 
         internal void setActive(bool active)
         {
-            if(active)
+            if(active && !isActive)
                 imageIndex = 0;
             isActive = active;
         }
