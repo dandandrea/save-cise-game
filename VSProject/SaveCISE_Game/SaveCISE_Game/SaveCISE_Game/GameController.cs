@@ -26,10 +26,10 @@ namespace SaveCISE_Game
         public const int GRID_HEIGHT = 14;
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
+        public const int MAX_BUDGET = 20000000;
         private const int NUM_LEVELS = 20; // Total number of waves 
         private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
         private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
-        public const int MAX_BUDGET = 20000000;
         private static int budget = MAX_BUDGET;
         private static Scene gameScene;
         private static Grid grid;
@@ -468,10 +468,23 @@ namespace SaveCISE_Game
             // Initialize the waves list
             waves = new List<List<Enemy>>();
 
-            // Add waves
-            waves.Add(mobFactory.generateMob1(10, .25f, 80, 10, 50));
-            waves.Add(mobFactory.generateMob1(10, .25f, 90, 10, 100));
-            waves.Add(mobFactory.generateMob1(10, .25f, 100, 10, 100));
+            // waves 1-5
+            waves.Add(mobFactory.generateMob1(10, 1f, 20, 2500, 10));
+            waves.Add(mobFactory.generateMob1(10, 1f, 30, 2500, 15));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 10));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 20));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 25));
+            // boss 1
+            waves.Add(mobFactory.generateBoss1(1, 1f, 40, 250000, 1000));
+            // waves 6-10
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 30));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 35));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 15));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 20));
+            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 30));
+            // boss 2
+            waves.Add(mobFactory.generateBoss2(1, 1f, 40, 250000, 0));
+
 
             #if DEBUG
             // Console.WriteLine("generateWaves() ending");
