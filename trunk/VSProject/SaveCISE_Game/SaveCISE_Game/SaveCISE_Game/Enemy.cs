@@ -74,7 +74,7 @@ namespace SaveCISE_Game
         {
 
             //Healthbars
-            if (this.checkAlive())
+            if (!this.isDead())
             {
                 double scaleX = ((double)width / sprite.getWidth());
                 double scaleY = ((double)height / sprite.getHeight());
@@ -103,7 +103,7 @@ namespace SaveCISE_Game
 
         private void doMovement()
         {
-            if (checkAlive())
+            if (!isDead())
             {
                 doLivingMovement();
             }
@@ -150,7 +150,7 @@ namespace SaveCISE_Game
                     else
                     {
                         // you have arrived at the final destination
-                        if (checkAlive())
+                        if (!isDead())
                         {
                             atCiseBuilding = true;
                         }
@@ -170,18 +170,18 @@ namespace SaveCISE_Game
             }
         }
 
-        private bool checkAlive()
+        private bool isDead()
         {
-            return strength>0;
+            return !(strength>0);
         }
 
         private void doAnimation()
         {
-            if (!checkAlive())
+            if (isDead())
             {
                 if (!this.dead)
                 {
-                    GameController.enthusiasm += 20;
+                    GameController.enthusiasm += this.enthusiasmBonus;
                     this.dead = true;
                 }
                 if (myColor == Color.White)
@@ -211,11 +211,11 @@ namespace SaveCISE_Game
 
         public void updatePath()
         {
-            if(pathIsBlocked() || !checkAlive())
+            if(pathIsBlocked() || isDead())
                 {
                 if (target != null)
                 {
-                    if (checkAlive())
+                    if (!isDead())
                     {
                         Stack<GridCell> temp = aStarGrid.astar(target.row, target.col, attack.row, attack.col);
                         if (temp != null)
@@ -233,13 +233,13 @@ namespace SaveCISE_Game
                 }
                 else
                 {
-                    if (checkAlive())
+                    if (!isDead())
                     {
-                        if (!this.dead)
+                        /*if (!this.dead)
                         {
                             GameController.enthusiasm += 20;
                             this.dead = true;
-                        }
+                        }*/
 
                         if (!atCiseBuilding)
                         {

@@ -26,11 +26,11 @@ namespace SaveCISE_Game
         public const int GRID_HEIGHT = 14;
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
-        public const int MAX_BUDGET = 20000000;
         private const int NUM_LEVELS = 20; // Total number of waves 
         private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
         private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
-        private static int budget = 5000;
+        public const int MAX_BUDGET = 20000000;
+        private static int budget = MAX_BUDGET;
         private static Scene gameScene;
         private static Grid grid;
         private static List<Enemy> enemies;
@@ -50,6 +50,7 @@ namespace SaveCISE_Game
         private static Button blockButton;
         public static Button yellButton;
         public static Button slowButton;
+        
 
         public static void hurtBudget(int damage)
         {
@@ -112,8 +113,6 @@ namespace SaveCISE_Game
             gameScene.add(gd);
             #endif
 
-            gameScene.add(new BudgetDrawer());
-
             // buttons/side panel
             WhitePanel wp = new WhitePanel();
             gameScene.add(wp);
@@ -142,11 +141,16 @@ namespace SaveCISE_Game
             gameScene.add(deleteTower);
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
 
+            gameScene.add(new BudgetDrawer());
             return gameScene;
         }
 
         internal static bool tryToPlaceTower(towerTypes typeToPlace, int x, int y)
         {
+            if(Tower.getTowerCost(typeToPlace) > enthusiasm)
+            {
+                return false;
+            }
             if (typeToPlace != towerTypes.NONE)
             {
                 int cellX = (x - GRID_OFFSET_X) / CELL_WIDTH;
@@ -292,15 +296,14 @@ namespace SaveCISE_Game
                 {
                     #if DEBUG
                     // Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
-                    // Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
                     #endif
 
                     // Generate the next fire time
                     t.generateNextFireTime(gameTime);
 
                     #if DEBUG
-                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
                     #endif
 
                     // Skip to next tower, if any
@@ -336,9 +339,9 @@ namespace SaveCISE_Game
                     t.generateNextFireTime(gameTime);
 
                     #if DEBUG
-                    // Console.WriteLine("Generated next fire time");
-                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    Console.WriteLine("Generated next fire time");
+                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
                     #endif
                 }
             }
@@ -419,7 +422,7 @@ namespace SaveCISE_Game
             }
             else
             {
-                //blockButton.setActive(true);
+                blockButton.setActive(true);
             }
             if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.HARM))
             {
@@ -477,7 +480,9 @@ namespace SaveCISE_Game
 
         public static void towerShootEnemy(Tower from, Enemy target)
         {
-
+#if DEBUG
+            Console.WriteLine("FIRE!!!!");
+#endif
         }
     }
 }
