@@ -466,9 +466,9 @@ namespace SaveCISE_Game
             waves = new List<List<Enemy>>();
 
             // Add waves
-            waves.Add(mobFactory.generateMob1(10, .25f, 20, 10, 50));
-            waves.Add(mobFactory.generateMob1(10, .25f, 30, 10, 100));
-            waves.Add(mobFactory.generateMob1(10, .25f, 40, 10, 100));
+            waves.Add(mobFactory.generateMob1(10, .25f, 80, 10, 50));
+            waves.Add(mobFactory.generateMob1(10, .25f, 90, 10, 100));
+            waves.Add(mobFactory.generateMob1(10, .25f, 100, 10, 100));
 
             #if DEBUG
             // Console.WriteLine("generateWaves() ending");
