@@ -465,21 +465,10 @@ namespace SaveCISE_Game
             // Initialize the waves list
             waves = new List<List<Enemy>>();
 
-            // Add enemies to first wave
-            waves.Add(mobFactory.generateMob1(15, .25f, 20, 10, 50));
-
-            // Add enemies to second wave
-            waves.Add(mobFactory.generateMob1(45, .25f, 100, 10, 100));
-
-            // Add enemies to third wave
-            waves.Add(mobFactory.generateMob1(45, .25f, 100, 10, 100));
-
-            #if DEBUG
-            // Console.WriteLine("[" + waves.Count + "]");
-            // Console.WriteLine("[" + waves[0].Count + "]");
-            // Console.WriteLine("[" + waves[1].Count + "]");
-            // Console.WriteLine("[" + waves[2].Count + "]");
-            #endif
+            // Add waves
+            waves.Add(mobFactory.generateMob1(10, .25f, 20, 10, 50));
+            waves.Add(mobFactory.generateMob1(10, .25f, 30, 10, 100));
+            waves.Add(mobFactory.generateMob1(10, .25f, 40, 10, 100));
 
             #if DEBUG
             // Console.WriteLine("generateWaves() ending");

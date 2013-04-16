@@ -94,7 +94,7 @@ namespace SaveCISE_Game
             // Remove enemies that were added to the removal list
             foreach (Enemy e in removalList)
             {
-                activeTargetList.Remove(e);
+                enemiesInRange.Remove(e);
             }
         }
 
@@ -267,7 +267,7 @@ namespace SaveCISE_Game
                     this.fireRateSecs = .1;
                     this.damageDealt = 0;
                     this.isAreaEffect = true;
-                    this.percentSlowDownDealt = 33.33f;
+                    this.percentSlowDownDealt = 50.0f;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
 
