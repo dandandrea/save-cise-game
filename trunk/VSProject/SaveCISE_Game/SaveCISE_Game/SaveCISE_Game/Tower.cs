@@ -16,7 +16,6 @@ namespace SaveCISE_Game
         private double fireRateSecs; // How often the tower should fire, in seconds
         private double nextFireTime = 0.0d; // The next fire time (in milliseconds)
         private bool isAreaEffect;
-        private int enthusiasmCost;
 
         public Tower(Sprite sprite, towerTypes towerType)
             : base(sprite)
@@ -24,21 +23,6 @@ namespace SaveCISE_Game
             this.enemiesInRange = new List<Enemy>();
             this.towerType = towerType;
             setTowerProperties(towerType);
-        }
-
-        public static int getTowerCost(towerTypes type)
-        {
-            switch (type)
-            {
-                case towerTypes.HARM:
-                    return 50;
-                case towerTypes.SLOW:
-                    return 30;
-                case towerTypes.BLOCK:
-                    return 20;
-            }
-
-            return 0;
         }
 
         // Fire at the active targets, if any
@@ -254,8 +238,8 @@ namespace SaveCISE_Game
             switch (towerType)
             {
                 case towerTypes.HARM:
-                    this.targetingRange = 100;
-                    this.fireRateSecs = 2;
+                    this.targetingRange = 150;
+                    this.fireRateSecs = 1;
                     this.damageDealt = 5;
                     this.percentSlowDownDealt = 0f;
                     this.isAreaEffect = false;
@@ -264,10 +248,10 @@ namespace SaveCISE_Game
 
                 case towerTypes.SLOW:
                     this.targetingRange = 75;
-                    this.fireRateSecs = .1;
-                    this.damageDealt = 0;
+                    this.fireRateSecs = .5;
+                    this.damageDealt = 1;
                     this.isAreaEffect = true;
-                    this.percentSlowDownDealt = 50.0f;
+                    this.percentSlowDownDealt = 30.0f;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
                     break;
 
@@ -280,6 +264,21 @@ namespace SaveCISE_Game
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     break;
             }
+        }
+
+        public static int getTowerCost(towerTypes type)
+        {
+            switch (type)
+            {
+                case towerTypes.HARM:
+                    return 50;
+                case towerTypes.SLOW:
+                    return 100;
+                case towerTypes.BLOCK:
+                    return 10;
+            }
+
+            return 0;
         }
 
         public void remove()
