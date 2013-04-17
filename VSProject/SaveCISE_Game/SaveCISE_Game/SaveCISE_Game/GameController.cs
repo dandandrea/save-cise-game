@@ -30,6 +30,7 @@ namespace SaveCISE_Game
         private const int NUM_LEVELS = 20; // Total number of waves 
         private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
         private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
+        private const int INITIAL_WAVE_DELAY_SECS = 10; // Number of seconds to wait before releasing first wave
         private static int budget = MAX_BUDGET;
         private static Scene gameScene;
         private static Grid grid;
@@ -42,8 +43,8 @@ namespace SaveCISE_Game
         private static List<List<Enemy>> waves; // The enemies that make up each wave
         private static int currentWaveIndex = 0; // Current wave index
         private static int currentWaveSize; // Size of the current wave
-        private static double nextSpawnTime = 0.0d; // Initialize this to zero so that the first enemy spawns immediately (stored in milliseconds)
-        private static double nextWaveTime = ((double) WAVE_ALL_SPAWN_SECS + WAVE_SPAWN_DELAY) * 1000;
+        private static double nextSpawnTime = 0.0d; // Stored in milliseconds
+        private static double nextWaveTime = 0.0d; // Stored in milliseconds
         private static TowerPlacer towerPlacer;
         private static TowerRemover towerRemover;
         private static MobFactory mobFactory;
@@ -89,8 +90,6 @@ namespace SaveCISE_Game
             // Build Play Scene Here
             gameScene = new Scene();
             gameScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameArea")));
-
-
 
             grid = new Grid();
             mobFactory = new MobFactory(grid);
@@ -242,6 +241,15 @@ namespace SaveCISE_Game
 
         internal static void Update(GameTime gameTime)
         {
+            if (isGameStarted == true && nextWaveTime == 0.0d)
+            {
+                nextWaveTime = (((double)WAVE_ALL_SPAWN_SECS + WAVE_SPAWN_DELAY) * 1000) + gameTime.TotalGameTime.TotalMilliseconds;
+                Console.WriteLine("Next wave time init'd to " + nextWaveTime + ", total game time is " + gameTime.TotalGameTime.TotalMilliseconds);
+
+                nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + (INITIAL_WAVE_DELAY_SECS * 1000);
+                Console.WriteLine("Initial spawn time init'd to " + nextSpawnTime + ", total game time is " + gameTime.TotalGameTime.TotalMilliseconds);
+            }
+
             //GameController.beginPlacingTower(towerTypes.BLOCK);
             foreach (Enemy e in deadEnemies)
             {
@@ -386,10 +394,6 @@ namespace SaveCISE_Game
                         }
                         else
                         {
-                            #if DEBUG
-                            // Console.WriteLine("Next wave");
-                            #endif
-
                             if (gameTime.TotalGameTime.TotalMilliseconds >= nextWaveTime)
                             {
                                 // There is another wave
@@ -399,6 +403,10 @@ namespace SaveCISE_Game
                                 currentWaveSize = waves[currentWaveIndex].Count;
                                 nextWaveTime += (WAVE_SPAWN_DELAY + WAVE_ALL_SPAWN_SECS) * 1000;
                                 nextSpawnTime += nextWaveTime;
+
+                                #if DEBUG
+                                Console.WriteLine("Wave released at " + gameTime.TotalGameTime.TotalMilliseconds + ", next wave time is " + nextWaveTime);
+                                #endif
                             }
                         }
                     }
