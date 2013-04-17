@@ -17,7 +17,7 @@ namespace SaveCISE_Game
 
     static class GameController
     {
-        public static int enthusiasm = 100; //starting enthusiasm
+        public static int enthusiasm = 140; //starting enthusiasm
         public const int CELL_WIDTH = 40;//30;
         public const int CELL_HEIGHT = 30;//15;
         public const int GRID_OFFSET_X = 0;
@@ -486,21 +486,21 @@ namespace SaveCISE_Game
             waves = new List<List<Enemy>>();
 
             // waves 1-5
-            waves.Add(mobFactory.generateMob1(10, 1f, 20, 2500, 10));
-            waves.Add(mobFactory.generateMob1(10, 1f, 30, 2500, 15));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 10));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 20));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 25));
+            waves.Add(mobFactory.generateMob1(15, 1f, 20, 2500, 10));
+            waves.Add(mobFactory.generateMob1(15, 1.5f, 30, 2500, 15));
+            waves.Add(mobFactory.generateMob2(50, 4f, 10, 1000, 6));
+            waves.Add(mobFactory.generateMob3(5, 1f, 400, 2500, 80));
+            waves.Add(mobFactory.generateMob1(25, 1.5f, 120, 2500, 20));
             // boss 1
-            waves.Add(mobFactory.generateBoss1(1, 1f, 40, 250000, 1000));
+            waves.Add(mobFactory.generateBoss1(1, 2f, 700, 250000, 1000));
             // waves 6-10
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 30));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 35));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 15));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 20));
-            waves.Add(mobFactory.generateMob1(10, 1f, 40, 2500, 30));
+            waves.Add(mobFactory.generateMob1(30, 1.5f, 180, 2500, 20));
+            waves.Add(mobFactory.generateMob3(7, 1f, 700, 2500, 100));
+            waves.Add(mobFactory.generateMob2(120, 4f, 20, 2500, 5));
+            waves.Add(mobFactory.generateMob1(50, 1.5f, 200, 2500, 20));
+            waves.Add(mobFactory.generateMob3(15, 1f, 900, 2500, 50));
             // boss 2
-            waves.Add(mobFactory.generateBoss2(1, 1f, 40, 250000, 0));
+            waves.Add(mobFactory.generateBoss2(1, 2f, 3000, 250000, 0));
 
 
             #if DEBUG
