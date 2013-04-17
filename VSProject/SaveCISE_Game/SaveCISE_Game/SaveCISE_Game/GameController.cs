@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SaveCISE_Game
 {
@@ -52,6 +53,7 @@ namespace SaveCISE_Game
         private static Button blockButton;
         public static Button yellButton;
         public static Button slowButton;
+        private static SoundEffectInstance footsteps;
         
 
         public static void hurtBudget(int damage)
@@ -143,6 +145,8 @@ namespace SaveCISE_Game
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
 
             gameScene.add(new BudgetDrawer());
+
+            footsteps = ContentStore.getSound("snd_steps").CreateInstance();
 
             return gameScene;
         }
@@ -278,6 +282,19 @@ namespace SaveCISE_Game
                 gameScene.remove(a);
             }
             deleteActors.Clear();
+
+            if (enemies.Count > 0)
+            {
+                if (footsteps.State != SoundState.Playing)
+                {
+                    //footsteps.IsLooped = true;
+                    footsteps.Play();
+                }
+            }
+            else if (footsteps.State == SoundState.Playing)
+            {
+                footsteps.Pause();
+            }
 
             // Iterate each tower
             // 1. Acquire new targets as they enter into the targeting range
