@@ -8,14 +8,15 @@ namespace SaveCISE_Game
 {
     class WaveSpawner
     {
-        private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
-        private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
-        private const int INITIAL_WAVE_DELAY_SECS = 10; // Number of seconds to wait before releasing first wave
+        private const int WAVE_ALL_SPAWN_SECS = 5; // Number of seconds to spawn the complete wave in
+        private const int WAVE_SPAWN_DELAY = 2; // Delay between waves
+        private const int INITIAL_WAVE_DELAY_SECS = 3; // Number of seconds to wait before releasing first wave
         private static List<List<Enemy>> waves; // The enemies that make up each wave
         private static List<int> waveStart;
         private static int currentWaveIndex = 0;
-        private static int nextMobTime = 0;
+        private static double nextMobTime = 0;
         private static MobFactory mobFactory;
+        private static double nextMobDelay;
 
         public WaveSpawner(Grid g, GameTime gameTime)
         {
@@ -26,38 +27,43 @@ namespace SaveCISE_Game
             generateTimes(gameTime);
 
             nextMobTime = waveStart[0];
+            nextMobDelay = WAVE_ALL_SPAWN_SECS/(double)waves[0].Count;
 
         }
 
         public void spawnEnemy(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime.TotalMilliseconds/1000 > nextMobTime)
+            if (currentWaveIndex != -1)
             {
-                if (waves[currentWaveIndex].Count != 0)
+                if (gameTime.TotalGameTime.TotalMilliseconds / 1000 > nextMobTime)
                 {
-                    // Place the enemy and remove from waves list
-                    GameController.addEnemy(waves[currentWaveIndex][0]);
-                    waves[currentWaveIndex].RemoveAt(0);
-                    nextMobTime = nextMobTime + WAVE_ALL_SPAWN_SECS / waves[currentWaveIndex].Count;
-                }
-
-                // End of current wave?
-                if (waves[currentWaveIndex].Count == 0)
-                {
-                    // No more waves?
-                    if (currentWaveIndex == waves.Count - 1)
+                    if (waves[currentWaveIndex].Count != 0)
                     {
-                        // Set current wave index to -1
-                        currentWaveIndex = -1;
+                        // Place the enemy and remove from waves list
+                        GameController.addEnemy(waves[currentWaveIndex][0]);
+                        waves[currentWaveIndex].RemoveAt(0);
+                        nextMobTime = nextMobTime + nextMobDelay;
                     }
-                    else
+
+                    // End of current wave?
+                    if (waves[currentWaveIndex].Count == 0)
                     {
-                        if (gameTime.TotalGameTime.TotalMilliseconds/1000 >= waveStart[currentWaveIndex])
+                        // No more waves?
+                        if (currentWaveIndex == waves.Count - 1)
                         {
-                            // There is another wave
-                            currentWaveIndex++;
-                            // Update current wave size
-                            nextMobTime = waveStart[currentWaveIndex];
+                            // Set current wave index to -1
+                            currentWaveIndex = -1;
+                        }
+                        else
+                        {
+                            if (gameTime.TotalGameTime.TotalMilliseconds / 1000 >= waveStart[currentWaveIndex + 1])
+                            {
+                                // There is another wave
+                                currentWaveIndex++;
+                                // Update current wave size
+                                nextMobTime = waveStart[currentWaveIndex];
+                                nextMobDelay = WAVE_ALL_SPAWN_SECS / (double)waves[currentWaveIndex].Count;
+                            }
                         }
                     }
                 }
@@ -74,7 +80,7 @@ namespace SaveCISE_Game
                 }
                 else
                 {
-                    return 45 - waveStart[currentWaveIndex] - (int)gameTime.TotalGameTime.TotalMilliseconds / 1000;
+                    return WAVE_ALL_SPAWN_SECS + WAVE_SPAWN_DELAY + (waveStart[currentWaveIndex] - (int)gameTime.TotalGameTime.TotalMilliseconds / 1000);
                 }
             }
             else
