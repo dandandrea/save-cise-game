@@ -121,9 +121,9 @@ namespace SaveCISE_Game
             gameScene.add(wp);
 
             //Tower buttons
-            GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_blockButton"), 48, 48, 4, 2));
+            GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_yellButton"), 48, 48, 4, 2));
+            GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_slowButton"), 48, 48, 4, 2));
             Button tower4 = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower5 = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             Button tower6 = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
