@@ -28,10 +28,9 @@ namespace SaveCISE_Game
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
         public const int MAX_BUDGET = 20000000;
-        private const int NUM_LEVELS = 20; // Total number of waves 
-        private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
-        private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
-        private const int INITIAL_WAVE_DELAY_SECS = 10; // Number of seconds to wait before releasing first wave
+        //private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
+        //private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
+        //private const int INITIAL_WAVE_DELAY_SECS = 10; // Number of seconds to wait before releasing first wave
         private static int budget = MAX_BUDGET;
         private static Scene gameScene;
         private static Grid grid;
@@ -42,18 +41,19 @@ namespace SaveCISE_Game
         private static List<Actor> deleteActors;
         private static bool isGameStarted; // Whether or not gameplay has started
         private static bool isPaused = false; // Whether or not gameplay is currently paused, hardcoded to false for now
-        private static List<List<Enemy>> waves; // The enemies that make up each wave
-        private static int currentWaveIndex = 0; // Current wave index
-        private static int currentWaveSize; // Size of the current wave
-        private static double nextSpawnTime = 0.0d; // Stored in milliseconds
-        private static double nextWaveTime = 0.0d; // Stored in milliseconds
+        //private static List<List<Enemy>> waves; // The enemies that make up each wave
+        //private static int currentWaveIndex = 0; // Current wave index
+        //private static int currentWaveSize; // Size of the current wave
+        //private static double nextSpawnTime = 0.0d; // Stored in milliseconds
+        //private static double nextWaveTime = 0.0d; // Stored in milliseconds
+        //private static MobFactory mobFactory;
         private static TowerPlacer towerPlacer;
         private static TowerRemover towerRemover;
-        private static MobFactory mobFactory;
         private static Button blockButton;
         public static Button yellButton;
         public static Button slowButton;
         private static SoundEffectInstance footsteps;
+        public static WaveSpawner waveSpawner;
         
 
         public static void hurtBudget(int damage)
@@ -95,10 +95,11 @@ namespace SaveCISE_Game
             gameScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameArea")));
 
             grid = new Grid();
-            mobFactory = new MobFactory(grid);
+            //mobFactory = new MobFactory(grid);
 
-            generateWaves(); // Generate the waves
-            currentWaveSize = waves[0].Count; // Initialize current wave size
+            //generateWaves(); // Generate the waves
+            //currentWaveSize = waves[0].Count; // Initialize current wave size
+
             enemies = new List<Enemy>();
             deadEnemies = new List<Enemy>();
             towers = new List<Tower>();
@@ -253,6 +254,11 @@ namespace SaveCISE_Game
 
         internal static void Update(GameTime gameTime)
         {
+            if (isGameStarted && waveSpawner == null)
+            {
+                waveSpawner = new WaveSpawner(grid, gameTime);
+            }
+            /*
             if (isGameStarted == true && nextWaveTime == 0.0d)
             {
                 nextWaveTime = (((double)WAVE_ALL_SPAWN_SECS + WAVE_SPAWN_DELAY) * 1000) + gameTime.TotalGameTime.TotalMilliseconds;
@@ -261,6 +267,7 @@ namespace SaveCISE_Game
                 nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + (INITIAL_WAVE_DELAY_SECS * 1000);
                 Console.WriteLine("Initial spawn time init'd to " + nextSpawnTime + ", total game time is " + gameTime.TotalGameTime.TotalMilliseconds);
             }
+            */
 
             //GameController.beginPlacingTower(towerTypes.BLOCK);
             foreach (Enemy e in deadEnemies)
@@ -385,6 +392,14 @@ namespace SaveCISE_Game
                 }
             }
 
+            //calls enemies
+            if (waveSpawner != null)
+            {
+                waveSpawner.spawnEnemy(gameTime);
+            }
+
+            /*
+
             // Spawn another enemy?  Only perform this check if gameplay has started and
             // there are still enemies remaining to be spawned
             if (isGameStarted == true && isPaused == false && currentWaveIndex != -1)
@@ -454,6 +469,8 @@ namespace SaveCISE_Game
                     }
                 }
             }
+              
+            */
 
             if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.BLOCK))
             {
@@ -498,6 +515,7 @@ namespace SaveCISE_Game
             isGameStarted = true;
         }
 
+        /*
         private static void generateWaves()
         {
             #if DEBUG
@@ -510,7 +528,7 @@ namespace SaveCISE_Game
             // waves 1-5
             waves.Add(mobFactory.generateMob1(15, 1.5f, 20, 2500, 10));
             waves.Add(mobFactory.generateMob1(20, 1.5f, 30, 2500, 10));
-            waves.Add(mobFactory.generateMob2(60, 3.8f, 11, 1000, 5));
+            waves.Add(mobFactory.generateMob2(60, 3.8f, 13, 1000, 5));
             waves.Add(mobFactory.generateMob3(5, 1f, 400, 2500, 80));
             waves.Add(mobFactory.generateMob1(25, 1.5f, 120, 2500, 20));
             // boss 1
@@ -529,6 +547,7 @@ namespace SaveCISE_Game
             // Console.WriteLine("generateWaves() ending");
             #endif
         }
+        */
 
         public static void towerShootEnemy(Tower from, Enemy target)
         {
