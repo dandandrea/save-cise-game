@@ -55,7 +55,14 @@ namespace SaveCISE_Game
             FontPos = new Vector2(720.0f, 410.0f);
             sb.DrawString(font1, output, FontPos, Color.Black,
                           0, FontOrigin, 0.8f, SpriteEffects.None, 0.5f);
-            
+
+            // "Time to Next Wave" value
+            value = GameController.nextWaveCountdown;
+            FontOrigin = font1.MeasureString(value.ToString()) / 2;
+            FontPos = new Vector2(695.0f, 440.0f);
+            sb.DrawString(font1, value + " secs", FontPos, Color.Black,
+                          0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
+
             sb.End();
 
             //Next image area
