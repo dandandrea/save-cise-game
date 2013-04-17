@@ -16,6 +16,7 @@ namespace SaveCISE_Game
         private double fireRateSecs; // How often the tower should fire, in seconds
         private double nextFireTime = 0.0d; // The next fire time (in milliseconds)
         private bool isAreaEffect;
+        private Color color;
 
         public Tower(Sprite sprite, towerTypes towerType)
             : base(sprite)
@@ -244,6 +245,7 @@ namespace SaveCISE_Game
                     this.percentSlowDownDealt = 0f;
                     this.isAreaEffect = false;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_yell")));
+                    this.color = Color.Orange;
                     break;
 
                 case towerTypes.SLOW:
@@ -253,6 +255,7 @@ namespace SaveCISE_Game
                     this.isAreaEffect = true;
                     this.percentSlowDownDealt = 30.0f;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
+                    this.color = Color.Blue;
                     break;
 
                 case towerTypes.BLOCK:
@@ -262,6 +265,7 @@ namespace SaveCISE_Game
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.color = Color.Silver;
                     break;
             }
         }
@@ -284,6 +288,11 @@ namespace SaveCISE_Game
         public void remove()
         {
             GameController.removeTower(this);
+        }
+
+        public override void draw(Microsoft.Xna.Framework.Graphics.SpriteBatch sb)
+        {
+            base.draw(sb,color);
         }
     }
 }
