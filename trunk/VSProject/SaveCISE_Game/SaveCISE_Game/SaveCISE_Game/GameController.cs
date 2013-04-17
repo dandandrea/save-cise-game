@@ -220,6 +220,11 @@ namespace SaveCISE_Game
                         {
                             e.updatePath();
                         }
+
+                        //Return half cost of tower
+                        float subsidy = (float)0.5 * Tower.getTowerCost(t.getTowerType());
+                        GameController.enthusiasm += (int) subsidy;
+
                         return true;
                     }
                 }
