@@ -68,7 +68,14 @@ namespace SaveCISE_Game
         {
             if (currentWaveIndex != -1)
             {
-                return waveStart[currentWaveIndex] - (int)gameTime.TotalGameTime.TotalMilliseconds / 1000;
+                if (waveStart[currentWaveIndex] > (int)gameTime.TotalGameTime.TotalMilliseconds / 1000)
+                {
+                    return waveStart[currentWaveIndex] - (int)gameTime.TotalGameTime.TotalMilliseconds / 1000;
+                }
+                else
+                {
+                    return 45 - waveStart[currentWaveIndex] - (int)gameTime.TotalGameTime.TotalMilliseconds / 1000;
+                }
             }
             else
             {
