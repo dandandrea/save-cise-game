@@ -235,12 +235,6 @@ namespace SaveCISE_Game
                 {
                     if (!isDead())
                     {
-                        /*if (!this.dead)
-                        {
-                            GameController.enthusiasm += 20;
-                            this.dead = true;
-                        }*/
-
                         if (!atCiseBuilding)
                         {
                             myPath = aStarGrid.astar(1, 1, attack.row, attack.col);
