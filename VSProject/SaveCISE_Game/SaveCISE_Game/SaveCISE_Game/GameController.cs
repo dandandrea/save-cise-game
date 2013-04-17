@@ -18,6 +18,7 @@ namespace SaveCISE_Game
 
     static class GameController
     {
+        public static int nextWaveCountdown = 0;
         public static int enthusiasm = 140; //starting enthusiasm
         public const int CELL_WIDTH = 40;//30;
         public const int CELL_HEIGHT = 30;//15;
@@ -47,6 +48,7 @@ namespace SaveCISE_Game
         //private static double nextSpawnTime = 0.0d; // Stored in milliseconds
         //private static double nextWaveTime = 0.0d; // Stored in milliseconds
         //private static MobFactory mobFactory;
+        private static bool isFirstEnemyReleased = false;
         private static TowerPlacer towerPlacer;
         private static TowerRemover towerRemover;
         private static Button blockButton;
@@ -348,8 +350,8 @@ namespace SaveCISE_Game
                     t.generateNextFireTime(gameTime);
 
                     #if DEBUG
-                    Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
+                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
+                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
                     #endif
 
                     // Skip to next tower, if any
@@ -407,15 +409,17 @@ namespace SaveCISE_Game
                 // Is it time to spawn another enemy?
                 if (gameTime.TotalGameTime.TotalMilliseconds >= nextSpawnTime)
                 {
-                    #if DEBUG
-                    // Console.WriteLine("Spawning next enemy");
-                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    // Console.WriteLine("nextSpawnTime is " + (nextSpawnTime / 1000) + " secs");
-                    // Console.WriteLine("Current wave size is " + currentWaveSize);
-                    #endif
+                    // Mark first enemy released
+                    isFirstEnemyReleased = true;
 
                     if (waves[currentWaveIndex].Count != 0)
                     {
+                        #if DEBUG
+                        // Console.WriteLine("Spawning next enemy at " + gameTime.TotalGameTime.TotalMilliseconds);
+                        // Console.WriteLine("nextSpawnTime is " + (nextSpawnTime / 1000) + " secs");
+                        // Console.WriteLine("Current wave size is " + currentWaveSize);
+                        #endif
+
                         // Place the enemy and remove from waves list
                         addEnemy(waves[currentWaveIndex][0]);
                         waves[currentWaveIndex].RemoveAt(0);
@@ -425,7 +429,7 @@ namespace SaveCISE_Game
                     if (waves[currentWaveIndex].Count == 0)
                     {
                         #if DEBUG
-                        // Console.WriteLine("Wave finished");
+                        // Console.WriteLine("Wave finished at " + gameTime.TotalGameTime.TotalMilliseconds + ", next wave time is " + nextWaveTime);
                         #endif
 
                         // No more waves?
@@ -451,7 +455,8 @@ namespace SaveCISE_Game
                                 nextSpawnTime += nextWaveTime;
 
                                 #if DEBUG
-                                Console.WriteLine("Wave released at " + gameTime.TotalGameTime.TotalMilliseconds + ", next wave time is " + nextWaveTime);
+                                Console.WriteLine("Wave number " + (currentWaveIndex + 1));
+                                // Console.WriteLine("Wave released at " + gameTime.TotalGameTime.TotalMilliseconds + ", next spawn time is " + nextSpawnTime + ", next wave time is " + nextWaveTime);
                                 #endif
                             }
                         }
@@ -515,46 +520,13 @@ namespace SaveCISE_Game
             isGameStarted = true;
         }
 
-        /*
-        private static void generateWaves()
-        {
-            #if DEBUG
-            // Console.WriteLine("generateWaves() starting");
-            #endif
-
-            // Initialize the waves list
-            waves = new List<List<Enemy>>();
-
-            // waves 1-5
-            waves.Add(mobFactory.generateMob1(15, 1.5f, 20, 2500, 10));
-            waves.Add(mobFactory.generateMob1(20, 1.5f, 30, 2500, 10));
-            waves.Add(mobFactory.generateMob2(60, 3.8f, 13, 1000, 5));
-            waves.Add(mobFactory.generateMob3(5, 1f, 400, 2500, 80));
-            waves.Add(mobFactory.generateMob1(25, 1.5f, 120, 2500, 20));
-            // boss 1
-            waves.Add(mobFactory.generateBoss1(1, 2f, 700, 250000, 600));
-            // waves 6-10
-            waves.Add(mobFactory.generateMob1(30, 1.5f, 200, 2500, 20));
-            waves.Add(mobFactory.generateMob3(7, 1f, 700, 2500, 100));
-            waves.Add(mobFactory.generateMob2(150, 3.8f, 20, 2500, 5));
-            waves.Add(mobFactory.generateMob1(50, 1.5f, 220, 2500, 20));
-            waves.Add(mobFactory.generateMob3(15, 1f, 1000, 2500, 50));
-            // boss 2
-            waves.Add(mobFactory.generateBoss2(1, 2f, 2600, 250000, 0));
-
-
-            #if DEBUG
-            // Console.WriteLine("generateWaves() ending");
-            #endif
-        }
-        */
-
         public static void towerShootEnemy(Tower from, Enemy target)
         {
+            #if DEBUG
+            // Console.WriteLine("FIRE!!!!");
+            #endif
+
             gameScene.add(new Bullet(new Vector2(from.getX()+from.getWidth()/4.0f, from.getY()-from.getHeight()/4.0f), new Vector2(target.getX()+target.getWidth()/4.0f, target.getY()-target.getHeight()/4.0f)));
-#if DEBUG
-            Console.WriteLine("FIRE!!!!");
-#endif
         }
 
         internal static void removeActor(Actor a)
