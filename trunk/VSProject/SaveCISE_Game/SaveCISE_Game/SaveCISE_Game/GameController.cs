@@ -38,6 +38,7 @@ namespace SaveCISE_Game
         private static List<Enemy> deadEnemies;
         private static List<Tower> towers;
         private static List<Tower> deleteTowers;
+        private static List<Actor> deleteActors;
         private static bool isGameStarted; // Whether or not gameplay has started
         private static bool isPaused = false; // Whether or not gameplay is currently paused, hardcoded to false for now
         private static List<List<Enemy>> waves; // The enemies that make up each wave
@@ -100,6 +101,7 @@ namespace SaveCISE_Game
             deadEnemies = new List<Enemy>();
             towers = new List<Tower>();
             deleteTowers = new List<Tower>();
+            deleteActors = new List<Actor>();
 
             towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
             gameScene.add(towerPlacer);
@@ -141,6 +143,7 @@ namespace SaveCISE_Game
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
 
             gameScene.add(new BudgetDrawer());
+
             return gameScene;
         }
 
@@ -264,6 +267,12 @@ namespace SaveCISE_Game
                 gameScene.remove(t);
             }
             deleteTowers.Clear();
+
+            foreach (Actor a in deleteActors)
+            {
+                gameScene.remove(a);
+            }
+            deleteActors.Clear();
 
             // Iterate each tower
             // 1. Acquire new targets as they enter into the targeting range
@@ -501,9 +510,15 @@ namespace SaveCISE_Game
 
         public static void towerShootEnemy(Tower from, Enemy target)
         {
+            gameScene.add(new Bullet(new Vector2(from.getX()+from.getWidth()/4.0f, from.getY()-from.getHeight()/4.0f), new Vector2(target.getX()+target.getWidth()/4.0f, target.getY()-target.getHeight()/4.0f)));
 #if DEBUG
             Console.WriteLine("FIRE!!!!");
 #endif
+        }
+
+        internal static void removeActor(Actor a)
+        {
+            deleteActors.Add(a);
         }
     }
 }

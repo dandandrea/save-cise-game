@@ -108,6 +108,18 @@ namespace SaveCISE_Game
 #endif
         }
 
+        public virtual void draw(SpriteBatch sb, float angle)
+        {
+            double scaleX = ((double)width / sprite.getWidth());
+            double scaleY = ((double)height / sprite.getHeight());
+            sprite.drawAngled(sb, x, y, angle, originX, originY, scaleX, scaleY);
+
+#if DEBUG
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("spr_whitePixel"));
+            originDrawer.draw(sb, x-1, y-1,0,3,3,Color.Red);
+#endif
+        }
+
         public virtual void update()
         {
             
@@ -188,6 +200,16 @@ namespace SaveCISE_Game
         {
             this.width = (int)(width*scale);
             this.height = (int)(height * scale);
+        }
+
+        public int getWidth()
+        {
+            return width;
+        }
+
+        public int getHeight()
+        {
+            return height;
         }
 
         internal virtual void keyPressed(Microsoft.Xna.Framework.Input.Keys key)
