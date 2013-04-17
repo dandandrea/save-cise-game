@@ -54,7 +54,7 @@ namespace SaveCISE_Game
         internal List<Enemy> generateBoss1(int x, float spd, int str, int dD, int eB)
         {
             List<Enemy> Mobs = new List<Enemy>();
-            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8);
+            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_govSnot"));
             for (int i = 0; i < x; i++)
             {
                 Mobs.Add(new Enemy(enemySprite, grid, spd, str, dD, eB));
@@ -66,7 +66,7 @@ namespace SaveCISE_Game
         internal List<Enemy> generateBoss2(int x, float spd, int str, int dD, int eB)
         {
             List<Enemy> Mobs = new List<Enemy>();
-            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_EnemyWalking"), 64, 64, 64, 8);
+            Sprite enemySprite = new Sprite(ContentStore.getTexture("spr_deanAbernaughty"));
             for (int i = 0; i < x; i++)
             {
                 Mobs.Add(new Enemy(enemySprite, grid, spd, str, dD, eB));

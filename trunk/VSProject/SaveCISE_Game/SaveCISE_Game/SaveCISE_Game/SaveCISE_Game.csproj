@@ -106,6 +106,8 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <Content Include="spr_deanAbernaughty.png" />
+    <Content Include="spr_govSnot.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SaveCISE_GameContent\SaveCISE_GameContent.contentproj">
