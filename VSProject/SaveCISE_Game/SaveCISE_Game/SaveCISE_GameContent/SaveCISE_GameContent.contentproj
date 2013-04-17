@@ -37,13 +37,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backgrounds\bg_mainScreen.png">
-      <Name>bg_mainScreen</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Backgrounds\bg_gamePlayArea.png">
       <Name>bg_gamePlayArea</Name>
       <Importer>TextureImporter</Importer>
@@ -182,6 +175,18 @@
     </Compile>
     <Compile Include="Sprites\spr_yellButton.png">
       <Name>spr_yellButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\bg_gameOver.png">
+      <Name>bg_gameOver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Backgrounds\bg_mainScreen.png">
+      <Name>bg_mainScreen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
