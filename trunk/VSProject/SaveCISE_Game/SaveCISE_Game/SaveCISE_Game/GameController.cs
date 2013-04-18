@@ -12,6 +12,9 @@ namespace SaveCISE_Game
         BLOCK,
         SLOW,
         HARM,
+        DANKEL,
+        DAVIS,
+        BERMUDEZ,
         NUM_TYPES,
         NONE
     }
@@ -29,7 +32,7 @@ namespace SaveCISE_Game
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
         public const int MAX_BUDGET = 20000000;
-        private static int budget = MAX_BUDGET;
+        public static int budget = MAX_BUDGET;
         private static Scene gameScene;
         private static Grid grid;
         private static List<Enemy> enemies;
@@ -43,6 +46,9 @@ namespace SaveCISE_Game
         private static Button blockButton;
         public static Button yellButton;
         public static Button slowButton;
+        public static Button dankelButton;
+        public static Button davisButton;
+        public static Button bermudezButton;
         private static SoundEffectInstance footsteps;
         public static WaveSpawner waveSpawner;
         
@@ -116,21 +122,21 @@ namespace SaveCISE_Game
             GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_blockButton"), 48, 48, 4, 2));
             GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_yellButton"), 48, 48, 4, 2));
             GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_slowButton"), 48, 48, 4, 2));
-            Button tower4 = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower5 = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            Button tower6 = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.dankelButton = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.davisButton = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.bermudezButton = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
             gameScene.add(blockButton);
             gameScene.add(yellButton);
             gameScene.add(slowButton);
-            gameScene.add(tower4);
-            gameScene.add(tower5);
-            gameScene.add(tower6);
+            gameScene.add(dankelButton);
+            gameScene.add(davisButton);
+            gameScene.add(bermudezButton);
             blockButton.setMouseReleasedAction(new PlaceWallTowerGameAction());
             yellButton.setMouseReleasedAction(new PlaceYellTowerGameAction());
             slowButton.setMouseReleasedAction(new PlaceSlowTowerGameAction());
-            tower4.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            tower5.setMouseReleasedAction(new PlaceWallTowerGameAction());
-            tower6.setMouseReleasedAction(new PlaceWallTowerGameAction());
+            dankelButton.setMouseReleasedAction(new PlaceDankelTowerGameAction());
+            davisButton.setMouseReleasedAction(new PlaceDavisTowerGameAction());
+            bermudezButton.setMouseReleasedAction(new PlaceBermudezTowerGameAction());
 
             Button deleteTower = new Button(696, 130, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
             gameScene.add(deleteTower);
@@ -173,6 +179,9 @@ namespace SaveCISE_Game
                         newTower.setOrigin(10, 34);//newTower.setOrigin(0, 12);
                         towers.Add(newTower);
                         gameScene.add(newTower);
+
+                        newTower.dankelDamageBoost(towers);
+
                         foreach (Enemy e in enemies)
                         {
                             e.updatePath();
@@ -180,7 +189,7 @@ namespace SaveCISE_Game
 
                     }
 
-                    //Discount the cost of the tower from enthusiasm
+                    //Sutract the cost of the tower from enthusiasm
                     GameController.enthusiasm -= Tower.getTowerCost(typeToPlace);
 
                     return true;
@@ -220,6 +229,12 @@ namespace SaveCISE_Game
                         //Return half cost of tower
                         float subsidy = (float)0.5 * Tower.getTowerCost(t.getTowerType());
                         GameController.enthusiasm += (int) subsidy;
+
+                        if (t.getTowerType() == towerTypes.DANKEL)
+                        {
+                            t.dankelDamageBoost(towers, true);
+                        }
+
 
                         return true;
                     }
@@ -306,7 +321,7 @@ namespace SaveCISE_Game
                 #endif
 
                 // If this is not a tower that deals damage or slows down then skip this entire section of code
-                if (t.getDamageDealt() == 0 && t.getPercentSlowDownDealt() == 0f)
+                if (t.getDamageDealt() == 0 && t.getPercentSlowDownDealt() == 0f && t.getTowerType() != towerTypes.BERMUDEZ && t.getTowerType() != towerTypes.DAVIS)
                 {
                     #if DEBUG
                     // Console.WriteLine("This tower does not deal damage or slow down, skipping to next tower");
@@ -490,6 +505,30 @@ namespace SaveCISE_Game
             else
             {
                 slowButton.setActive(true);
+            }
+            if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.DANKEL))
+            {
+                dankelButton.setActive(false);
+            }
+            else
+            {
+                dankelButton.setActive(true);
+            }
+            if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.DAVIS))
+            {
+                davisButton.setActive(false);
+            }
+            else
+            {
+                davisButton.setActive(true);
+            }
+            if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.BERMUDEZ))
+            {
+                bermudezButton.setActive(false);
+            }
+            else
+            {
+                bermudezButton.setActive(true);
             }
 
         }

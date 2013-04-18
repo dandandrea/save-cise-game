@@ -74,8 +74,11 @@
   <ItemGroup>
     <Compile Include="Actor.cs" />
     <Compile Include="BudgetDrawer.cs" />
+    <Compile Include="PlaceBermudezTowerGameAction.cs" />
+    <Compile Include="PlaceDankelTowerGameAction.cs" />
     <Compile Include="ContentStore.cs" />
     <Compile Include="MobFactory.cs" />
+    <Compile Include="PlaceDavisTowerGameAction.cs" />
     <Compile Include="PlaceSlowTowerGameAction.cs" />
     <Compile Include="PlaceYellTowerGameAction.cs" />
     <Compile Include="DeleteTowerGameAction.cs" />
