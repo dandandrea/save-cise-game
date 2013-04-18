@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Actor.cs" />
     <Compile Include="BudgetDrawer.cs" />
+    <Compile Include="ContentStore.cs" />
     <Compile Include="MobFactory.cs" />
     <Compile Include="PlaceSlowTowerGameAction.cs" />
     <Compile Include="PlaceYellTowerGameAction.cs" />
@@ -90,7 +91,6 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="ChangeSceneGameAction.cs" />
-    <Compile Include="ContentStore.cs" />
     <Compile Include="GridCell.cs" />
     <Compile Include="GameAction.cs" />
     <Compile Include="GameController.cs" />
