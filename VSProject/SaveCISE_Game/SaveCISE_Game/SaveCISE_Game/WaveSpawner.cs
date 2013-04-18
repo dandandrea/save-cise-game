@@ -8,9 +8,9 @@ namespace SaveCISE_Game
 {
     class WaveSpawner
     {
-        private const int WAVE_ALL_SPAWN_SECS = 5; // Number of seconds to spawn the complete wave in
-        private const int WAVE_SPAWN_DELAY = 2; // Delay between waves
-        private const int INITIAL_WAVE_DELAY_SECS = 3; // Number of seconds to wait before releasing first wave
+        private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
+        private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
+        private const int INITIAL_WAVE_DELAY_SECS = 10; // Number of seconds to wait before releasing first wave
         private static List<List<Enemy>> waves; // The enemies that make up each wave
         private static List<int> waveStart;
         private static int currentWaveIndex = 0;
