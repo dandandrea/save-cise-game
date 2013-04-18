@@ -69,7 +69,7 @@ namespace SaveCISE_Game
 
             stage.addScene(openingScene);
 
-            Button playButton = new Button(200,250, new Sprite(ContentStore.getTexture("spr_beginButton"),200,50,3,3));
+            Button playButton = new Button(200,350, new Sprite(ContentStore.getTexture("spr_beginButton"),200,50,3,3));
             openingScene.add(playButton);
 
 #if DEBUG
@@ -78,7 +78,7 @@ namespace SaveCISE_Game
             playButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 1));
 #endif
 
-            Button quitButton = new Button(200, 310, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
+            Button quitButton = new Button(200, 410, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
 
             openingScene.add(quitButton);
 

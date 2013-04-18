@@ -8,6 +8,10 @@ namespace SaveCISE_Game
 {
     class Tower : Actor
     {
+        private const int BERMUDEZ_ENTH_INC = 10000;
+        private const int DAVIS_BUDGET_INC = 100;
+        private const int DANKELBOOSTRANGE = 75;
+        private const double DANKEL_DAM_MULT = 1.5;
         private towerTypes towerType; // Type of tower
         private int damageDealt; // This is the amount of damage that the tower deals per attack (if any)
         private float percentSlowDownDealt; // This is the percentage of slow down that this tower deals 
@@ -16,7 +20,8 @@ namespace SaveCISE_Game
         private double fireRateSecs; // How often the tower should fire, in seconds
         private double nextFireTime = 0.0d; // The next fire time (in milliseconds)
         private bool isAreaEffect;
-        private Color color;
+        public Color color;
+        public bool damageBoost = false;
 
         public Tower(Sprite sprite, towerTypes towerType)
             : base(sprite)
@@ -29,6 +34,7 @@ namespace SaveCISE_Game
         // Fire at the active targets, if any
         public void fireAtActiveTargets()
         {
+
             #if DEBUG
             // Console.WriteLine("[Tower.fireAtActiveTarget()] Looking for active targets");
             #endif
@@ -37,6 +43,15 @@ namespace SaveCISE_Game
             List<Enemy> removalList = new List<Enemy>();
             if (activeTargetList != null)
             {
+                if (towerType == towerTypes.BERMUDEZ)
+                {
+                    GameController.enthusiasm += BERMUDEZ_ENTH_INC;
+                }
+                else if (towerType == towerTypes.DAVIS)
+                {
+                    GameController.budget += DAVIS_BUDGET_INC;
+                }
+
                 foreach (Enemy e in activeTargetList)
                 {
                     #if DEBUG
@@ -166,6 +181,50 @@ namespace SaveCISE_Game
             }
         }
 
+        public void dankelDamageBoost(List<Tower> towers, bool remove = false)
+        {
+            bool isDankel = false;
+            if (this.towerType == towerTypes.DANKEL)
+            {
+                isDankel = true;
+            }
+
+            foreach (Tower t in towers)
+            {
+                int xDiff = t.getX() - this.x;
+                int yDiff = t.getY() - this.y;
+                int c = (xDiff * xDiff) + (yDiff * yDiff);
+
+                if (c < (DANKELBOOSTRANGE * DANKELBOOSTRANGE))
+                {
+                    if (remove)
+                    {
+                        towerTypes type = t.getTowerType();
+                        t.setTowerProperties(type);
+                        t.damageBoost = false;
+                    }
+                    else
+                    {
+                        if (isDankel)
+                        {
+                            double multiplier = t.damageDealt * DANKEL_DAM_MULT;
+                            t.damageDealt = (int)multiplier;
+                            t.damageBoost = true;
+                            t.color = Color.Tomato;
+                        }
+                        else if(t.towerType == towerTypes.DANKEL)
+                        {
+                            double multiplier = this.damageDealt * DANKEL_DAM_MULT;
+                            this.damageDealt = (int)multiplier;
+                            this.damageBoost = true;
+                            this.color = Color.Tomato;
+                        }
+                    }
+                }
+            }
+
+        }
+
         // Remove enemies that are on the target list but have fallen out of range
         public void dropTargetsOutOfRange()
         {
@@ -236,6 +295,7 @@ namespace SaveCISE_Game
 
         private void setTowerProperties(towerTypes towerType)
         {
+
             switch (towerType)
             {
                 case towerTypes.HARM:
@@ -267,6 +327,33 @@ namespace SaveCISE_Game
                     this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
                     this.color = Color.Silver;
                     break;
+                case towerTypes.DANKEL:
+                    this.targetingRange = 0;
+                    this.fireRateSecs = 0;
+                    this.damageDealt = 0;
+                    this.isAreaEffect = false;
+                    this.percentSlowDownDealt = 0f;
+                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.color = Color.Tomato;
+                    break;
+                case towerTypes.BERMUDEZ:
+                    this.targetingRange = 2000;
+                    this.fireRateSecs = 4;
+                    this.damageDealt = 0;
+                    this.isAreaEffect = false;
+                    this.percentSlowDownDealt = 0f;
+                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.color = Color.Green;
+                    break;
+                case towerTypes.DAVIS:
+                    this.targetingRange = 2000;
+                    this.fireRateSecs = 4;
+                    this.damageDealt = 0;
+                    this.isAreaEffect = false;
+                    this.percentSlowDownDealt = 0f;
+                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.color = Color.Yellow;
+                    break;
             }
         }
 
@@ -280,6 +367,12 @@ namespace SaveCISE_Game
                     return 100;
                 case towerTypes.BLOCK:
                     return 10;
+                case towerTypes.DANKEL:
+                    return 70;
+                case towerTypes.BERMUDEZ:
+                    return 70;
+                case towerTypes.DAVIS:
+                    return 70;
             }
 
             return 0;

@@ -32,45 +32,32 @@ namespace SaveCISE_Game
             //"Enthusiasm"
             string output = "Enthusiasm";
             Vector2 FontOrigin = font1.MeasureString(output) / 2;
-            Vector2 FontPos = new Vector2(720.0f, 200.0f);
+            Vector2 FontPos = new Vector2(720.0f, 250.0f);
             sb.DrawString(font1, output, FontPos, Color.Black,
                           0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
             
            //Enthusiasm value
             int value = GameController.enthusiasm;
             FontOrigin = font1.MeasureString(value.ToString()) / 2;
-            FontPos = new Vector2(720.0f, 230.0f);
+            FontPos = new Vector2(720.0f, 280.0f);
             sb.DrawString(font1, "$" + value.ToString(), FontPos, Color.Black,
                           0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
 
-            //"Next"
-            output = "Next";
-            FontOrigin = font1.MeasureString(output) / 2;
-            FontPos = new Vector2(720.0f, 300.0f);
-            sb.DrawString(font1, output, FontPos, Color.Black,
-                          0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
 
             output = "Time to Next Wave";
             FontOrigin = font1.MeasureString(output) / 2;
-            FontPos = new Vector2(720.0f, 410.0f);
+            FontPos = new Vector2(720.0f, 390.0f);
             sb.DrawString(font1, output, FontPos, Color.Black,
                           0, FontOrigin, 0.8f, SpriteEffects.None, 0.5f);
 
             // "Time to Next Wave" value
             value = GameController.nextWaveCountdown;
             FontOrigin = font1.MeasureString(value.ToString()) / 2;
-            FontPos = new Vector2(695.0f, 440.0f);
+            FontPos = new Vector2(695.0f, 420.0f);
             sb.DrawString(font1, value + " secs", FontPos, Color.Black,
                           0, FontOrigin, 1.0f, SpriteEffects.None, 0.5f);
 
             sb.End();
-
-            //Next image area
-            int nextHeight = 75;
-            int nextWidth = 140;
-            Sprite nextBackground = new Sprite(ContentStore.getTexture("spr_whitePixel"), nextWidth,nextHeight, 1, 1);
-            nextBackground.draw(sb, 650, 320, 1);
-
 
             
        }
