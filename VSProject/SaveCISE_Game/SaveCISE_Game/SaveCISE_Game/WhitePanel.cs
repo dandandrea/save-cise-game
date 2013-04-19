@@ -50,10 +50,10 @@ namespace SaveCISE_Game
                     desc = "Increases damage";
                     break;
                 case towerTypes.DAVIS:
-                    desc = "Increases enthusiasm.";
+                    desc = "Heals budget.";
                     break;
                 case towerTypes.BERMUDEZ:
-                    desc = "Increases budget.";
+                    desc = "Increases enthusiasm.";
                     break;
                 case towerTypes.NUM_TYPES:
                     desc = "Delete a tower.";

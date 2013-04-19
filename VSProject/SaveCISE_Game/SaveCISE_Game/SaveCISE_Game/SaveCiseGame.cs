@@ -101,6 +101,10 @@ namespace SaveCISE_Game
             Scene gameScene = GameController.getGameScene();
             gameScene.setEscapeAction(new ChangeSceneGameAction(stage, 0));
             stage.addScene(gameScene);
+
+            Scene gameOverScene = new Scene();
+            gameOverScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameOver")));
+            stage.addScene(gameOverScene);
             
         }
 
@@ -124,7 +128,12 @@ namespace SaveCISE_Game
             doKeyboardEvents();
             doMouseEvents();
             stage.Update( gameTime );
+            if (GameController.isGameOver())
+            {
+                GameAction sceneChanger = new ChangeSceneGameAction(stage, 3);
+                sceneChanger.doAction();
 
+            }
             base.Update(gameTime);
         }
 

@@ -122,9 +122,9 @@ namespace SaveCISE_Game
             GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_blockButton"), 48, 48, 4, 2));
             GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_yellButton"), 48, 48, 4, 2));
             GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_slowButton"), 48, 48, 4, 2));
-            GameController.dankelButton = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            GameController.davisButton = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
-            GameController.bermudezButton = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_towerButton"), 48, 48, 4, 2));
+            GameController.dankelButton = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_dankel"), 48, 48, 4, 2));
+            GameController.davisButton = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_davis"), 48, 48, 4, 2));
+            GameController.bermudezButton = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_bermudez"), 48, 48, 4, 2));
             gameScene.add(blockButton);
             gameScene.add(yellButton);
             gameScene.add(slowButton);
