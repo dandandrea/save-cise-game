@@ -105,6 +105,10 @@ namespace SaveCISE_Game
             Scene gameOverScene = new Scene();
             gameOverScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameOver")));
             stage.addScene(gameOverScene);
+
+            Scene gameWinScene = new Scene();
+            gameWinScene.setBackground(new Sprite(ContentStore.getTexture("bg_winScreen")));
+            stage.addScene(gameWinScene);
             
         }
 
@@ -133,6 +137,11 @@ namespace SaveCISE_Game
                 GameAction sceneChanger = new ChangeSceneGameAction(stage, 3);
                 sceneChanger.doAction();
 
+            }
+            if (GameController.isGameWon())
+            {
+                GameAction sceneChanger = new ChangeSceneGameAction(stage, 4);
+                sceneChanger.doAction();
             }
             base.Update(gameTime);
         }

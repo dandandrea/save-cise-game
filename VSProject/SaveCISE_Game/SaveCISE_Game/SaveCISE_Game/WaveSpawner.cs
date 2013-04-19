@@ -52,6 +52,7 @@ namespace SaveCISE_Game
                         if (currentWaveIndex == waves.Count - 1)
                         {
                             // Set current wave index to -1
+                            GameController.lastWave();
                             currentWaveIndex = -1;
                         }
                         else

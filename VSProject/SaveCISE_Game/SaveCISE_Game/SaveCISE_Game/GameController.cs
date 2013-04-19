@@ -51,6 +51,7 @@ namespace SaveCISE_Game
         public static Button bermudezButton;
         private static SoundEffectInstance footsteps;
         public static WaveSpawner waveSpawner;
+        private static bool isLastWave = false;
         
 
         public static void hurtBudget(int damage)
@@ -568,6 +569,16 @@ namespace SaveCISE_Game
         internal static void removeActor(Actor a)
         {
             deleteActors.Add(a);
+        }
+
+        internal static void lastWave()
+        {
+            isLastWave = true;
+        }
+
+        internal static bool isGameWon()
+        {
+            return isLastWave && (enemies.Count == 0);
         }
     }
 }

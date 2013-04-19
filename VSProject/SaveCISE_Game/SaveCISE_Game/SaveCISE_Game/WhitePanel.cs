@@ -38,22 +38,22 @@ namespace SaveCISE_Game
             switch (WhitePanel.caption)
             {
                 case towerTypes.BLOCK:
-                    desc = "Blocks path of the enemy.";
+                    desc = "Blocks path of the enemy.\n Cost: 10";
                     break;
                 case towerTypes.HARM:
-                    desc = "Attacks using shouting force.";
+                    desc = "Attacks using shouting force.\n Cost: 50";
                     break;
                 case towerTypes.SLOW:
-                    desc = "Slows down nearby enemies.";
+                    desc = "Slows down nearby enemies.\n Cost: 100";
                     break;
                 case towerTypes.DANKEL:
-                    desc = "Increases damage";
+                    desc = "Increases damage.\n Cost: 70";
                     break;
                 case towerTypes.DAVIS:
-                    desc = "Heals budget.";
+                    desc = "Heals budget.\n Cost 70";
                     break;
                 case towerTypes.BERMUDEZ:
-                    desc = "Increases enthusiasm.";
+                    desc = "Increases enthusiasm.\n Cost 70";
                     break;
                 case towerTypes.NUM_TYPES:
                     desc = "Delete a tower.";
