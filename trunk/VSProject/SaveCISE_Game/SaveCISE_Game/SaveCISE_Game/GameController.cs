@@ -131,6 +131,12 @@ namespace SaveCISE_Game
             gameScene.add(dankelButton);
             gameScene.add(davisButton);
             gameScene.add(bermudezButton);
+            blockButton.setMouseOverAction(new BlockTowerDescriptionGameAction());
+            yellButton.setMouseOverAction(new ShoutTowerDescriptionGameAction());
+            slowButton.setMouseOverAction(new SlowTowerDescriptionGameAction());
+            dankelButton.setMouseOverAction(new DankelTowerDescriptionGameAction());
+            davisButton.setMouseOverAction(new DavisTowerDescriptionGameAction());
+            bermudezButton.setMouseOverAction(new BermudezTowerDescriptionGameAction());
             blockButton.setMouseReleasedAction(new PlaceWallTowerGameAction());
             yellButton.setMouseReleasedAction(new PlaceYellTowerGameAction());
             slowButton.setMouseReleasedAction(new PlaceSlowTowerGameAction());
@@ -141,6 +147,7 @@ namespace SaveCISE_Game
             Button deleteTower = new Button(696, 130, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
             gameScene.add(deleteTower);
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
+            deleteTower.setMouseOverAction(new DeleteTowerDescriptionGameAction());
 
             gameScene.add(new BudgetDrawer());
 

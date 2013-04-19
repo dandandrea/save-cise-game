@@ -73,7 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor.cs" />
+    <Compile Include="BermudezTowerDescriptionGameAction.cs" />
+    <Compile Include="BlockTowerDescriptionGameAction.cs" />
     <Compile Include="BudgetDrawer.cs" />
+    <Compile Include="DankelTowerDescriptionGameAction.cs" />
+    <Compile Include="DavisTowerDescriptionGameAction.cs" />
+    <Compile Include="DeleteTowerDescriptionGameAction.cs" />
     <Compile Include="PlaceBermudezTowerGameAction.cs" />
     <Compile Include="PlaceDankelTowerGameAction.cs" />
     <Compile Include="ContentStore.cs" />
@@ -82,6 +87,8 @@
     <Compile Include="PlaceSlowTowerGameAction.cs" />
     <Compile Include="PlaceYellTowerGameAction.cs" />
     <Compile Include="DeleteTowerGameAction.cs" />
+    <Compile Include="ShoutTowerDescriptionGameAction.cs" />
+    <Compile Include="SlowTowerDescriptionGameAction.cs" />
     <Compile Include="TowerRemover.cs" />
     <Compile Include="WaveSpawner.cs" />
     <Compile Include="WhitePanel.cs" />
