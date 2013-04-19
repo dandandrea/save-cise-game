@@ -8,7 +8,7 @@ namespace SaveCISE_Game
 {
     class Tower : Actor
     {
-        private const int BERMUDEZ_ENTH_INC = 10000;
+        private const int BERMUDEZ_ENTH_INC = 20;
         private const int DAVIS_BUDGET_INC = 100;
         private const int DANKELBOOSTRANGE = 75;
         private const double DANKEL_DAM_MULT = 1.5;
