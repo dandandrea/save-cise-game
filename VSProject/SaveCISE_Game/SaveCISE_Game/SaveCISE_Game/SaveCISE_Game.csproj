@@ -87,6 +87,7 @@
     <Compile Include="PlaceSlowTowerGameAction.cs" />
     <Compile Include="PlaceYellTowerGameAction.cs" />
     <Compile Include="DeleteTowerGameAction.cs" />
+    <Compile Include="ReplayGameAction.cs" />
     <Compile Include="ShoutTowerDescriptionGameAction.cs" />
     <Compile Include="SlowTowerDescriptionGameAction.cs" />
     <Compile Include="TowerRemover.cs" />
