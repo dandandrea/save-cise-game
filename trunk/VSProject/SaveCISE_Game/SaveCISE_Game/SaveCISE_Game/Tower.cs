@@ -304,7 +304,7 @@ namespace SaveCISE_Game
                     this.damageDealt = 5;
                     this.percentSlowDownDealt = 0f;
                     this.isAreaEffect = false;
-                    this.setSprite(new Sprite(ContentStore.getTexture("spr_yell")));
+                    this.setSprite(new Sprite(ContentStore.getTexture("Copy of spr_yell")));
                     this.color = Color.Orange;
                     break;
 
@@ -314,7 +314,7 @@ namespace SaveCISE_Game
                     this.damageDealt = 1;
                     this.isAreaEffect = true;
                     this.percentSlowDownDealt = 30.0f;
-                    this.setSprite(new Sprite(ContentStore.getTexture("spr_slow")));
+                    this.setSprite(new Sprite(ContentStore.getTexture("Copy of spr_slow")));
                     this.color = Color.Blue;
                     break;
 
@@ -324,7 +324,7 @@ namespace SaveCISE_Game
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
-                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.setSprite(new Sprite(ContentStore.getTexture("Copy of spr_blockTower")));
                     this.color = Color.Silver;
                     break;
                 case towerTypes.DANKEL:
@@ -333,7 +333,7 @@ namespace SaveCISE_Game
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
-                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.setSprite(new Sprite(ContentStore.getTexture("Copy of spr_blockTower")));
                     this.color = Color.Tomato;
                     break;
                 case towerTypes.BERMUDEZ:
@@ -342,7 +342,7 @@ namespace SaveCISE_Game
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
-                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.setSprite(new Sprite(ContentStore.getTexture("Copy of spr_blockTower")));
                     this.color = Color.Green;
                     break;
                 case towerTypes.DAVIS:
@@ -351,7 +351,7 @@ namespace SaveCISE_Game
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
-                    this.setSprite(new Sprite(ContentStore.getTexture("spr_blockTower")));
+                    this.setSprite(new Sprite(ContentStore.getTexture("Copy of spr_blockTower")));
                     this.color = Color.Yellow;
                     break;
             }

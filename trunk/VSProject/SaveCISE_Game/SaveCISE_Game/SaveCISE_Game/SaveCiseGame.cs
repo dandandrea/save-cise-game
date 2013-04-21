@@ -64,12 +64,12 @@ namespace SaveCISE_Game
             Scene openingScene = new Scene();
             openingScene.setEscapeAction(new QuitGameAction(this));
             
-            Sprite bg = new Sprite(ContentStore.getTexture("bg_mainScreen"));
+            Sprite bg = new Sprite(ContentStore.getTexture("Copy of bg_mainScreen"));
             openingScene.setBackground(bg);
 
             stage.addScene(openingScene);
 
-            Button playButton = new Button(200,350, new Sprite(ContentStore.getTexture("spr_beginButton"),200,50,3,3));
+            Button playButton = new Button(200,350, new Sprite(ContentStore.getTexture("Copy of spr_beginButton"),200,50,3,3));
             openingScene.add(playButton);
 
 #if DEBUG
@@ -78,7 +78,7 @@ namespace SaveCISE_Game
             playButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 1));
 #endif
 
-            Button quitButton = new Button(200, 410, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
+            Button quitButton = new Button(200, 410, new Sprite(ContentStore.getTexture("Copy of spr_quitButton"), 200, 50, 3, 3));
 
             openingScene.add(quitButton);
 
@@ -89,11 +89,11 @@ namespace SaveCISE_Game
 
             stage.addScene(instructionScene);
 
-            Button nextButton = new Button(500, 300, new Sprite(ContentStore.getTexture("spr_beginButton"), 200, 50, 3, 3));
+            Button nextButton = new Button(500, 300, new Sprite(ContentStore.getTexture("Copy of spr_beginButton"), 200, 50, 3, 3));
             nextButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 2));
             instructionScene.add(nextButton);
 
-            Button backButton = new Button(100, 300, new Sprite(ContentStore.getTexture("spr_quitButton"), 200, 50, 3, 3));
+            Button backButton = new Button(100, 300, new Sprite(ContentStore.getTexture("Copy of spr_quitButton"), 200, 50, 3, 3));
             backButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 0));
             instructionScene.add(backButton);
 
@@ -103,11 +103,11 @@ namespace SaveCISE_Game
             stage.addScene(gameScene);
 
             Scene gameOverScene = new Scene();
-            gameOverScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameOver")));
+            gameOverScene.setBackground(new Sprite(ContentStore.getTexture("Copy of bg_gameOver")));
             stage.addScene(gameOverScene);
 
             Scene gameWinScene = new Scene();
-            gameWinScene.setBackground(new Sprite(ContentStore.getTexture("bg_winScreen")));
+            gameWinScene.setBackground(new Sprite(ContentStore.getTexture("Copy of bg_winScreen")));
             stage.addScene(gameWinScene);
             
         }

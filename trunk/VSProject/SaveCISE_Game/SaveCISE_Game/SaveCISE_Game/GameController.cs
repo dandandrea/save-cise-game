@@ -90,7 +90,7 @@ namespace SaveCISE_Game
         {
             // Build Play Scene Here
             gameScene = new Scene();
-            gameScene.setBackground(new Sprite(ContentStore.getTexture("bg_gameArea")));
+            gameScene.setBackground(new Sprite(ContentStore.getTexture("Copy of bg_gameArea")));
 
             grid = new Grid();
             //mobFactory = new MobFactory(grid);
@@ -104,10 +104,10 @@ namespace SaveCISE_Game
             deleteTowers = new List<Tower>();
             deleteActors = new List<Actor>();
 
-            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
+            towerPlacer = new TowerPlacer(new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
             gameScene.add(towerPlacer);
 
-            towerRemover = new TowerRemover(new Sprite(ContentStore.getTexture("spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
+            towerRemover = new TowerRemover(new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
             gameScene.add(towerRemover);
 
             #if DEBUG
@@ -120,12 +120,12 @@ namespace SaveCISE_Game
             gameScene.add(wp);
 
             //Tower buttons
-            GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("spr_blockButton"), 48, 48, 4, 2));
-            GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("spr_yellButton"), 48, 48, 4, 2));
-            GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("spr_slowButton"), 48, 48, 4, 2));
-            GameController.dankelButton = new Button(647, 80, new Sprite(ContentStore.getTexture("spr_dankel"), 48, 48, 4, 2));
-            GameController.davisButton = new Button(696, 80, new Sprite(ContentStore.getTexture("spr_davis"), 48, 48, 4, 2));
-            GameController.bermudezButton = new Button(745, 80, new Sprite(ContentStore.getTexture("spr_bermudez"), 48, 48, 4, 2));
+            GameController.blockButton = new Button(647, 30, new Sprite(ContentStore.getTexture("Copy of spr_blockButton"), 48, 48, 4, 2));
+            GameController.yellButton = new Button(696, 30, new Sprite(ContentStore.getTexture("Copy of spr_yellButton"), 48, 48, 4, 2));
+            GameController.slowButton = new Button(745, 30, new Sprite(ContentStore.getTexture("Copy of spr_slowButton"), 48, 48, 4, 2));
+            GameController.dankelButton = new Button(647, 80, new Sprite(ContentStore.getTexture("Copy of spr_dankel"), 48, 48, 4, 2));
+            GameController.davisButton = new Button(696, 80, new Sprite(ContentStore.getTexture("Copy of spr_davis"), 48, 48, 4, 2));
+            GameController.bermudezButton = new Button(745, 80, new Sprite(ContentStore.getTexture("Copy of spr_bermudez"), 48, 48, 4, 2));
             gameScene.add(blockButton);
             gameScene.add(yellButton);
             gameScene.add(slowButton);
@@ -145,7 +145,7 @@ namespace SaveCISE_Game
             davisButton.setMouseReleasedAction(new PlaceDavisTowerGameAction());
             bermudezButton.setMouseReleasedAction(new PlaceBermudezTowerGameAction());
 
-            Button deleteTower = new Button(696, 130, new Sprite(ContentStore.getTexture("spr_deleteButton"), 48, 48, 4, 2));
+            Button deleteTower = new Button(696, 130, new Sprite(ContentStore.getTexture("Copy of spr_deleteButton"), 48, 48, 4, 2));
             gameScene.add(deleteTower);
             deleteTower.setMouseReleasedAction(new DeleteTowerGameAction());
             deleteTower.setMouseOverAction(new DeleteTowerDescriptionGameAction());
@@ -182,7 +182,7 @@ namespace SaveCISE_Game
                             grid.clearTile(cellY, cellX);
                             return false;
                         }
-                        Tower newTower = new Tower(new Sprite(ContentStore.getTexture("spr_blockTower")), typeToPlace);
+                        Tower newTower = new Tower(new Sprite(ContentStore.getTexture("Copy of spr_blockTower")), typeToPlace);
                         newTower.setLocation(cellX * CELL_WIDTH + GRID_OFFSET_X, cellY * CELL_HEIGHT + GRID_OFFSET_Y);
                         newTower.setOrigin(10, 34);//newTower.setOrigin(0, 12);
                         towers.Add(newTower);

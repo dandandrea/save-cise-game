@@ -82,8 +82,8 @@ namespace SaveCISE_Game
                 int nextWidth = 30;
                 float str = ((float)strength / (float)startingStrength) * nextWidth;
                 int healthWidth = (int)str;
-                Sprite healthBar = new Sprite(ContentStore.getTexture("spr_whitePixel"), nextWidth, nextHeight, 1, 1);
-                Sprite healthLeft = new Sprite(ContentStore.getTexture("spr_whitePixel"), healthWidth, nextHeight, 1, 1);
+                Sprite healthBar = new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"), nextWidth, nextHeight, 1, 1);
+                Sprite healthLeft = new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"), healthWidth, nextHeight, 1, 1);
                 healthBar.draw(sb, (x - (int)(originX * scaleX)) + 15, (y - (int)(originY * scaleY)) + 3, imageIndex, scaleX, scaleY, Color.Red);
                 healthLeft.draw(sb, (x - (int)(originX * scaleX)) + 15, (y - (int)(originY * scaleY)) + 3, imageIndex, scaleX, scaleY, Color.Green);
             }

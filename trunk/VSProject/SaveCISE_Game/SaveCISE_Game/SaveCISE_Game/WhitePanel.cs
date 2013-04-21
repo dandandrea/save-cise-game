@@ -17,7 +17,7 @@ namespace SaveCISE_Game
         public static towerTypes caption = towerTypes.NONE;
 
 
-       public WhitePanel() : base(new Sprite(ContentStore.getTexture("spr_whitePixel"), panelWidth, panelHeight, 1, 1))
+       public WhitePanel() : base(new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"), panelWidth, panelHeight, 1, 1))
         {
             this.panelTier = 1;
         }
