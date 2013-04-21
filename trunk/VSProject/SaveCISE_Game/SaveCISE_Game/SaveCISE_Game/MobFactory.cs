@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SaveCISE_Game
 {
@@ -33,7 +34,7 @@ namespace SaveCISE_Game
             Sprite enemySprite = new Sprite(ContentStore.getTexture("Copy of spr_EnemyWalking"), 64, 64, 64, 8);
             for (int i = 0; i < x; i++)
             {
-                Mobs.Add(new Enemy(enemySprite, grid, spd, str, dD, eB));
+                Mobs.Add(new Enemy(enemySprite, grid, spd, str, dD, eB, Color.DarkCyan));
             }
             return Mobs;
         }
@@ -45,7 +46,7 @@ namespace SaveCISE_Game
             Sprite enemySprite = new Sprite(ContentStore.getTexture("Copy of spr_EnemyWalking"), 64, 64, 64, 8);
             for (int i = 0; i < x; i++)
             {
-                Mobs.Add(new Enemy(enemySprite, grid, spd, str, dD, eB));
+                Mobs.Add(new Enemy(enemySprite, grid, spd, str, dD, eB, Color.LightPink));
             }
             return Mobs;
         }

@@ -63,6 +63,23 @@ namespace SaveCISE_Game
             this.startingStrength = strength;
         }
 
+        public Enemy(Sprite sprite, Grid aStarGrid, float speed, int strength, int damageDealt, int enthusiasmBonus, Color color)
+            : base(sprite)
+        {
+            this.aStarGrid = aStarGrid;
+            this.attack = aStarGrid.getRandomAttackPoint();
+            //Console.WriteLine("asd" + att.col + " " + att.row);
+            this.speed = speed;
+            this.strength = strength;
+            this.damageDealt = damageDealt;
+            this.enthusiasmBonus = enthusiasmBonus;
+            framesPerDirection = sprite.getSubimageCount() / (int)directions.NUM_DIRECTIONS;
+            setLocation(-10, -10); // Default spawn location
+            this.setOrigin(20, 40); // for drawing the sprite properly
+            this.startingStrength = strength;
+            this.myColor = color;
+        }
+
         public override void setLocation(int x, int y)
         {
             this.trueX = x;

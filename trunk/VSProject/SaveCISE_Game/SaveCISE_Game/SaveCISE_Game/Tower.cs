@@ -8,10 +8,10 @@ namespace SaveCISE_Game
 {
     class Tower : Actor
     {
-        private const int BERMUDEZ_ENTH_INC = 100;
-        private const int DAVIS_BUDGET_INC = 100;
-        private const int DANKELBOOSTRANGE = 75;
-        private const double DANKEL_DAM_MULT = 1.5;
+        private const int BERMUDEZ_ENTH_INC = 1;
+        private const int DAVIS_BUDGET_INC = 5000;
+        private const int DANKELBOOSTRANGE = 60;
+        private const double DANKEL_DAM_MULT = 3;
         private towerTypes towerType; // Type of tower
         private int damageDealt; // This is the amount of damage that the tower deals per attack (if any)
         private float percentSlowDownDealt; // This is the percentage of slow down that this tower deals 
@@ -352,7 +352,7 @@ namespace SaveCISE_Game
                     break;
                 case towerTypes.BERMUDEZ:
                     this.targetingRange = 2000;
-                    this.fireRateSecs = 4;
+                    this.fireRateSecs = .5;
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
@@ -361,7 +361,7 @@ namespace SaveCISE_Game
                     break;
                 case towerTypes.DAVIS:
                     this.targetingRange = 2000;
-                    this.fireRateSecs = 4;
+                    this.fireRateSecs = .1;
                     this.damageDealt = 0;
                     this.isAreaEffect = false;
                     this.percentSlowDownDealt = 0f;
@@ -380,13 +380,13 @@ namespace SaveCISE_Game
                 case towerTypes.SLOW:
                     return 100;
                 case towerTypes.BLOCK:
-                    return 10;
+                    return 5;
                 case towerTypes.DANKEL:
-                    return 70;
+                    return 500;
                 case towerTypes.BERMUDEZ:
-                    return 70;
+                    return 100;
                 case towerTypes.DAVIS:
-                    return 70;
+                    return 150;
             }
 
             return 0;
