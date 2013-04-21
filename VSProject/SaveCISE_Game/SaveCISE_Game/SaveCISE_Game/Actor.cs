@@ -91,7 +91,7 @@ namespace SaveCISE_Game
             sprite.draw(sb, x - (int)(originX*scaleX), y - (int)(originY*scaleY), imageIndex, scaleX, scaleY, Color.White);
 
 #if DEBUG
-            Sprite originDrawer = new Sprite(ContentStore.getTexture("spr_whitePixel"));
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"));
             originDrawer.draw(sb, x-1, y-1, 0, 3, 3, Color.Red);
 #endif
         }
@@ -103,7 +103,7 @@ namespace SaveCISE_Game
             sprite.draw(sb, x - (int)(originX * scaleX), y - (int)(originY * scaleY), imageIndex, scaleX, scaleY, color);
             
 #if DEBUG
-            Sprite originDrawer = new Sprite(ContentStore.getTexture("spr_whitePixel"));
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"));
             originDrawer.draw(sb, x-1, y-1,0,3,3,Color.Red);
 #endif
         }
@@ -115,7 +115,7 @@ namespace SaveCISE_Game
             sprite.drawAngled(sb, x, y, angle, originX, originY, scaleX, scaleY);
 
 #if DEBUG
-            Sprite originDrawer = new Sprite(ContentStore.getTexture("spr_whitePixel"));
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"));
             originDrawer.draw(sb, x-1, y-1,0,3,3,Color.Red);
 #endif
         }

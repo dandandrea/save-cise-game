@@ -13,12 +13,12 @@ namespace SaveCISE_Game
         int baseY = 300;
         Sprite cover;
         SpriteFont font;
-        public BudgetDrawer() : base(new Sprite(ContentStore.getTexture("spr_whitePixel")))
+        public BudgetDrawer() : base(new Sprite(ContentStore.getTexture("Copy of spr_whitePixel")))
         {
             this.width = 30;
             this.x = 607;
             this.y = 10;
-            this.cover = new Sprite(ContentStore.getTexture("spr_healthBarCover"));
+            this.cover = new Sprite(ContentStore.getTexture("Copy of spr_healthBarCover"));
             font = ContentStore.getFont("font_budget");
         }
 

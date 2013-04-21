@@ -18,7 +18,7 @@ namespace SaveCISE_Game
         Vector2 end;
 
         public Bullet(Vector2 start, Vector2 end)
-            : base(new Sprite(ContentStore.getTexture("spr_shoutBullet")))
+            : base(new Sprite(ContentStore.getTexture("Copy of spr_shoutBullet")))
         {
             this.setOrigin(32, 64);
             trueX = start.X;
