@@ -109,7 +109,21 @@ namespace SaveCISE_Game
                 // Otherwise return the entire active targets list
                 if (this.isAreaEffect == false)
                 {
+                    // We'll use this to return the enemy to fire on
                     List<Enemy> _enemyInRange = new List<Enemy>();
+
+                    // Scan the list for a boss (has very high damage) and return that boss if they exist
+                    foreach (Enemy e in enemiesInRange)
+                    {
+                        // Does this enemy do boss damage?  If so then return this enemy
+                        if (e.getDamageDealt() > 5000)
+                        {
+                            _enemyInRange.Add(e);
+                            return _enemyInRange;
+                        }
+                    }
+
+                    // If we made it here then we didn't find a boss in range, return the first enemy in range
                     _enemyInRange.Add(enemiesInRange[0]);
                     return _enemyInRange;
                 }

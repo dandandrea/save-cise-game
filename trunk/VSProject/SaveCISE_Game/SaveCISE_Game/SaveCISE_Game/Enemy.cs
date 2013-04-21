@@ -371,6 +371,11 @@ namespace SaveCISE_Game
             return this.strength;
         }
 
+        public int getDamageDealt()
+        {
+            return this.damageDealt;
+        }
+
         public bool getHasBeenSlowedDown()
         {
             return this.hasBeenSlowedDown;
