@@ -579,7 +579,7 @@ namespace SaveCISE_Game
             }
             else if (from.getTowerType() == towerTypes.SLOW)
             {
-                bulletColor = Color.Yellow;
+                bulletColor = Color.CornflowerBlue;
             }
 
             gameScene.add(new Bullet(new Vector2(from.getX() + from.getWidth() / 4.0f, from.getY() - from.getHeight() / 4.0f), new Vector2(target.getX() + target.getWidth() / 4.0f, target.getY() - target.getHeight() / 4.0f), bulletColor));
