@@ -38,22 +38,22 @@ namespace SaveCISE_Game
             switch (WhitePanel.caption)
             {
                 case towerTypes.BLOCK:
-                    desc = "Blocks path of the enemy.\n Cost: 10";
+                    desc = "Blocks path \nof the enemy.";
                     break;
                 case towerTypes.HARM:
-                    desc = "Attacks using shouting force.\n Cost: 50";
+                    desc = "Attacks using \nplasma-bytes.";
                     break;
                 case towerTypes.SLOW:
-                    desc = "Slows down nearby enemies.\n Cost: 100";
+                    desc = "Slows down \nnearby enemies.";
                     break;
                 case towerTypes.DANKEL:
-                    desc = "Increases damage.\n Cost: 70";
+                    desc = "Increases damage \nor surrounding \nstudents.";
                     break;
                 case towerTypes.DAVIS:
-                    desc = "Heals budget.\n Cost 70";
+                    desc = "Heals CISE \nbuilding over \ntime.";
                     break;
                 case towerTypes.BERMUDEZ:
-                    desc = "Increases enthusiasm.\n Cost 70";
+                    desc = "Increases \nmotivation \nover time.";
                     break;
                 case towerTypes.NUM_TYPES:
                     desc = "Delete a tower.";
@@ -61,9 +61,9 @@ namespace SaveCISE_Game
 
             }
             Vector2 FontOrigin = font1.MeasureString(desc) / 2;
-            Vector2 FontPos = new Vector2(720.0f, 200.0f);
-            sb.DrawString(font1, desc, FontPos, Color.Black,
-                          0, FontOrigin, 0.5f, SpriteEffects.None, 0.5f);
+            Vector2 FontPos = new Vector2(720.0f, 220.0f);
+            sb.DrawString(font1, desc, FontPos, Color.White,
+                          0, FontOrigin, 0.8f, SpriteEffects.None, 0.5f);
            
             //"Enthusiasm"
             string output = "Enthusiasm";
