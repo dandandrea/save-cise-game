@@ -61,6 +61,16 @@ namespace SaveCISE_Game
             scenes.Add(scene);
         }
 
+        internal void removeScene(Scene scene)
+        {
+            scenes.Remove(scene);
+        }
+
+        internal void insertScene(int index, Scene scene)
+        {
+            scenes.Insert(index, scene);
+        }
+
         internal void mouseOver(int x, int y)
         {
             scenes[currentScene].mouseOver(x,y);

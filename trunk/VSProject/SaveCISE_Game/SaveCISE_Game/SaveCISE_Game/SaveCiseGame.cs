@@ -75,11 +75,11 @@ namespace SaveCISE_Game
             // Go straight to the 2nd stage
             playButton.setMouseReleasedAction(new ChangeSceneGameAction(stage, 2));
 
-            Button quitButton = new Button(200, 410, new Sprite(ContentStore.getTexture("Copy of spr_quitButton"), 200, 50, 3, 3));
+            // Button quitButton = new Button(200, 410, new Sprite(ContentStore.getTexture("Copy of spr_quitButton"), 200, 50, 3, 3));
 
-            openingScene.add(quitButton);
+            // openingScene.add(quitButton);
 
-            quitButton.setMouseReleasedAction(new QuitGameAction(this));
+            // quitButton.setMouseReleasedAction(new QuitGameAction(this));
 
             // Build "How to Play" scene here
             Scene instructionScene = new Scene();
@@ -103,10 +103,13 @@ namespace SaveCISE_Game
             gameOverScene.setBackground(new Sprite(ContentStore.getTexture("Copy of bg_gameOver")));
             stage.addScene(gameOverScene);
 
+            Button replayButton = new Button(200, 410, new Sprite(ContentStore.getTexture("Copy of spr_quitButton"), 200, 50, 3, 3));
+            gameOverScene.add(replayButton);
+            replayButton.setMouseReleasedAction(new ReplayGameAction(stage, 2, gameScene));
+
             Scene gameWinScene = new Scene();
             gameWinScene.setBackground(new Sprite(ContentStore.getTexture("Copy of bg_winScreen")));
             stage.addScene(gameWinScene);
-            
         }
 
         /*
@@ -133,7 +136,7 @@ namespace SaveCISE_Game
             {
                 GameAction sceneChanger = new ChangeSceneGameAction(stage, 3);
                 sceneChanger.doAction();
-
+                GameController.budget = 1; // Hack to make replay button work
             }
             if (GameController.isGameWon())
             {

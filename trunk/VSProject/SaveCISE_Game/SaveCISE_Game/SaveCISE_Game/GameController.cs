@@ -266,6 +266,12 @@ namespace SaveCISE_Game
             deleteTowers.Add(t);
         }
 
+        internal static void reset()
+        {
+            GameController.waveSpawner = null;
+            GameController.buildGameScene();
+        }
+
         internal static void Update(GameTime gameTime)
         {
             if (isGameStarted && waveSpawner == null)
