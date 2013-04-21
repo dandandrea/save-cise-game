@@ -74,5 +74,14 @@ namespace SaveCISE_Game
             sb.Draw(spriteSheet, dest, src, Color.White, angle, new Vector2(originX,originY),SpriteEffects.None, 1.0f);
             sb.End();
         }
+
+        internal void drawAngled(SpriteBatch sb, int x, int y, float angle, int originX, int originY, double scaleX, double scaleY, Color color)
+        {
+            Rectangle src = new Rectangle(0, 0, spriteWidth, spriteHeight);
+            Rectangle dest = new Rectangle(x, y, (int)(spriteWidth * scaleX), (int)(spriteHeight * scaleY));
+            sb.Begin();
+            sb.Draw(spriteSheet, dest, src, color, angle, new Vector2(originX, originY), SpriteEffects.None, 1.0f);
+            sb.End();
+        }
     }
 }

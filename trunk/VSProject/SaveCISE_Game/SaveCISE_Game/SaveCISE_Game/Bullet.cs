@@ -16,10 +16,12 @@ namespace SaveCISE_Game
         float trueX;
         float trueY;
         Vector2 end;
+        Color color;
 
-        public Bullet(Vector2 start, Vector2 end)
+        public Bullet(Vector2 start, Vector2 end, Color color)
             : base(new Sprite(ContentStore.getTexture("Copy of spr_shoutBullet")))
         {
+            this.color = color;
             this.setOrigin(32, 64);
             trueX = start.X;
             trueY = start.Y;
@@ -61,7 +63,7 @@ namespace SaveCISE_Game
 
         public override void draw(SpriteBatch sb)
         {
-            this.draw(sb, angle+(float)Math.PI/2.0f);
+            this.draw(sb, angle+(float)Math.PI/2.0f, color);
         }
     }
 }

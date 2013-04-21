@@ -120,6 +120,18 @@ namespace SaveCISE_Game
 #endif
         }
 
+        public virtual void draw(SpriteBatch sb, float angle, Color color)
+        {
+            double scaleX = ((double)width / sprite.getWidth());
+            double scaleY = ((double)height / sprite.getHeight());
+            sprite.drawAngled(sb, x, y, angle, originX, originY, scaleX, scaleY, color);
+
+#if DEBUG
+            Sprite originDrawer = new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"));
+            originDrawer.draw(sb, x - 1, y - 1, 0, 3, 3, Color.Red);
+#endif
+        }
+
         public virtual void update()
         {
             
