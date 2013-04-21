@@ -569,7 +569,13 @@ namespace SaveCISE_Game
             // Console.WriteLine("FIRE!!!!");
             #endif
 
-            gameScene.add(new Bullet(new Vector2(from.getX()+from.getWidth()/4.0f, from.getY()-from.getHeight()/4.0f), new Vector2(target.getX()+target.getWidth()/4.0f, target.getY()-target.getHeight()/4.0f)));
+            Color bulletColor = Color.White;
+            if (from.damageBoost)
+            {
+                bulletColor = Color.Red;
+            }
+
+            gameScene.add(new Bullet(new Vector2(from.getX() + from.getWidth() / 4.0f, from.getY() - from.getHeight() / 4.0f), new Vector2(target.getX() + target.getWidth() / 4.0f, target.getY() - target.getHeight() / 4.0f), bulletColor));
         }
 
         internal static void removeActor(Actor a)
