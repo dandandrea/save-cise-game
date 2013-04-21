@@ -109,19 +109,19 @@ namespace SaveCISE_Game
             // waves 1-5
             waves.Add(mobFactory.generateMob1(15, 1.5f, 20, 2500, 10));
             waves.Add(mobFactory.generateMob1(20, 1.5f, 30, 2500, 10));
-            waves.Add(mobFactory.generateMob2(60, 3.8f, 13, 1000, 5));
-            waves.Add(mobFactory.generateMob3(5, 1f, 400, 2500, 80));
-            waves.Add(mobFactory.generateMob1(25, 1.5f, 120, 2500, 20));
+            waves.Add(mobFactory.generateMob2(60, 3.8f, 11, 1000, 5));
+            waves.Add(mobFactory.generateMob3(5, 1f, 350, 5000, 80));
+            waves.Add(mobFactory.generateMob1(25, 1.5f, 100, 2500, 20));
             // boss 1
-            waves.Add(mobFactory.generateBoss1(1, 2f, 700, 250000, 600));
+            waves.Add(mobFactory.generateBoss1(1, 2f, 600, 100000, 500));
             // waves 6-10
-            waves.Add(mobFactory.generateMob1(30, 1.5f, 200, 2500, 20));
-            waves.Add(mobFactory.generateMob3(7, 1f, 700, 2500, 100));
-            waves.Add(mobFactory.generateMob2(150, 3.8f, 20, 2500, 5));
-            waves.Add(mobFactory.generateMob1(50, 1.5f, 220, 2500, 20));
-            waves.Add(mobFactory.generateMob3(15, 1f, 1000, 2500, 50));
+            waves.Add(mobFactory.generateMob1(30, 1.5f, 250, 2500, 20));
+            waves.Add(mobFactory.generateMob3(7, 1f, 1600, 5000, 100));
+            waves.Add(mobFactory.generateMob2(150, 3.8f, 45, 2500, 5));
+            waves.Add(mobFactory.generateMob1(50, 1.5f, 400, 2500, 20));
+            waves.Add(mobFactory.generateMob3(15, 1f, 2500, 5000, 50));
             // boss 2
-            waves.Add(mobFactory.generateBoss2(1, 2f, 2600, 250000, 0));
+            waves.Add(mobFactory.generateBoss2(1, 2f, 6000, 100000, 0));
         }
     }
 }

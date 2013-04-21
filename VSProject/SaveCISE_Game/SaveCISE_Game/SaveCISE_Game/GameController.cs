@@ -21,8 +21,6 @@ namespace SaveCISE_Game
 
     static class GameController
     {
-        public static int nextWaveCountdown = 0;
-        public static int enthusiasm = 140; //starting enthusiasm
         public const int CELL_WIDTH = 40;//30;
         public const int CELL_HEIGHT = 30;//15;
         public const int GRID_OFFSET_X = 0;
@@ -32,6 +30,9 @@ namespace SaveCISE_Game
         public const int CISE_COL = 12;
         public const int CISE_ROW = 12;
         public const int MAX_BUDGET = 20000000;
+        public const int INITIAL_ENTHUSIASM = 145;
+        public static int nextWaveCountdown = 0;
+        public static int enthusiasm = INITIAL_ENTHUSIASM; //starting enthusiasm
         public static int budget = MAX_BUDGET;
         private static Scene gameScene;
         private static Grid grid;
@@ -269,6 +270,8 @@ namespace SaveCISE_Game
         internal static void reset()
         {
             GameController.waveSpawner = null;
+            GameController.budget = GameController.MAX_BUDGET;
+            GameController.enthusiasm = INITIAL_ENTHUSIASM;
             GameController.buildGameScene();
         }
 
