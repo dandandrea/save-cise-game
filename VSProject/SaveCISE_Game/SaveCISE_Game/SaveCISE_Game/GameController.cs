@@ -350,7 +350,6 @@ namespace SaveCISE_Game
                 }
 
                 // Fire at the active targets if there are any
-                #endif
                 t.fireAtActiveTargets();
 
                 // Are there any active targets?
