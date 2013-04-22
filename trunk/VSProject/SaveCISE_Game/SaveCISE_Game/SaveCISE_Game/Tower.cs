@@ -49,10 +49,7 @@ namespace SaveCISE_Game
                 }
                 else if (towerType == towerTypes.DAVIS)
                 {
-                    if (GameController.MAX_BUDGET - DAVIS_BUDGET_INC >= 0)
-                    {
                         GameController.budget += DAVIS_BUDGET_INC;
-                    }
                 }
 
                 foreach (Enemy e in activeTargetList)
