@@ -111,11 +111,6 @@ namespace SaveCISE_Game
             towerRemover = new TowerRemover(new Sprite(ContentStore.getTexture("Copy of spr_whitePixel"), CELL_WIDTH, CELL_HEIGHT, 1, 1), 100, 100);
             gameScene.add(towerRemover);
 
-            #if DEBUG
-            GridDrawer gd = new GridDrawer();
-            gameScene.add(gd);
-            #endif
-
             // buttons/side panel
             WhitePanel wp = new WhitePanel();
             gameScene.add(wp);
@@ -227,9 +222,6 @@ namespace SaveCISE_Game
                     {
                         deleteTowers.Add(t);
                         grid.clearTile(cellY, cellX);
-                        #if DEBUG
-                        Console.WriteLine(cellX + " " + cellY);
-                        #endif
                         foreach (Enemy e in enemies)
                         {
                             e.updatePath();
@@ -269,10 +261,10 @@ namespace SaveCISE_Game
 
         internal static void reset()
         {
-            GameController.waveSpawner = null;
-            GameController.budget = GameController.MAX_BUDGET;
-            GameController.enthusiasm = INITIAL_ENTHUSIASM;
-            GameController.buildGameScene();
+            waveSpawner = null;
+            budget = MAX_BUDGET;
+            enthusiasm = INITIAL_ENTHUSIASM;
+            buildGameScene();
         }
 
         internal static void Update(GameTime gameTime)
@@ -281,16 +273,6 @@ namespace SaveCISE_Game
             {
                 waveSpawner = new WaveSpawner(grid, gameTime);
             }
-            /*
-            if (isGameStarted == true && nextWaveTime == 0.0d)
-            {
-                nextWaveTime = (((double)WAVE_ALL_SPAWN_SECS + WAVE_SPAWN_DELAY) * 1000) + gameTime.TotalGameTime.TotalMilliseconds;
-                Console.WriteLine("Next wave time init'd to " + nextWaveTime + ", total game time is " + gameTime.TotalGameTime.TotalMilliseconds);
-
-                nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + (INITIAL_WAVE_DELAY_SECS * 1000);
-                Console.WriteLine("Initial spawn time init'd to " + nextSpawnTime + ", total game time is " + gameTime.TotalGameTime.TotalMilliseconds);
-            }
-            */
 
             //GameController.beginPlacingTower(towerTypes.BLOCK);
             foreach (Enemy e in deadEnemies)
@@ -317,7 +299,6 @@ namespace SaveCISE_Game
             {
                 if (footsteps.State != SoundState.Playing)
                 {
-                    //footsteps.IsLooped = true;
                     footsteps.Play();
                 }
             }
@@ -333,31 +314,18 @@ namespace SaveCISE_Game
             // 4. Remove the target if its strengh goes to zero
             foreach (Tower t in towers)
             {
-                #if DEBUG
-                // Console.WriteLine("Found a tower at " + t.getX() + ", " + t.getY());
-                #endif
 
                 // If this is not a tower that deals damage or slows down then skip this entire section of code
                 if (t.getDamageDealt() == 0 && t.getPercentSlowDownDealt() == 0f && t.getTowerType() != towerTypes.BERMUDEZ && t.getTowerType() != towerTypes.DAVIS)
                 {
-                    #if DEBUG
-                    // Console.WriteLine("This tower does not deal damage or slow down, skipping to next tower");
-                    #endif
-
                     // Skip to next tower
                     continue;
                 }
 
                 // Acquire new targets
-                #if DEBUG
-                // Console.WriteLine("Acquiring new targets, if any");
-                #endif
                 t.acquireNewTargets(enemies);
 
                 // Drop existing targets that have left the targeting range
-                #if DEBUG
-                // Console.WriteLine("Dropping existing targets that have left the targeting range, if any");
-                #endif
                 t.dropTargetsOutOfRange();
 
                 // Does this tower have a next fire time yet?  If not then set it and skip to the next tower
@@ -370,34 +338,18 @@ namespace SaveCISE_Game
                     // Generate the next fire time
                     t.generateNextFireTime(gameTime);
 
-                    #if DEBUG
-                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
-                    #endif
-
                     // Skip to next tower, if any
                     continue;
                 }
 
-                #if DEBUG
-                // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
-                #endif
-
                 // Is it not yet time for this tower to fire?
                 if (t.getNextFireTime() > gameTime.TotalGameTime.TotalMilliseconds)
                 {
-                    #if DEBUG
-                    // Console.WriteLine("It is not yet time for this tower to fire, skipping to next tower (if any)");
-                    #endif
-
                     // Skip to next tower, if any
                     continue;
                 }
 
                 // Fire at the active targets if there are any
-                #if DEBUG
-                // Console.WriteLine("Firing at active target(s), if any");
                 #endif
                 t.fireAtActiveTargets();
 
@@ -407,11 +359,6 @@ namespace SaveCISE_Game
                     // Generate next fire time
                     t.generateNextFireTime(gameTime);
 
-                    #if DEBUG
-                    // Console.WriteLine("Generated next fire time");
-                    // Console.WriteLine("totalGameTime is " + (gameTime.TotalGameTime.TotalMilliseconds / 1000) + " secs");
-                    // Console.WriteLine("nextFireTime is " + (t.getNextFireTime() / 1000) + " secs");
-                    #endif
                 }
             }
 
@@ -421,83 +368,6 @@ namespace SaveCISE_Game
                 waveSpawner.spawnEnemy(gameTime);
                 nextWaveCountdown = waveSpawner.getNextWaveTime(gameTime);
             }
-
-            /*
-
-            // Spawn another enemy?  Only perform this check if gameplay has started and
-            // there are still enemies remaining to be spawned
-            if (isGameStarted == true && isPaused == false && currentWaveIndex != -1)
-            {
-                // Is it time to spawn another enemy?
-                if (gameTime.TotalGameTime.TotalMilliseconds >= nextSpawnTime)
-                {
-                    // Mark first enemy released
-                    isFirstEnemyReleased = true;
-
-                    if (waves[currentWaveIndex].Count != 0)
-                    {
-                        #if DEBUG
-                        // Console.WriteLine("Spawning next enemy at " + gameTime.TotalGameTime.TotalMilliseconds);
-                        // Console.WriteLine("nextSpawnTime is " + (nextSpawnTime / 1000) + " secs");
-                        // Console.WriteLine("Current wave size is " + currentWaveSize);
-                        #endif
-
-                        // Place the enemy and remove from waves list
-                        addEnemy(waves[currentWaveIndex][0]);
-                        waves[currentWaveIndex].RemoveAt(0);
-                    }
-
-                    // End of current wave?
-                    if (waves[currentWaveIndex].Count == 0)
-                    {
-                        #if DEBUG
-                        // Console.WriteLine("Wave finished at " + gameTime.TotalGameTime.TotalMilliseconds + ", next wave time is " + nextWaveTime);
-                        #endif
-
-                        // No more waves?
-                        if (currentWaveIndex == waves.Count - 1)
-                        {
-                            #if DEBUG
-                            // Console.WriteLine("No more waves");
-                            #endif
-
-                            // Set current wave index to -1
-                            currentWaveIndex = -1;
-                        }
-                        else
-                        {
-                            if (gameTime.TotalGameTime.TotalMilliseconds >= nextWaveTime)
-                            {
-                                // There is another wave
-                                currentWaveIndex++;
-
-                                // Update current wave size
-                                currentWaveSize = waves[currentWaveIndex].Count;
-                                nextWaveTime += (WAVE_SPAWN_DELAY + WAVE_ALL_SPAWN_SECS) * 1000;
-                                nextSpawnTime += nextWaveTime;
-
-                                #if DEBUG
-                                Console.WriteLine("Wave number " + (currentWaveIndex + 1));
-                                // Console.WriteLine("Wave released at " + gameTime.TotalGameTime.TotalMilliseconds + ", next spawn time is " + nextSpawnTime + ", next wave time is " + nextWaveTime);
-                                #endif
-                            }
-                        }
-                    }
-
-                    // If there are still more enemies to spawn
-                    if (currentWaveIndex != -1)
-                    {
-                        // Calculate the next spawn time
-                        nextSpawnTime = gameTime.TotalGameTime.TotalMilliseconds + (WAVE_ALL_SPAWN_SECS * 1000 / currentWaveSize);
-
-                        #if DEBUG
-                        // Console.WriteLine("nextSpawnTime updated to " + (nextSpawnTime / 1000) + " secs");
-                        #endif
-                    }
-                }
-            }
-              
-            */
 
             if (GameController.enthusiasm < Tower.getTowerCost(towerTypes.BLOCK))
             {

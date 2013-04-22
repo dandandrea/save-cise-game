@@ -113,9 +113,9 @@ namespace SaveCISE_Game
             waves.Add(mobFactory.generateMob3(5, 1f, 350, 5000, 80));
             waves.Add(mobFactory.generateMob1(25, 1.5f, 100, 2500, 20));
             // boss 1
-            waves.Add(mobFactory.generateBoss1(1, 2f, 600, 100000, 500));
+            waves.Add(mobFactory.generateBoss1(1, 2f, 700, 100000, 500));
             // waves 6-10
-            waves.Add(mobFactory.generateMob1(30, 1.5f, 250, 2500, 20));
+            waves.Add(mobFactory.generateMob1(30, 1.5f, 270, 2500, 20));
             waves.Add(mobFactory.generateMob3(7, 1f, 2000, 5000, 100));
             waves.Add(mobFactory.generateMob2(150, 3.8f, 50, 2500, 5));
             waves.Add(mobFactory.generateMob1(50, 1.5f, 400, 2500, 20));
