@@ -27,7 +27,7 @@ namespace SaveCISE_Game
             base.draw(sb, Color.LimeGreen);
             cover.draw(sb, this.x, 15, 0);
             sb.Begin();
-            sb.DrawString(font, "" + GameController.getBudget(), new Vector2(x-20,y-20), Color.Lime);
+            sb.DrawString(font, "" + GameController.getBudget()/1000, new Vector2(x-6,y-20), Color.Lime);
             sb.End();
         }
 
