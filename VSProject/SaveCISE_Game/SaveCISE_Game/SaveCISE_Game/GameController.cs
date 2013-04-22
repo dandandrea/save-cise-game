@@ -416,6 +416,10 @@ namespace SaveCISE_Game
             {
                 bermudezButton.setActive(true);
             }
+            if (budget >= MAX_BUDGET)
+            {
+                budget = MAX_BUDGET;
+            }
 
         }
 
