@@ -94,10 +94,6 @@ namespace SaveCISE_Game
             gameScene.setBackground(new Sprite(ContentStore.getTexture("Copy of bg_gameArea")));
 
             grid = new Grid();
-            //mobFactory = new MobFactory(grid);
-
-            //generateWaves(); // Generate the waves
-            //currentWaveSize = waves[0].Count; // Initialize current wave size
 
             enemies = new List<Enemy>();
             deadEnemies = new List<Enemy>();
@@ -261,10 +257,12 @@ namespace SaveCISE_Game
 
         internal static void reset()
         {
-            waveSpawner = null;
-            budget = MAX_BUDGET;
-            enthusiasm = INITIAL_ENTHUSIASM;
-            buildGameScene();
+            isGameStarted = false;
+            GameController.gameScene = null;
+            GameController.waveSpawner = null;
+            GameController.budget = GameController.MAX_BUDGET;
+            GameController.enthusiasm = INITIAL_ENTHUSIASM;
+            //GameController.buildGameScene();
         }
 
         internal static void Update(GameTime gameTime)
@@ -331,9 +329,6 @@ namespace SaveCISE_Game
                 // Does this tower have a next fire time yet?  If not then set it and skip to the next tower
                 if (t.getNextFireTime() == 0.0d)
                 {
-                    #if DEBUG
-                    // Console.WriteLine("This tower doesn't have a next fire time yet, generating it now and then skipping to next tower");
-                    #endif
 
                     // Generate the next fire time
                     t.generateNextFireTime(gameTime);
@@ -345,7 +340,6 @@ namespace SaveCISE_Game
                 // Is it not yet time for this tower to fire?
                 if (t.getNextFireTime() > gameTime.TotalGameTime.TotalMilliseconds)
                 {
-                    // Skip to next tower, if any
                     continue;
                 }
 
@@ -357,7 +351,6 @@ namespace SaveCISE_Game
                 {
                     // Generate next fire time
                     t.generateNextFireTime(gameTime);
-
                 }
             }
 

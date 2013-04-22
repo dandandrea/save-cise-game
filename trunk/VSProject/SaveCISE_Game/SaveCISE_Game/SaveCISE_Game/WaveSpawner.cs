@@ -11,12 +11,12 @@ namespace SaveCISE_Game
         private const int WAVE_ALL_SPAWN_SECS = 30; // Number of seconds to spawn the complete wave in
         private const int WAVE_SPAWN_DELAY = 15; // Delay between waves
         private const int INITIAL_WAVE_DELAY_SECS = 10; // Number of seconds to wait before releasing first wave
-        private static List<List<Enemy>> waves; // The enemies that make up each wave
-        private static List<int> waveStart;
-        private static int currentWaveIndex = 0;
-        private static double nextMobTime = 0;
-        private static MobFactory mobFactory;
-        private static double nextMobDelay;
+        private List<List<Enemy>> waves; // The enemies that make up each wave
+        private List<int> waveStart;
+        private int currentWaveIndex = 0;
+        private double nextMobTime = 0;
+        private MobFactory mobFactory;
+        private double nextMobDelay;
 
         public WaveSpawner(Grid g, GameTime gameTime)
         {
@@ -90,7 +90,7 @@ namespace SaveCISE_Game
             }
         }
 
-        private static void generateTimes(GameTime gameTime)
+        private void generateTimes(GameTime gameTime)
         {
             waveStart = new List<int>();
 
@@ -101,7 +101,7 @@ namespace SaveCISE_Game
             }
         }
 
-        private static void generateWaves()
+        private void generateWaves()
         {
             // Initialize the waves list
             waves = new List<List<Enemy>>();
@@ -109,7 +109,7 @@ namespace SaveCISE_Game
             // waves 1-5
             waves.Add(mobFactory.generateMob1(15, 1.5f, 20, 2500, 10));
             waves.Add(mobFactory.generateMob1(20, 1.5f, 30, 2500, 10));
-            waves.Add(mobFactory.generateMob2(60, 3.8f, 11, 1000, 5));
+            waves.Add(mobFactory.generateMob2(50, 3.8f, 11, 1000, 6));
             waves.Add(mobFactory.generateMob3(5, 1f, 350, 5000, 80));
             waves.Add(mobFactory.generateMob1(25, 1.5f, 100, 2500, 20));
             // boss 1
