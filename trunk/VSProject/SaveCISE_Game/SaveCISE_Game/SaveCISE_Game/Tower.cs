@@ -389,7 +389,7 @@ namespace SaveCISE_Game
                 case towerTypes.BERMUDEZ:
                     return 100;
                 case towerTypes.DAVIS:
-                    return 150;
+                    return 5;
             }
 
             return 0;
