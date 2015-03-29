@@ -1,0 +1,1 @@
+This is the repository for code and other artifacts related to our final project for our "AI for Video Games" class.
